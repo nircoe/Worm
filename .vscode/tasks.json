@@ -1,0 +1,69 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+        { // Configure
+            "label": "CMake Task: Configure",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                ".."
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/build"  // Adjust if your build folder is different
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "problemMatcher": ["$gcc"]
+        },
+		{ // Build 
+			"label": "CMake Task: Build",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--build",
+                "."
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/build"  // Adjust if your build folder is different
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": ["$gcc"]
+		},
+        { // Clean
+            "label": "CMake Task: Clean",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--build",
+                ".",
+                "--target",
+                "clean"  
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/build"  // Adjust if your build folder is different
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "problemMatcher": []
+        },
+		{ // Run
+			"label": "CMake Task: Run",
+            "type": "shell",
+            "command": "./raylib_tutorials.exe",  // Replace with your executable name
+            "options": {
+                "cwd": "${workspaceFolder}/build"  // Adjust if your build folder is different
+            },
+            "group": "test",
+            "dependsOn": ["CMake Task: Clean", "CMake Task: Build"],
+            "dependsOrder": "sequence",
+            "problemMatcher": []
+		}
+	]
+}
