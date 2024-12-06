@@ -1,15 +1,17 @@
 #include "food.hpp"
 
-Food::Food(raylib::Vector2 initialPosition)
-    : GameObject(initialPosition) {}
+Food::Food(raylib::Vector2 position) : GameObject(position) { }
 
-void Food::Update()
+void Food::update()
 {
     //Food Update logic
 }
 
-void Food::Render() const
+void Food::render() const
 {
+    if(!this->isActive()) return;
+
     const raylib::Vector2 pos = getTransform().getPosition();
-    DrawRectangle(pos.x, pos.y, m_width, m_height, GREEN);
+    const raylib::Vector2 foodSize = Utils::getFoodSize();
+    DrawRectangleV(pos, foodSize, GREEN);
 }

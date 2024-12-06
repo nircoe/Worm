@@ -56,7 +56,7 @@
 		{ // Run
 			"label": "CMake Task: Run",
             "type": "shell",
-            "command": "./raylib_tutorials.exe",  // Replace with your executable name
+            "command": "./Worm.exe",  // Replace with your executable name
             "options": {
                 "cwd": "${workspaceFolder}/build"  // Adjust if your build folder is different
             },

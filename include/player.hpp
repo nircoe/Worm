@@ -3,6 +3,9 @@
 #include "raylib-cpp.hpp"
 #include "game_object.hpp"
 #include "moveable.hpp"
+#include "food.hpp"
+#include "auxiliary/consts.hpp"
+#include "auxiliary/utils.hpp"
 
 class Player : public GameObject 
 {
@@ -11,9 +14,11 @@ public:
 
     virtual ~Player() override = default;
 
-    virtual void Update() override;
+    virtual void update() override;
 
-    virtual void Render() const override;
+    virtual void render() const override;
+
+    const bool checkFoodCollision(const Food& food) const;
 
 private:
     Moveable m_moveable; 

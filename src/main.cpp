@@ -1,5 +1,6 @@
 #include "raylib-cpp.hpp"
-#include "colors.hpp"
+#include "auxiliary/colors.hpp"
+#include "auxiliary/consts.hpp"
 #include "scene.hpp"
 #include "player.hpp"
 #include "food.hpp"
@@ -32,14 +33,13 @@ void HandleText(raylib::Window& window, raylib::Camera2D& camera, const int Targ
 int main() 
 {
     // Awake
-    const std::pair<int, int> ScreenSize = std::pair<int, int>(800, 800);
-    const raylib::Vector2 fScreenSize = raylib::Vector2((float)ScreenSize.first, (float)ScreenSize.second);
+    const raylib::Vector2 fScreenSize = raylib::Vector2((float)Consts::SCREEN_WIDTH, (float)Consts::SCREEN_HEIGHT);
     const int TargetFPS = 60;
     const raylib::Image IconImage = raylib::Image("C:/Projects/Worm/assets/worm.png");  
     
     raylib::Vector2 characterPos = raylib::Vector2();
-    raylib::Camera2D camera = raylib::Camera2D({fScreenSize.x / 2, fScreenSize.y / 2}, {0.0f, 0.0f});
-    raylib::Window window(ScreenSize.first, ScreenSize.second, "Worm");
+    raylib::Camera2D camera = raylib::Camera2D({0.0f, 0.0f}, {0.0f, 0.0f});
+    raylib::Window window(Consts::SCREEN_WIDTH, Consts::SCREEN_HEIGHT, "Worm");
 
     Scene scene = Scene();
 
@@ -49,7 +49,7 @@ int main()
     // Update
     while(!window.ShouldClose())
     {
-        scene.Update();
+        scene.update();
 
         // Drawing
         window.BeginDrawing();
@@ -58,8 +58,8 @@ int main()
             camera.BeginMode();
             {
                 // HandleCamera / UpdateCamera
-                HandleCamera(camera, player->GetPosition());
-                scene.Render();
+                //HandleCamera(camera, player->GetPosition());
+                scene.render();
             }
             camera.EndMode();
 

@@ -1,10 +1,10 @@
 #pragma once
 
-#include <unordered_map>
-#include <memory>
+#include <vector>
 #include "game_object.hpp"
 #include "player.hpp"
 #include "food.hpp"
+#include "auxiliary/consts.hpp"
 
 class Scene 
 {
@@ -13,11 +13,10 @@ public:
 
     ~Scene() = default;
     
-    void Update();
-    void Render();
+    void update();
+    void render();
 
 private:
-    // std::unordered_map<unsigned int, std::shared_ptr<GameObject>> m_gameObjects;
     Player m_player;
-    std::vector<Food> m_foods;
+    Food m_food;
 };
