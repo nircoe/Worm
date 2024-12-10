@@ -34,6 +34,7 @@ endif()
 # This is the main part:
 # My source files here:
 set(SOURCES 
+    src/transform2d.cpp
     src/game_object.cpp
     src/moveable.cpp
     src/player.cpp

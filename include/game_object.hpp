@@ -11,18 +11,18 @@ public:
     GameObject(raylib::Vector2 initialPosition);
     virtual ~GameObject() = default;
 
-    virtual void Update() = 0;
-    virtual void Render() const = 0;
+    virtual void update() = 0;
+    virtual void render() const = 0;
 
 #pragma region setters
-    void SetActive(bool active);
+    void setActive(bool active);
 #pragma endregion
     
 #pragma region getters
     unsigned int getId() const;
     Transform2D& getTransform();
     const Transform2D& getTransform() const;
-    bool IsActive() const;
+    const bool isActive() const;
 #pragma endregion
 
 private:
