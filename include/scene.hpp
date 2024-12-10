@@ -19,4 +19,8 @@ public:
 private:
     Player m_player;
     Food m_food;
+
+    bool m_gameOver;
+
+    void gameOver() const;
 };
