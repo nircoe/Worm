@@ -26,4 +26,6 @@ private:
     std::vector<raylib::Vector2> m_playerBody; // each item is the center position of a circle
 
     const std::vector<raylib::Vector2> getPlayerBody() const;
+
+    const bool checkBodyToBodyCollision() const;
 };
