@@ -35,7 +35,7 @@ void Player::update()
     if(velocity.x != 0 || velocity.y != 0)
         velocity = velocity.Normalize();
     velocity *= speed;
-    if(velocity == Consts::ZERO_2D) 
+    if(velocity == Consts::ZERO_2D || velocity == -prevVelocity) 
         velocity = prevVelocity;
     m_moveable.setVelocity(velocity);
 
