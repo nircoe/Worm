@@ -4,7 +4,7 @@ Moveable::Moveable() : Moveable(0.0f) {}
 
 Moveable::Moveable(float speed) : m_speed(speed) {}
 
-float Moveable::getSpeed() { return this->m_speed * GetFrameTime(); }
+float Moveable::getSpeed() { return this->m_speed; }
 
 void Moveable::setVelocity(raylib::Vector2 vel) { m_velocity = vel; }
 

@@ -21,6 +21,8 @@ public:
 
     ~Transform2D() = default;
 
+    void setPosition(const raylib::Vector2 newPosition);
+
     raylib::Vector2 getPosition();
 
     const raylib::Vector2 getPosition() const;

@@ -1,0 +1,47 @@
+#pragma once
+
+#include "raylib-cpp.hpp"
+#include "consts.hpp"
+#include <vector>
+#include <random>
+
+namespace Utils
+{
+    inline const raylib::Vector2 getFoodSpawnPoint(const std::vector<raylib::Vector2>& playerBody)
+    {
+        const float margin = Consts::FOOD_SPAWN_MARGIN;
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_real_distribution<float> distX(margin, Consts::SCREEN_WIDTH - margin);
+        std::uniform_real_distribution<float> distY(margin, Consts::SCREEN_HEIGHT - margin);
+        raylib::Vector2 spawnPoint = raylib::Vector2();
+        bool valid = false;
+        
+        while(!valid)
+        {
+            spawnPoint.x = distX(gen);
+            spawnPoint.y = distY(gen);
+            Rectangle rec = { spawnPoint.x, spawnPoint.y, 5.0f, 5.0f};
+            bool collision = false;
+            for(int i = 0; i < playerBody.size(); ++i)
+            {
+                float radius = (i == 0) ? 
+                                Consts::PLAYER_HEAD_RADIUS : 
+                                Consts::PLAYER_BODY_RADIUS;
+                if(CheckCollisionCircleRec(playerBody[i], radius, rec))
+                {
+                    collision = true;
+                    break;
+                }
+            }
+            valid = !collision;
+        }
+
+        return spawnPoint;
+    }
+
+    inline const raylib::Vector2 getFoodSize()
+    {
+        return raylib::Vector2(Consts::FOOD_SIZE, Consts::FOOD_SIZE);
+    }
+} // namespace Utils
