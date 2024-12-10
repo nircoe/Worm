@@ -34,7 +34,6 @@ int main()
 {
     // Awake
     const raylib::Vector2 fScreenSize = raylib::Vector2((float)Consts::SCREEN_WIDTH, (float)Consts::SCREEN_HEIGHT);
-    const int TargetFPS = 60;
     const raylib::Image IconImage = raylib::Image("C:/Projects/Worm/assets/worm.png");  
     
     raylib::Vector2 characterPos = raylib::Vector2();
@@ -44,7 +43,7 @@ int main()
     Scene scene = Scene();
 
     // Start
-    WindowSettings(window, TargetFPS, IconImage);
+    WindowSettings(window, Consts::FPS_TARGET, IconImage);
     
     // Update
     while(!window.ShouldClose())
@@ -64,7 +63,7 @@ int main()
             camera.EndMode();
 
             // HandleText / HandleUI
-            HandleText(window, camera, TargetFPS);
+            HandleText(window, camera, Consts::FPS_TARGET);
         }   
         window.EndDrawing();
     }

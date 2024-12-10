@@ -2,10 +2,7 @@
 
 Food::Food(raylib::Vector2 position) : GameObject(position) { }
 
-void Food::update()
-{
-    //Food Update logic
-}
+void Food::update() { }
 
 void Food::render() const
 {
@@ -14,4 +11,9 @@ void Food::render() const
     const raylib::Vector2 pos = getTransform().getPosition();
     const raylib::Vector2 foodSize = Utils::getFoodSize();
     DrawRectangleV(pos, foodSize, GREEN);
+}
+
+void Food::changePosition(const raylib::Vector2 newPosition)
+{
+    this->getTransform().setPosition(newPosition);
 }

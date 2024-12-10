@@ -15,5 +15,7 @@ public:
 
     virtual void render() const override;
 
+    void changePosition(const raylib::Vector2 newPosition);
+
 private:
 };

@@ -18,10 +18,12 @@ public:
 
     virtual void render() const override;
 
-    const bool checkFoodCollision(const Food& food) const;
+    const bool checkFoodCollision(Food& food) const;
 
 private:
     Moveable m_moveable; 
 
     std::vector<raylib::Vector2> m_playerBody; // each item is the center position of a circle
+
+    const std::vector<raylib::Vector2> getPlayerBody() const;
 };
