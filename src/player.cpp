@@ -10,8 +10,6 @@ Player::Player(raylib::Vector2 initialPosition, const float speed)
 
 void Player::render() const
 {
-    if(!this->isActive()) return;
-
     for(int i = 0; i < m_playerBody.size(); ++i)
     {
         float radius = (i == 0) ? 
@@ -23,6 +21,8 @@ void Player::render() const
 
 void Player::update() 
 {    
+    if(!this->isActive()) return;
+
     raylib::Vector2 prevVelocity = this->m_moveable.getVelocity();
     raylib::Vector2 velocity = raylib::Vector2();
     float speed = this->m_moveable.getSpeed();
@@ -48,6 +48,11 @@ void Player::update()
         }
         m_playerBody[0] += velocity;
     }
+
+    if(this->checkBodyToBodyCollision())
+    {
+        this->setActive(false);
+    }
 }
 
 const bool Player::checkFoodCollision(Food& food) const
@@ -63,4 +68,15 @@ const bool Player::checkFoodCollision(Food& food) const
 const std::vector<raylib::Vector2> Player::getPlayerBody() const
 {
     return this->m_playerBody;
+}
+
+const bool Player::checkBodyToBodyCollision() const
+{
+    for(size_t i = 1; i < m_playerBody.size(); ++i)
+    {
+        if(CheckCollisionCircles(m_playerBody[0], Consts::PLAYER_HEAD_RADIUS,
+                                    m_playerBody[i], Consts::PLAYER_BODY_RADIUS))
+            return true;
+    }
+    return false;
 }
