@@ -47,6 +47,7 @@ void Player::update()
             m_playerBody[i] = m_playerBody[i - 1];
         }
         m_playerBody[0] += velocity;
+        m_playerBody[0] = Utils::fixGettingOffScreen(m_playerBody[0]);
     }
 
     if(this->checkBodyToBodyCollision())
