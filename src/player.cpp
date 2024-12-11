@@ -5,7 +5,7 @@ Player::Player(raylib::Vector2 initialPosition, const float speed)
 {
     m_moveable = Moveable(speed);
 
-    m_playerBody = Consts::INITIAL_PLAYER_BODY;
+    m_playerBody = std::vector<raylib::Vector2>(Consts::INITIAL_PLAYER_BODY);
 }
 
 void Player::render() const
@@ -61,9 +61,7 @@ const bool Player::checkFoodCollision(Food& food) const
     raylib::Vector2 food_pos = food.getTransform().getPosition();
     raylib::Vector2 food_size = Utils::getFoodSize();
     Rectangle rec = { food_pos.x, food_pos.y, food_size.x, food_size.y };
-    bool res = CheckCollisionCircleRec(m_playerBody[0], 10.0f, rec);
-    if(res) food.changePosition(Utils::getFoodSpawnPoint(this->getPlayerBody()));
-    return res;
+    return CheckCollisionCircleRec(m_playerBody[0], 10.0f, rec);
 }
 
 const raylib::Vector2 Player::getHeadPosition() const
@@ -74,6 +72,11 @@ const raylib::Vector2 Player::getHeadPosition() const
 const int Player::getScore() const
 {
     return this->getPlayerBody().size() - 3;
+}
+
+void Player::handleFoodCollision()
+{
+    this->m_playerBody.push_back(Consts::ZERO_2D);
 }
 
 const std::vector<raylib::Vector2> Player::getPlayerBody() const

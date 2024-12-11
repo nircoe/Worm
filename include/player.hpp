@@ -24,12 +24,14 @@ public:
 
     const int getScore() const;
 
+    void handleFoodCollision();
+
+    const std::vector<raylib::Vector2> getPlayerBody() const;
+
 private:
     Moveable m_moveable; 
 
     std::vector<raylib::Vector2> m_playerBody; // each item is the center position of a circle
-
-    const std::vector<raylib::Vector2> getPlayerBody() const;
 
     const bool checkBodyToBodyCollision() const;
 };
