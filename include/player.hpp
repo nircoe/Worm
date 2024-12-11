@@ -20,6 +20,10 @@ public:
 
     const bool checkFoodCollision(Food& food) const;
 
+    const raylib::Vector2 getHeadPosition() const;
+
+    const int getScore() const;
+
 private:
     Moveable m_moveable; 
 
