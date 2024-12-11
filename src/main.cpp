@@ -20,14 +20,14 @@ void WindowSettings(raylib::Window& window, const int TargetFPS, const raylib::I
     window.SetIcon(IconImage);
 }
 
-void HandleText(raylib::Window& window, raylib::Camera2D& camera, const int TargetFPS)
+void HandleText(raylib::Window& window, raylib::Camera2D& camera, const int TargetFPS, const raylib::Vector2 playerPos)
 {
     const char* targetFPSStr = TargetFPS > 0 ? TextFormat("Target FPS: %i", TargetFPS) : "Target FPS: MAX";
     std::pair<int, int> fpsPos = std::pair<int, int>(50, 50);
     DrawText(targetFPSStr, fpsPos.first, fpsPos.second, 20, BLACK);
     DrawText(TextFormat("Current FPS: %i", window.GetFPS()), fpsPos.first, fpsPos.second + 50, 20, BLACK);
-    DrawText(TextFormat("X: %f", camera.target.x), fpsPos.first, fpsPos.second + 100, 20, BLACK);
-    DrawText(TextFormat("Y: %f", camera.target.y), fpsPos.first, fpsPos.second + 130, 20, BLACK);
+    DrawText(TextFormat("X: %f", playerPos.x), fpsPos.first, fpsPos.second + 100, 20, BLACK);
+    DrawText(TextFormat("Y: %f", playerPos.y), fpsPos.first, fpsPos.second + 130, 20, BLACK);
 }
 
 int main() 
@@ -37,7 +37,7 @@ int main()
     const raylib::Image IconImage = raylib::Image("C:/Projects/Worm/assets/worm.png");  
     
     raylib::Vector2 characterPos = raylib::Vector2();
-    raylib::Camera2D camera = raylib::Camera2D({0.0f, 0.0f}, {0.0f, 0.0f});
+    raylib::Camera2D camera = raylib::Camera2D(Consts::ZERO_2D, Consts::ZERO_2D);
     raylib::Window window(Consts::SCREEN_WIDTH, Consts::SCREEN_HEIGHT, "Worm");
 
     Scene scene = Scene();
@@ -63,7 +63,7 @@ int main()
             camera.EndMode();
 
             // HandleText / HandleUI
-            HandleText(window, camera, Consts::FPS_TARGET);
+            HandleText(window, camera, Consts::FPS_TARGET, scene.getPlayerHeadPosition());
         }   
         window.EndDrawing();
     }
