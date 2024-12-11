@@ -10,7 +10,7 @@ void Food::render() const
 
     const raylib::Vector2 pos = getTransform().getPosition();
     const raylib::Vector2 foodSize = Utils::getFoodSize();
-    DrawRectangleV(pos, foodSize, GREEN);
+    DrawRectangleV(pos, foodSize, RED);
 }
 
 void Food::changePosition(const raylib::Vector2 newPosition)

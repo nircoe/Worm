@@ -8,7 +8,11 @@ void Scene::update()
 {
     if(!this->m_gameOver)
     {
-        //m_player.checkFoodCollision(m_food);
+        if(m_player.checkFoodCollision(m_food))
+        {
+            m_player.handleFoodCollision();
+            m_food.changePosition(Utils::getFoodSpawnPoint(m_player.getPlayerBody()));
+        }
 
         m_player.update();
         m_food.update();
