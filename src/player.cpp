@@ -27,11 +27,11 @@ void Player::update()
     raylib::Vector2 velocity = raylib::Vector2();
     float speed = this->m_moveable.getSpeed();
     velocity.x = (IsKeyDown(KEY_RIGHT)) ?
-                    Consts::ONE_F : (IsKeyDown(KEY_LEFT)) ?
-                    -Consts::ONE_F : Consts::ZERO_F;
+                    1.0f : (IsKeyDown(KEY_LEFT)) ?
+                    -1.0f : 0.0f;
     velocity.y = (IsKeyDown(KEY_DOWN)) ?
-                    Consts::ONE_F : (IsKeyDown(KEY_UP)) ?
-                    -Consts::ONE_F : Consts::ZERO_F;                    
+                    1.0f : (IsKeyDown(KEY_UP)) ?
+                    -1.0f : 0.0f;                    
     if(velocity.x != 0 || velocity.y != 0)
         velocity = velocity.Normalize();
     velocity *= speed;
@@ -65,6 +65,16 @@ const bool Player::checkFoodCollision(Food& food) const
     return res;
 }
 
+const raylib::Vector2 Player::getHeadPosition() const
+{
+    return this->getPlayerBody()[0];
+}
+
+const int Player::getScore() const
+{
+    return this->getPlayerBody().size() - 3;
+}
+
 const std::vector<raylib::Vector2> Player::getPlayerBody() const
 {
     return this->m_playerBody;
@@ -72,10 +82,11 @@ const std::vector<raylib::Vector2> Player::getPlayerBody() const
 
 const bool Player::checkBodyToBodyCollision() const
 {
-    for(size_t i = 1; i < m_playerBody.size(); ++i)
+    const size_t bodySize = this->getPlayerBody().size();
+    for(size_t i = 1; i < bodySize; ++i)
     {
-        if(CheckCollisionCircles(m_playerBody[0], Consts::PLAYER_HEAD_RADIUS,
-                                    m_playerBody[i], Consts::PLAYER_BODY_RADIUS))
+        if(CheckCollisionCircles(this->m_playerBody[0], Consts::PLAYER_HEAD_RADIUS,
+                                    this->m_playerBody[i], Consts::PLAYER_BODY_RADIUS))
             return true;
     }
     return false;

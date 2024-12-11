@@ -56,7 +56,8 @@
 		"istream": "cpp",
 		"cinttypes": "cpp",
 		"chrono": "cpp",
-		"span": "cpp"
+		"span": "cpp",
+		"format": "cpp"
 	},
 	"C_Cpp.default.compilerPath": "C:\\raylib\\w64devkit\\bin\\g++.exe",
 	"cmake.generator": "Ninja"

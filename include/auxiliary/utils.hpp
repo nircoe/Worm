@@ -44,4 +44,9 @@ namespace Utils
     {
         return raylib::Vector2(Consts::FOOD_SIZE, Consts::FOOD_SIZE);
     }
+
+    inline const int centerlizeTextX(const char* text, const int fontSize) 
+    {
+        return (Consts::SCREEN_WIDTH - MeasureText(text, fontSize)) / 2;
+    }
 } // namespace Utils
