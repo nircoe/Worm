@@ -14,7 +14,7 @@ namespace Consts
     const std::string RECT_COLLIDER = "Rect_Collider";
 
     const int TWO = 2;
-    const int FPS_TARGET = 10;
+    const int FPS_TARGET = 15;
     const int SCREEN_WIDTH = 800;
     const int SCREEN_HEIGHT = 800;
     const int GAME_OVER_FONT_SIZE = 50;
@@ -22,7 +22,7 @@ namespace Consts
     const float HALF_SCREEN_WIDTH = SCREEN_WIDTH / 2.0f;
     const float HALF_SCREEN_HEIGHT = SCREEN_HEIGHT / 2.0f;
     const float PLAYER_SPEED = 23.0f;
-    const float FOOD_SIZE = 8.0f;
+    const float FOOD_SIZE = 15.0f;
     const float PLAYER_HEAD_RADIUS = 12.0f;
     const float PLAYER_BODY_RADIUS = 10.0f;
     const float FOOD_SPAWN_MARGIN = 50.0f;
