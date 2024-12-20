@@ -7,7 +7,7 @@
 
 namespace Utils
 {
-    inline const raylib::Vector2 getFoodSpawnPoint(const std::vector<raylib::Vector2>& playerBody)
+    inline const raylib::Vector2 getFoodSpawnPoint(const std::list<raylib::Vector2>& playerBody)
     {
         const float margin = Consts::FOOD_SPAWN_MARGIN;
         std::random_device rd;
@@ -23,17 +23,18 @@ namespace Utils
             spawnPoint.y = distY(gen);
             Rectangle rec = { spawnPoint.x, spawnPoint.y, 5.0f, 5.0f};
             bool collision = false;
-            for(int i = 0; i < playerBody.size(); ++i)
+            for (auto it = playerBody.begin(); it != playerBody.end(); ++it)
             {
-                float radius = (i == 0) ? 
+                float radius = (playerBody.front().Equals(*it)) ? 
                                 Consts::PLAYER_HEAD_RADIUS : 
                                 Consts::PLAYER_BODY_RADIUS;
-                if(CheckCollisionCircleRec(playerBody[i], radius, rec))
+                if(CheckCollisionCircleRec(*it, radius, rec))
                 {
                     collision = true;
                     break;
                 }
             }
+
             valid = !collision;
         }
 
@@ -50,25 +51,4 @@ namespace Utils
         return (Consts::SCREEN_WIDTH - MeasureText(text, fontSize)) / 2;
     }
 
-    inline raylib::Vector2 fixGettingOffScreen(raylib::Vector2 pos)
-    {
-        if(pos.x < 0.0f)
-        {
-            pos.x += Consts::SCREEN_WIDTH;
-        }
-        else if(Consts::SCREEN_WIDTH < pos.x)
-        {
-            pos.x -= Consts::SCREEN_WIDTH;
-        }
-
-        if(pos.y < 0.0f)
-        {
-            pos.y += Consts::SCREEN_HEIGHT;
-        }
-        else if(Consts::SCREEN_HEIGHT < pos.y)
-        {
-            pos.y -= Consts::SCREEN_HEIGHT;
-        }
-        return pos;
-    }
 } // namespace Utils
