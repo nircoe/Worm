@@ -1,10 +1,13 @@
-#include "scene.hpp"
+#include "game_scene.hpp"
 
-Scene::Scene() : m_player(raylib::Vector2(), Consts::PLAYER_SPEED), 
-                    m_food(Utils::getFoodSpawnPoint(Consts::INITIAL_PLAYER_BODY)),
-                    m_gameOver(false) { }
+GameScene::GameScene(Enums::Difficulty difficulty) 
+    : m_player(raylib::Vector2(), Consts::PLAYER_SPEED, difficulty), 
+        m_food(Utils::getFoodSpawnPoint(Consts::INITIAL_PLAYER_BODY)),
+        m_difficulty(difficulty),
+        m_borders(Consts::BORDERS),
+        m_gameOver(false) { }
 
-void Scene::update() 
+void GameScene::update() 
 {
     if(!this->m_gameOver)
     {
@@ -26,26 +29,32 @@ void Scene::update()
 
     if(this->m_gameOver)
         this->gameOver();
-    // check collision between the worm and the foods
-    // check collision between the head of the worm and the rest of the body
 }
 
-void Scene::render() 
+void GameScene::render() 
 {
     m_player.render();
     m_food.render();
+    if(m_difficulty == Enums::Difficulty::Hard || m_difficulty == Enums::Difficulty::Impossible)
+    {
+        for (auto &&rec : m_borders)
+        {
+            DrawRectangleRec(rec, Colors::BORDER_COLOR);
+        }
+    }
+    
 }
 
-const raylib::Vector2 Scene::getPlayerHeadPosition() const
+const raylib::Vector2 GameScene::getPlayerHeadPosition() const
 {
     return this->m_player.getHeadPosition();
 }
 
-void Scene::gameOver() const
+void GameScene::gameOver() const
 {
     // Draw text "GAME OVER!"
     float textHeight = Consts::SCREEN_HEIGHT;
-    textHeight *= (m_player.getHeadPosition().y > Consts::HALF_SCREEN_HEIGHT) ? 0.25f : 0.75f;
+    textHeight *= (m_player.getHeadPosition().y > Consts::HALF_SCREEN.y) ? 0.25f : 0.75f;
     DrawText(Consts::GAME_OVER_TEXT.c_str(), 
                 GAME_OVER_TEXT_WIDTH, 
                 (int)textHeight, 

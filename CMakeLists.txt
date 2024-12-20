@@ -39,7 +39,7 @@ set(SOURCES
     src/moveable.cpp
     src/player.cpp
     src/food.cpp
-    src/scene.cpp
+    src/game_scene.cpp
     src/main.cpp
     # any other source file in the future
 )

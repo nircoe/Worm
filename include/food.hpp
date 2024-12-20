@@ -3,9 +3,11 @@
 #include "game_object.hpp"
 #include "auxiliary/consts.hpp"
 #include "auxiliary/utils.hpp"
+#include "auxiliary/colors.hpp"
 #include <vector>
 
-class Food : public GameObject {
+class Food : public GameObject 
+{
 public:
     Food(raylib::Vector2 position);
     
@@ -16,6 +18,4 @@ public:
     virtual void render() const override;
 
     void changePosition(const raylib::Vector2 newPosition);
-
-private:
 };

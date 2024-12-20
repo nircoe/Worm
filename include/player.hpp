@@ -6,11 +6,26 @@
 #include "food.hpp"
 #include "auxiliary/consts.hpp"
 #include "auxiliary/utils.hpp"
+#include "auxiliary/enums.hpp"
+#include "auxiliary/colors.hpp"
+#include <list>
 
 class Player : public GameObject 
 {
+    Moveable m_moveable; 
+    Enums::Difficulty m_difficulty;
+
+    int m_beginningFrames;
+    bool m_isBeginning;
+
+    std::list<raylib::Vector2> m_playerBody; // each item is the center position of a circle
+
+    const bool checkBodyToBodyCollision() const;
+    const bool checkBodyToBorderCollision() const;
+    raylib::Vector2 fixGettingOffScreen(raylib::Vector2 pos) const;
+
 public:
-    Player(raylib::Vector2 initialPosition, const float speed);
+    Player(raylib::Vector2 initialPosition, const float speed, Enums::Difficulty difficulty);
 
     virtual ~Player() override = default;
 
@@ -26,12 +41,5 @@ public:
 
     void handleFoodCollision();
 
-    const std::vector<raylib::Vector2> getPlayerBody() const;
-
-private:
-    Moveable m_moveable; 
-
-    std::vector<raylib::Vector2> m_playerBody; // each item is the center position of a circle
-
-    const bool checkBodyToBodyCollision() const;
+    const std::list<raylib::Vector2> getPlayerBody() const;
 };

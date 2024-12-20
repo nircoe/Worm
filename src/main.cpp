@@ -2,6 +2,8 @@
 #include "auxiliary/colors.hpp"
 #include "auxiliary/consts.hpp"
 #include "scene.hpp"
+#include "home_scene.hpp"
+#include "game_scene.hpp"
 #include "player.hpp"
 #include "food.hpp"
 
@@ -37,13 +39,13 @@ int main()
     const raylib::Image IconImage = raylib::Image("C:/Projects/Worm/assets/worm.png");  
     
     raylib::Vector2 characterPos = raylib::Vector2();
-    raylib::Camera2D camera = raylib::Camera2D(Consts::ZERO_2D, Consts::ZERO_2D);
+    raylib::Camera2D camera = raylib::Camera2D(raylib::Vector2::Zero(), raylib::Vector2::Zero());
     raylib::Window window(Consts::SCREEN_WIDTH, Consts::SCREEN_HEIGHT, "Worm");
 
-    Scene scene = Scene();
+    GameScene scene = GameScene(Enums::Difficulty::Hard);
 
     // Start
-    WindowSettings(window, Consts::FPS_TARGET, IconImage);
+    WindowSettings(window, Consts::HARD_FPS_TARGET, IconImage);
     
     // Update
     while(!window.ShouldClose())
@@ -63,7 +65,7 @@ int main()
             camera.EndMode();
 
             // HandleText / HandleUI
-            HandleText(window, camera, Consts::FPS_TARGET, scene.getPlayerHeadPosition());
+            HandleText(window, camera, Consts::MEDIUM_FPS_TARGET, scene.getPlayerHeadPosition());
         }   
         window.EndDrawing();
     }

@@ -6,7 +6,14 @@
 #include "raylib-cpp.hpp"
 #include "transform2d.hpp"
 
-class GameObject {
+class GameObject 
+{
+    static unsigned int s_idCounter; // static member for ID generation
+
+    unsigned int m_id;
+    Transform2D m_transform;
+    bool m_isActive;
+    
 public:
     GameObject(raylib::Vector2 initialPosition);
     virtual ~GameObject() = default;
@@ -24,11 +31,4 @@ public:
     const Transform2D& getTransform() const;
     const bool isActive() const;
 #pragma endregion
-
-private:
-    static unsigned int s_idCounter; // static member for ID generation
-
-    unsigned int m_id;
-    Transform2D m_transform;
-    bool m_isActive;
 };
