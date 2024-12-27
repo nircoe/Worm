@@ -20,6 +20,7 @@ namespace Consts
     const int SCREEN_WIDTH = 800;
     const int SCREEN_HEIGHT = 800;
     const int GAME_OVER_FONT_SIZE = 50;
+    const int NAME_OF_SCENES = 2;
 
     const float PLAYER_SPEED = 23.0f;
     const float DIAGONAL_MULTIPLY = 1.352f;
@@ -37,4 +38,6 @@ namespace Consts
         { -1.0f, SCREEN_HEIGHT - 10.0f, SCREEN_WIDTH + 1.0f, 10.0f },
         { SCREEN_WIDTH - 10.0f, -1.0f, 10.0f, SCREEN_HEIGHT + 1.0f }
     };
+
+    const raylib::Font FONT("../../assets/fonts/joystix_monospace.otf");
 } // namespace Consts
