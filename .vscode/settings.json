@@ -57,7 +57,18 @@
 		"cinttypes": "cpp",
 		"chrono": "cpp",
 		"span": "cpp",
-		"format": "cpp"
+		"format": "cpp",
+		"bitset": "cpp",
+		"charconv": "cpp",
+		"ctime": "cpp",
+		"list": "cpp",
+		"ratio": "cpp",
+		"iomanip": "cpp",
+		"semaphore": "cpp",
+		"sstream": "cpp",
+		"stop_token": "cpp",
+		"thread": "cpp",
+		"variant": "cpp"
 	},
 	"C_Cpp.default.compilerPath": "C:\\raylib\\w64devkit\\bin\\g++.exe",
 	"cmake.generator": "Ninja"

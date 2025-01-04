@@ -2,6 +2,7 @@
 
 #include "raylib-cpp.hpp"
 #include "consts.hpp"
+#include "enums.hpp"
 #include <vector>
 #include <random>
 
@@ -51,4 +52,14 @@ namespace Utils
         return (Consts::SCREEN_WIDTH - MeasureText(text, fontSize)) / 2;
     }
 
+    inline void drawTestingText(raylib::Window& window, raylib::Camera2D& camera, 
+                                const int TargetFPS, const raylib::Vector2 playerPos)
+    {
+        const char* targetFPSStr = TargetFPS > 0 ? TextFormat("Target FPS: %i", TargetFPS) : "Target FPS: MAX";
+        std::pair<int, int> fpsPos = std::pair<int, int>(50, 50);
+        DrawText(targetFPSStr, fpsPos.first, fpsPos.second, 20, BLACK);
+        DrawText(TextFormat("Current FPS: %i", window.GetFPS()), fpsPos.first, fpsPos.second + 50, 20, BLACK);
+        DrawText(TextFormat("X: %f", playerPos.x), fpsPos.first, fpsPos.second + 100, 20, BLACK);
+        DrawText(TextFormat("Y: %f", playerPos.y), fpsPos.first, fpsPos.second + 130, 20, BLACK);
+    }
 } // namespace Utils

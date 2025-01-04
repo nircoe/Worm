@@ -25,6 +25,8 @@ class Player : public GameObject
     raylib::Vector2 fixGettingOffScreen(raylib::Vector2 pos) const;
 
 public:
+    Player() = default;
+    
     Player(raylib::Vector2 initialPosition, const float speed, Enums::Difficulty difficulty);
 
     virtual ~Player() override = default;

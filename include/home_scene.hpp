@@ -9,5 +9,7 @@ public:
 
     ~HomeScene() = default;
 
-    
+    void update(SceneManager& sceneManager) override;
+    void render() override;
+    void renderUI() override;
 };

@@ -1,13 +1,12 @@
 #include "game_scene.hpp"
 
-GameScene::GameScene(Enums::Difficulty difficulty) 
-    : m_player(raylib::Vector2(), Consts::PLAYER_SPEED, difficulty), 
-        m_food(Utils::getFoodSpawnPoint(Consts::INITIAL_PLAYER_BODY)),
-        m_difficulty(difficulty),
-        m_borders(Consts::BORDERS),
-        m_gameOver(false) { }
+GameScene::GameScene(Enums::Difficulty difficulty) : m_player(raylib::Vector2(), Consts::PLAYER_SPEED, difficulty),
+      m_food(Utils::getFoodSpawnPoint(Consts::INITIAL_PLAYER_BODY)),
+      m_difficulty(difficulty),
+      m_borders(Consts::BORDERS),
+      m_gameOver(false) { }
 
-void GameScene::update() 
+void GameScene::update(SceneManager& sceneManager) 
 {
     if(!this->m_gameOver)
     {
@@ -28,7 +27,9 @@ void GameScene::update()
     }
 
     if(this->m_gameOver)
-        this->gameOver();
+    {
+        // logic for buttons
+    }
 }
 
 void GameScene::render() 
@@ -42,12 +43,27 @@ void GameScene::render()
             DrawRectangleRec(rec, Colors::BORDER_COLOR);
         }
     }
-    
+}
+
+void GameScene::renderUI()
+{
+    if(m_gameOver) 
+        this->gameOver();
 }
 
 const raylib::Vector2 GameScene::getPlayerHeadPosition() const
 {
     return this->m_player.getHeadPosition();
+}
+
+void GameScene::changeDifficulty(Enums::Difficulty newDifficulty)
+{
+    m_difficulty = newDifficulty;
+}
+
+const Enums::Difficulty GameScene::getDifficulty() const
+{
+    return m_difficulty;
 }
 
 void GameScene::gameOver() const
@@ -67,4 +83,6 @@ void GameScene::gameOver() const
                 Consts::GAME_OVER_FONT_SIZE), 
                 (int)textHeight + 100, 
                 Consts::GAME_OVER_FONT_SIZE, BLACK);
+
+    // TODO: add buttons
 }
