@@ -10,10 +10,11 @@
 int main() 
 {
     HomeScene homeScene;
-    GameScene gameScene(Enums::Difficulty::Hard);
+    GameScene gameScene(Enums::Difficulty::Medium);
 
     //SceneManager sceneManager({ &homeScene, &gameScene });
-    SceneManager sceneManager({ &gameScene });
+    SceneManager sceneManager({ &homeScene });
+    // SceneManager sceneManager({ &gameScene });
 
     return sceneManager.gameLoop();
 }

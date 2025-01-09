@@ -58,7 +58,7 @@
             "type": "shell",
             "command": "./Worm.exe",  // Replace with your executable name
             "options": {
-                "cwd": "${workspaceFolder}/build"  // Adjust if your build folder is different
+                "cwd": "${workspaceFolder}/build/Debug"  // Adjust if your build folder is different
             },
             "group": "test",
             "dependsOn": ["CMake Task: Clean", "CMake Task: Build"],

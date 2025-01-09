@@ -1,18 +1,16 @@
 #pragma once
 
 #include "raylib-cpp.hpp"
+#include "enums.hpp"
+#include "colors.hpp"
 #include <string>
+#include <array>
 #include <list>
 
 namespace Consts
 {
     const std::string GAME_NAME = "Worm";
     const std::string GAME_OVER_TEXT = "GAME OVER!";
-    const std::string TRANSFORM = "Transform";
-    const std::string MOVEABLE = "Moveable";
-    const std::string COLLIDER = "Collider";
-    const std::string CIRCLE_COLLIDER = "Circle_Collider";
-    const std::string RECT_COLLIDER = "Rect_Collider";
 
     // const int EASY_FPS_TARGET = 10;
     // const int MEDIUM_FPS_TARGET = 20;
@@ -21,6 +19,8 @@ namespace Consts
     const int SCREEN_WIDTH = 800;
     const int SCREEN_HEIGHT = 800;
     const int GAME_OVER_FONT_SIZE = 50;
+    const int TITLE_FONT_SIZE = 80;
+    const int BUTTONS_FONT_SIZE = 36;
     const int NUM_OF_SCENES = 1; // 2
 
     const float PLAYER_SPEED = 23.0f;
@@ -30,9 +30,7 @@ namespace Consts
     const float PLAYER_BODY_RADIUS = 10.0f;
     const float FOOD_SPAWN_MARGIN = 50.0f;
 
-    const raylib::Image ICON_IMAGE = raylib::Image("C:/Projects/Worm/assets/worm.png");  
-    const raylib::Vector2 ZERO_2D = { 0.0f, 0.0f };
-    const raylib::Vector2 HALF_SCREEN = { SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f };
+    const raylib::Vector2 HALF_SCREEN(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f);
     const std::list<raylib::Vector2> INITIAL_PLAYER_BODY = { HALF_SCREEN, HALF_SCREEN, HALF_SCREEN };
     const std::vector<raylib::Rectangle> BORDERS = {
         { -1.0f, -1.0f, 10.0f, SCREEN_HEIGHT + 1.0f },
@@ -41,5 +39,82 @@ namespace Consts
         { SCREEN_WIDTH - 10.0f, -1.0f, 10.0f, SCREEN_HEIGHT + 1.0f }
     };
 
+    const raylib::Rectangle PLAY_BUTTON_RECT(300, 650, 200, 60);
+    const raylib::Rectangle EXIT_BUTTON_RECT(300, 720, 200, 60);
+    const raylib::Rectangle EASY_BUTTON_RECT(50, 350, 150, 70);
+    const raylib::Rectangle MEDIUM_BUTTON_RECT(225, 350, 150, 70);
+    const raylib::Rectangle HARD_BUTTON_RECT(400, 350, 150, 70);
+    const raylib::Rectangle IMPOSSIBLE_BUTTON_RECT(575, 350, 150, 70);
+
+    //  0  ,  1  ,  2  ,   3   ,  4  ,     5
+    // Play, Exit, Easy, Medium, Hard, Impossible
+    const std::array<const std::string, 6> HOME_BUTTONS_TEXTS = {  
+        "Play",
+        "Exit",
+        "Easy",
+        "Medium",
+        "Hard",
+        "Impossible" };
+
+    //  0  ,  1  ,  2  ,   3   ,  4  ,     5
+    // Play, Exit, Easy, Medium, Hard, Impossible
+    const std::array<const raylib::Rectangle, 6> HOME_BUTTONS_RECTS = {
+        Consts::PLAY_BUTTON_RECT,
+        Consts::EXIT_BUTTON_RECT,
+        Consts::EASY_BUTTON_RECT,
+        Consts::MEDIUM_BUTTON_RECT,
+        Consts::HARD_BUTTON_RECT,
+        Consts::IMPOSSIBLE_BUTTON_RECT };
+
+    //  0  ,  1  ,  2  ,   3   ,  4  ,     5
+    // Play, Exit, Easy, Medium, Hard, Impossible   
+    const std::array<Enums::HomeButton, 6> HOME_BUTTONS_IDS = {
+        Enums::HomeButton::Play,
+        Enums::HomeButton::Exit,
+        Enums::HomeButton::Easy,
+        Enums::HomeButton::Medium,
+        Enums::HomeButton::Hard,
+        Enums::HomeButton::Impossible };
+
+    //  0  ,  1  ,  2  ,   3   ,  4  ,     5
+    // Play, Exit, Easy, Medium, Hard, Impossible
+    const std::array<raylib::Color, 6> HOME_BUTTONS_BASE_COLORS = {
+        Colors::BUTTON_BASE_COLOR,
+        Colors::BUTTON_BASE_COLOR,
+        Colors::EASY_BASE_COLOR,
+        Colors::MEDIUM_BASE_COLOR,
+        Colors::HARD_BASE_COLOR,
+        Colors::IMPOSSIBLE_BASE_COLOR };
+
+    //  0  ,  1  ,  2  ,   3   ,  4  ,     5
+    // Play, Exit, Easy, Medium, Hard, Impossible
+    const std::array<raylib::Color, 6> HOME_BUTTONS_HOVER_COLORS = {
+        Colors::BUTTON_HOVER_COLOR,
+        Colors::BUTTON_HOVER_COLOR,
+        Colors::EASY_HOVER_COLOR,
+        Colors::MEDIUM_HOVER_COLOR,
+        Colors::HARD_HOVER_COLOR,
+        Colors::IMPOSSIBLE_HOVER_COLOR };
+
+    //  0  ,  1  ,  2  ,   3   ,  4  ,     5
+    // Play, Exit, Easy, Medium, Hard, Impossible
+    const std::array<raylib::Color, 6> HOME_BUTTONS_CLICKED_COLORS = {
+        Colors::BUTTON_CLICKED_COLOR,
+        Colors::BUTTON_CLICKED_COLOR,
+        Colors::EASY_CLICKED_COLOR,
+        Colors::MEDIUM_CLICKED_COLOR,
+        Colors::HARD_CLICKED_COLOR,
+        Colors::IMPOSSIBLE_CLICKED_COLOR };
+
+    //  0  ,   1   ,  2  ,     3
+    // Easy, Medium, Hard, Impossible
+    const std::array<Enums::Difficulty, 4> DIFFICULTIES_ARRAY = {
+        Enums::Difficulty::Easy,
+        Enums::Difficulty::Medium,
+        Enums::Difficulty::Hard,
+        Enums::Difficulty::Impossible
+    };
+
+    const raylib::Image ICON_IMAGE("C:/Projects/Worm/assets/worm.png");  
     const raylib::Font FONT("C:/Projects/Worm/assets/fonts/joystix_monospace.otf");
 } // namespace Consts

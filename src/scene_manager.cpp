@@ -1,4 +1,11 @@
 #include "scene_manager.hpp"
+#include "scene.hpp"
+#include "raylib-cpp.hpp"
+#include <string>
+#include "auxiliary/enums.hpp"
+#include <algorithm>
+#include <iostream>
+#include <exception>
 
 SceneManager::SceneManager(std::initializer_list<Scene*> scenes) : 
     m_window(Consts::SCREEN_WIDTH, Consts::SCREEN_HEIGHT, Consts::GAME_NAME),
@@ -25,7 +32,10 @@ SceneManager::~SceneManager() { }
 
 void SceneManager::setSceneActive(Enums::SceneName sceneName, bool active)
 {
-    m_activeScenes.set(static_cast<int>(sceneName), active);
+    int scene = static_cast<int>(sceneName);
+    if(scene < 0 || m_scenes.size() <= scene) 
+        throw std::exception("ERROR: Trying to reach invalid Scene!");
+    m_activeScenes.set(scene, active);
 }
 
 void SceneManager::update()
@@ -63,23 +73,30 @@ void SceneManager::renderUI()
 
 int SceneManager::gameLoop()
 {
-    while(!m_window.ShouldClose())
+    try
     {
-        this->update();
-
-        m_window.BeginDrawing();
+        while(!m_window.ShouldClose())
         {
-            m_window.ClearBackground(WHITE);
-            m_camera.BeginMode();
+            this->update();
+
+            m_window.BeginDrawing();
             {
-                this->render();
-            }
-            m_camera.EndMode();
+                m_window.ClearBackground(WHITE);
+                m_camera.BeginMode();
+                {
+                    this->render();
+                }
+                m_camera.EndMode();
 
-            this->renderUI();
-        }   
-        m_window.EndDrawing();
+                this->renderUI();
+            }   
+            m_window.EndDrawing();
+        }
     }
-
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+    
     return 0; // Success
 }

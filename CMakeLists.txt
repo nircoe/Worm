@@ -3,6 +3,10 @@ project(Worm) # My Project Name
 
 set_property(GLOBAL PROPERTY PROJECT_NAME "Worm")
 
+# Set compiler flags - treat warnings as errors
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W3 /WX")
+
+
 # raylib
 find_package(raylib QUIET)
 if (NOT raylib_FOUND)

@@ -15,4 +15,23 @@ namespace Enums
         Home_Scene = 0,
         Game_Scene = 1
     };
+
+    enum class HomeButton
+    {
+        None,
+        Play,
+        Exit,
+        Easy,
+        Medium,
+        Hard,
+        Impossible
+    };
+
+    enum class GameButton
+    {
+        None,
+        Home_Screen,
+        Play_Again,
+        Exit
+    };
 }

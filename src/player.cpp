@@ -19,6 +19,31 @@ void Player::render() const
     }
 }
 
+void Player::updatePlayerBody(bool checkInnerCollisions)
+{
+    raylib::Vector2 velocity = m_moveable.getVelocity();
+    if(velocity != raylib::Vector2::Zero())
+    {
+        raylib::Vector2 temp = velocity;
+        if(checkInnerCollisions && CheckCollisionCircles(this->fixGettingOffScreen(m_playerBody.front() + velocity), 
+                                    Consts::PLAYER_HEAD_RADIUS, *(++m_playerBody.begin()), Consts::PLAYER_BODY_RADIUS))
+        {
+            velocity *= Consts::DIAGONAL_MULTIPLY;
+        }
+        m_playerBody.pop_back();
+        m_playerBody.push_front(this->fixGettingOffScreen(m_playerBody.front() + velocity));
+
+        if(this->m_beginningFrames < 3)
+            if(++(this->m_beginningFrames) == 3)
+                this->m_isBeginning = false;
+    }
+}
+
+void Player::updateForHomeScene()
+{
+    updatePlayerBody(false);
+}
+
 void Player::update() 
 {    
     if(!this->isActive()) return;
@@ -36,22 +61,6 @@ void Player::update()
         velocity = prevVelocity;
 
     // update the player body positions
-    if(velocity != raylib::Vector2::Zero())
-    {
-        raylib::Vector2 temp = velocity;
-        if(CheckCollisionCircles(this->fixGettingOffScreen(m_playerBody.front() + velocity), 
-                                    Consts::PLAYER_HEAD_RADIUS, *(++m_playerBody.begin()), Consts::PLAYER_BODY_RADIUS))
-        {
-            velocity *= Consts::DIAGONAL_MULTIPLY;
-        }
-        m_playerBody.pop_back();
-        m_playerBody.push_front(this->fixGettingOffScreen(m_playerBody.front() + velocity));
-
-        if(this->m_beginningFrames < 3)
-            if(++(this->m_beginningFrames) == 3)
-                this->m_isBeginning = false;
-    }
-
     m_moveable.setVelocity(velocity);
 
     if(this->checkBodyToBodyCollision() || this->checkBodyToBorderCollision())
@@ -71,7 +80,7 @@ const raylib::Vector2 Player::getHeadPosition() const
     return this->getPlayerBody().front();
 }
 
-const int Player::getScore() const
+const std::size_t Player::getScore() const
 {
     return this->getPlayerBody().size() - 3;
 }

@@ -62,4 +62,46 @@ namespace Utils
         DrawText(TextFormat("X: %f", playerPos.x), fpsPos.first, fpsPos.second + 100, 20, BLACK);
         DrawText(TextFormat("Y: %f", playerPos.y), fpsPos.first, fpsPos.second + 130, 20, BLACK);
     }
+
+    // Gives you the position (Vector2) for your text so it will be Centered in specific area for Font
+    inline raylib::Vector2 centralizeTextEx(Font font, const char *text, float fontSize, 
+                                            const raylib::Vector2& anchorPosition, const raylib::Vector2& areaSize, float spacing = 0)
+    {
+        raylib::Vector2 textPosition = { 0 };
+        raylib::Vector2 textSize = MeasureTextEx(font, text, fontSize, spacing);
+
+        textPosition.x = anchorPosition.x + ((areaSize.x - textSize.x) / 2.0f);
+        textPosition.y = anchorPosition.y + ((areaSize.y - textSize.y) / 2.0f);
+
+        return textPosition;
+    }
+
+    // Gives you the position (Vector2) for your text so it will be Centered in specific area for default font
+    inline raylib::Vector2 centralizeText(const char *text, int fontSize, 
+                                            const raylib::Vector2& anchorPosition, const raylib::Vector2& areaSize)
+    {
+        raylib::Vector2 textPosition = { 0.0f, 0.0f };
+
+        // Check if default font has been loaded
+        if (GetFontDefault().texture.id != 0)
+        {
+            int defaultFontSize = 10;   // Default Font chars height in pixel
+            if (fontSize < defaultFontSize) fontSize = defaultFontSize;
+            int spacing = fontSize/defaultFontSize;
+
+            textPosition = centralizeTextEx(GetFontDefault(), text, (float)fontSize, anchorPosition, areaSize, (float)spacing);
+        }
+
+        return textPosition;
+    }
+
+    inline void drawButton(const raylib::Font& font, const raylib::Rectangle& rect, 
+                            const std::string& text, const raylib::Color& buttonColor, 
+                            float fontSize, const raylib::Color& textColor, float spacing = 0) 
+    {
+        DrawRectangleRec(rect, buttonColor);
+        raylib::Vector2 textPosition = centralizeTextEx(font, text.c_str(), fontSize, 
+                                        { rect.x, rect.y }, { rect.width, rect.height }, spacing);
+        raylib::DrawTextEx(font, text.c_str(), textPosition, fontSize, spacing, textColor);
+    }
 } // namespace Utils

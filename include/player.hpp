@@ -23,6 +23,7 @@ class Player : public GameObject
     const bool checkBodyToBodyCollision() const;
     const bool checkBodyToBorderCollision() const;
     raylib::Vector2 fixGettingOffScreen(raylib::Vector2 pos) const;
+    void updatePlayerBody(bool checkInnerCollisions = true);
 
 public:
     Player() = default;
@@ -35,11 +36,13 @@ public:
 
     virtual void render() const override;
 
+    void updateForHomeScene();
+
     const bool checkFoodCollision(Food& food) const;
 
     const raylib::Vector2 getHeadPosition() const;
 
-    const int getScore() const;
+    const std::size_t getScore() const;
 
     void handleFoodCollision();
 

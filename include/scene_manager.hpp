@@ -1,14 +1,14 @@
 #pragma once
-#include "raylib-cpp.hpp"
+
 #include <array>
 #include <bitset>
 #include <initializer_list>
-#include <string>
-#include "scene.hpp"
-#include "home_scene.hpp"
-#include "game_scene.hpp"
-#include "auxiliary/consts.hpp"
 #include "auxiliary/enums.hpp"
+#include "auxiliary/consts.hpp"
+
+class Scene;
+
+namespace raylib { class Window; class Camera2D; }
 
 class SceneManager 
 {
