@@ -97,7 +97,7 @@ namespace Utils
 
     inline void drawButton(const raylib::Font& font, const raylib::Rectangle& rect, 
                             const std::string& text, const raylib::Color& buttonColor, 
-                            float fontSize, const raylib::Color& textColor, float spacing = 0) 
+                            float fontSize, const raylib::Color& textColor, float spacing = 1) 
     {
         DrawRectangleRec(rect, buttonColor);
         raylib::Vector2 textPosition = centralizeTextEx(font, text.c_str(), fontSize, 

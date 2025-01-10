@@ -17,12 +17,20 @@ class SceneManager
     raylib::Camera2D m_camera;
     std::array<Scene*, Consts::NUM_OF_SCENES> m_scenes;
     std::bitset<Consts::NUM_OF_SCENES> m_activeScenes;
+    raylib::Font m_font;
+    raylib::Image m_iconImage;
+    bool m_shouldClose = false;
+
+    void setSceneActive(Enums::SceneName sceneName, bool active = true);
 
 public:
     SceneManager(std::initializer_list<Scene*> scenes);
-    ~SceneManager();
+    ~SceneManager() = default;
     
-    void setSceneActive(Enums::SceneName sceneName, bool active = true);
+    void activateScene(Enums::SceneName sceneName);
+    void deactivateScene(Enums::SceneName sceneName);
+    void closeGame();
+    void changeDifficulty(Enums::Difficulty newDifficulty);
 
     void update();
     void render();

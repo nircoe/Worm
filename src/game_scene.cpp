@@ -45,10 +45,10 @@ void GameScene::render()
     }
 }
 
-void GameScene::renderUI()
+void GameScene::renderUI(const raylib::Font& font)
 {
     if(m_gameOver) 
-        this->gameOver();
+        gameOver(font);
 }
 
 const raylib::Vector2 GameScene::getPlayerHeadPosition() const
@@ -59,6 +59,7 @@ const raylib::Vector2 GameScene::getPlayerHeadPosition() const
 void GameScene::changeDifficulty(Enums::Difficulty newDifficulty)
 {
     m_difficulty = newDifficulty;
+    m_player.changeDifficulty(newDifficulty);
 }
 
 const Enums::Difficulty GameScene::getDifficulty() const
@@ -66,7 +67,7 @@ const Enums::Difficulty GameScene::getDifficulty() const
     return m_difficulty;
 }
 
-void GameScene::gameOver() const
+void GameScene::gameOver(const raylib::Font& font) const
 {
     // Draw text "GAME OVER!"
     float textHeight = Consts::SCREEN_HEIGHT;

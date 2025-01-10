@@ -22,10 +22,10 @@ namespace Colors
     const raylib::Color HARD_HOVER_COLOR(230, 100, 70);    // Brighter, more saturated red-orange
     const raylib::Color HARD_CLICKED_COLOR(150, 50, 30);     // Darker, more maroonish red
 
-    // Impossible Button (Black/Dark Purple - Extremely difficult)
-    const raylib::Color IMPOSSIBLE_BASE_COLOR(30, 20, 40);    // Very dark purple, almost black
-    const raylib::Color IMPOSSIBLE_HOVER_COLOR(50, 40, 60);   // Slightly lighter, more visible dark purple
-    const raylib::Color IMPOSSIBLE_CLICKED_COLOR(10, 0, 20);    // Even darker, almost imperceptible shift towards black
+    // Impossible Button (Deep Purple/Electric Purple - Extremely difficult)
+    const raylib::Color IMPOSSIBLE_BASE_COLOR(40, 20, 70);       // Deep purple
+    const raylib::Color IMPOSSIBLE_HOVER_COLOR(70, 40, 120);     // Electric purple (more blue and brighter)
+    const raylib::Color IMPOSSIBLE_CLICKED_COLOR(20, 10, 35);      // Darker, almost black purple with a red undertone
 
     // Play/Exit Buttons (Orange/Brown - Warm/Friendly)
     const raylib::Color BUTTON_BASE_COLOR(210, 180, 140); // Light Brownish Orange

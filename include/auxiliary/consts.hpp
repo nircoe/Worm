@@ -11,6 +11,8 @@ namespace Consts
 {
     const std::string GAME_NAME = "Worm";
     const std::string GAME_OVER_TEXT = "GAME OVER!";
+    const std::string FONT_PATH = "C:/Projects/Worm/assets/fonts/joystix_monospace.otf";
+    const std::string ICON_IMAGE_PATH = "C:/Projects/Worm/assets/worm.png";
 
     // const int EASY_FPS_TARGET = 10;
     // const int MEDIUM_FPS_TARGET = 20;
@@ -20,8 +22,8 @@ namespace Consts
     const int SCREEN_HEIGHT = 800;
     const int GAME_OVER_FONT_SIZE = 50;
     const int TITLE_FONT_SIZE = 80;
-    const int BUTTONS_FONT_SIZE = 36;
-    const int NUM_OF_SCENES = 1; // 2
+    const int BUTTONS_FONT_SIZE = 20;
+    const int NUM_OF_SCENES = 2; // 2
 
     const float PLAYER_SPEED = 23.0f;
     const float DIAGONAL_MULTIPLY = 1.352f;
@@ -39,12 +41,12 @@ namespace Consts
         { SCREEN_WIDTH - 10.0f, -1.0f, 10.0f, SCREEN_HEIGHT + 1.0f }
     };
 
-    const raylib::Rectangle PLAY_BUTTON_RECT(300, 650, 200, 60);
-    const raylib::Rectangle EXIT_BUTTON_RECT(300, 720, 200, 60);
-    const raylib::Rectangle EASY_BUTTON_RECT(50, 350, 150, 70);
-    const raylib::Rectangle MEDIUM_BUTTON_RECT(225, 350, 150, 70);
-    const raylib::Rectangle HARD_BUTTON_RECT(400, 350, 150, 70);
-    const raylib::Rectangle IMPOSSIBLE_BUTTON_RECT(575, 350, 150, 70);
+    const raylib::Rectangle PLAY_BUTTON_RECT(300, 450, 200, 60);
+    const raylib::Rectangle EXIT_BUTTON_RECT(300, 520, 200, 60);
+    const raylib::Rectangle EASY_BUTTON_RECT(60, 250, 150, 70);
+    const raylib::Rectangle MEDIUM_BUTTON_RECT(230, 250, 150, 70);
+    const raylib::Rectangle HARD_BUTTON_RECT(395, 250, 150, 70);
+    const raylib::Rectangle IMPOSSIBLE_BUTTON_RECT(565, 250, 150, 70);
 
     //  0  ,  1  ,  2  ,   3   ,  4  ,     5
     // Play, Exit, Easy, Medium, Hard, Impossible
@@ -115,6 +117,4 @@ namespace Consts
         Enums::Difficulty::Impossible
     };
 
-    const raylib::Image ICON_IMAGE("C:/Projects/Worm/assets/worm.png");  
-    const raylib::Font FONT("C:/Projects/Worm/assets/fonts/joystix_monospace.otf");
 } // namespace Consts

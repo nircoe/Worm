@@ -24,7 +24,7 @@ class GameScene : public Scene
     
     const int GAME_OVER_TEXT_WIDTH = Utils::centerlizeTextX(Consts::GAME_OVER_TEXT.c_str(), Consts::GAME_OVER_FONT_SIZE);
 
-    void gameOver() const;
+    void gameOver(const raylib::Font& font) const;
 
 public:
     GameScene() = default;
@@ -35,7 +35,7 @@ public:
     
     void update(SceneManager& sceneManager) override;
     void render() override;
-    void renderUI() override;
+    void renderUI(const raylib::Font& font) override;
 
     const raylib::Vector2 getPlayerHeadPosition() const;
 

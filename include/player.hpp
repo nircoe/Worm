@@ -36,6 +36,8 @@ public:
 
     virtual void render() const override;
 
+    void initForHomeScene();
+
     void updateForHomeScene();
 
     const bool checkFoodCollision(Food& food) const;
@@ -45,6 +47,8 @@ public:
     const std::size_t getScore() const;
 
     void handleFoodCollision();
+
+    void changeDifficulty(Enums::Difficulty newDifficulty);
 
     const std::list<raylib::Vector2> getPlayerBody() const;
 };

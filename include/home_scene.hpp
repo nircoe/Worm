@@ -19,9 +19,7 @@ class HomeScene : public Scene
     const std::size_t m_arraysSize = 6;
     std::array<raylib::Color, 6> m_buttonsColors;
 
-    raylib::Vector2 m_titlePosition = Utils::centralizeTextEx(Consts::FONT, m_titleText.c_str(), 
-                                            Consts::TITLE_FONT_SIZE, raylib::Vector2::Zero(), 
-                                            { Consts::SCREEN_WIDTH, 200.0f});
+    raylib::Vector2 m_titlePosition;
 
     Enums::Difficulty m_difficulty = Enums::Difficulty::Medium;
     Enums::HomeButton m_currentClickedButton = Enums::HomeButton::None;
@@ -44,5 +42,9 @@ public:
 
     void update(SceneManager& sceneManager) override;
     void render() override;
-    void renderUI() override;
+    void renderUI(const raylib::Font& font) override;
+
+    Enums::Difficulty getDifficulty() const;
+
+    void calculateTitlePosition(const raylib::Font& font);
 };

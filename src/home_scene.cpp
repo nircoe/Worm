@@ -1,11 +1,16 @@
 #include "home_scene.hpp"
 #include "scene_manager.hpp"
 
-HomeScene::HomeScene() : m_player(raylib::Vector2::Zero(), Consts::PLAYER_SPEED, m_difficulty) 
+HomeScene::HomeScene() : 
+    m_player(raylib::Vector2::Zero(), 
+    Consts::PLAYER_SPEED, 
+    m_difficulty) 
 { 
     //  0  ,  1  ,  2  ,    3   ,  4  ,     5
     // Play, Exit, Easy, Medium, Hard, Impossible
     resetButtonsColor();
+
+    m_player.initForHomeScene();
 }
 
 void HomeScene::update(SceneManager& sceneManager)
@@ -22,19 +27,33 @@ void HomeScene::render()
     m_player.render();
 }
 
-void HomeScene::renderUI()
+void HomeScene::renderUI(const raylib::Font& font)
 {
-    DrawTextEx(Consts::FONT, m_titleText, m_titlePosition, Consts::TITLE_FONT_SIZE, 0, BLACK);
+    DrawTextEx(font, m_titleText, m_titlePosition, Consts::TITLE_FONT_SIZE, 1, BLACK);
     for(std::size_t i = 0; i < m_arraysSize; ++i)
     {
-        Utils::drawButton(Consts::FONT, Consts::HOME_BUTTONS_RECTS[i], Consts::HOME_BUTTONS_TEXTS[i], m_buttonsColors[i], Consts::BUTTONS_FONT_SIZE, WHITE);
+        Utils::drawButton(font, Consts::HOME_BUTTONS_RECTS[i], Consts::HOME_BUTTONS_TEXTS[i], 
+            m_buttonsColors[i], Consts::BUTTONS_FONT_SIZE, WHITE);
     }
+}
+
+Enums::Difficulty HomeScene::getDifficulty() const
+{
+    return m_difficulty;
+}
+
+void HomeScene::calculateTitlePosition(const raylib::Font &font)
+{
+    m_titlePosition = Utils::centralizeTextEx(font, m_titleText.c_str(), 
+                                            Consts::TITLE_FONT_SIZE, raylib::Vector2::Zero(), 
+                                            { Consts::SCREEN_WIDTH, 200.0f});
 }
 
 void HomeScene::resetButtonsColor()
 {
     m_buttonsColors = Consts::HOME_BUTTONS_BASE_COLORS;
     resetDifficultyButtonsColor();
+    
 }
 
 void HomeScene::resetDifficultyButtonsColor()
@@ -72,18 +91,30 @@ raylib::Color HomeScene::checkButton(SceneManager& sceneManager, const raylib::C
     {
         if(button == Enums::HomeButton::Play)
         {
-            sceneManager.setSceneActive(Enums::SceneName::Game_Scene);
-
+            sceneManager.activateScene(Enums::SceneName::Game_Scene);
+            sceneManager.deactivateScene(Enums::SceneName::Home_Scene);
         }
-        if(button != Enums::HomeButton::Play && button != Enums::HomeButton::Exit) 
+        else if(button == Enums::HomeButton::Exit)
+            sceneManager.closeGame();
+        else if(button != Enums::HomeButton::Play && button != Enums::HomeButton::Exit) 
+        {
             checkDifficultyButton();
+            sceneManager.changeDifficulty(m_difficulty);
+        }
         
         m_currentClickedButton = Enums::HomeButton::None;
         return clickedColor;
     } 
+    if(IsMouseButtonDown(MOUSE_BUTTON_LEFT) && m_currentClickedButton == button)
+    {
+        return clickedColor;
+    }
 
     if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+    {
         m_currentClickedButton = button;
+    }
+        
 
     return hoverColor;
 }

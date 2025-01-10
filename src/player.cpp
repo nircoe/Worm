@@ -19,6 +19,11 @@ void Player::render() const
     }
 }
 
+void Player::initForHomeScene()
+{
+    m_moveable.setVelocity({ Consts::PLAYER_SPEED, 0.0f});
+}
+
 void Player::updatePlayerBody(bool checkInnerCollisions)
 {
     raylib::Vector2 velocity = m_moveable.getVelocity();
@@ -63,6 +68,8 @@ void Player::update()
     // update the player body positions
     m_moveable.setVelocity(velocity);
 
+    updatePlayerBody();
+
     if(this->checkBodyToBodyCollision() || this->checkBodyToBorderCollision())
         this->setActive(false);
 }
@@ -88,6 +95,11 @@ const std::size_t Player::getScore() const
 void Player::handleFoodCollision()
 {
     this->m_playerBody.push_back(raylib::Vector2::Zero());
+}
+
+void Player::changeDifficulty(Enums::Difficulty newDifficulty)
+{
+    m_difficulty = newDifficulty;
 }
 
 const std::list<raylib::Vector2> Player::getPlayerBody() const
