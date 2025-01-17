@@ -2,7 +2,7 @@
 
 #include "scene.hpp"
 #include "raylib-cpp.hpp"
-#include "player.hpp"
+#include "home_scene_player.hpp"
 #include "auxiliary/consts.hpp"
 #include "auxiliary/utils.hpp"
 #include "auxiliary/enums.hpp"
@@ -18,13 +18,14 @@ class HomeScene : public Scene
     // Play, Exit, Easy, Medium, Hard, Impossible
     const std::size_t m_arraysSize = 6;
     std::array<raylib::Color, 6> m_buttonsColors;
+    std::array<raylib::Vector2, 6> m_buttonsTextPosition;
 
     raylib::Vector2 m_titlePosition;
 
-    Enums::Difficulty m_difficulty = Enums::Difficulty::Medium;
+    Enums::Difficulty m_difficulty = Consts::STARTING_DIFFICULTY;
     Enums::HomeButton m_currentClickedButton = Enums::HomeButton::None;
     
-    Player m_player;
+    HomeScenePlayer m_player;
 
     void resetButtonsColor();
     void resetDifficultyButtonsColor();
@@ -46,5 +47,5 @@ public:
 
     Enums::Difficulty getDifficulty() const;
 
-    void calculateTitlePosition(const raylib::Font& font);
+    void calculateTextsPositions(const raylib::Font& font) override;
 };

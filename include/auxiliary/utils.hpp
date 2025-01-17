@@ -8,7 +8,7 @@
 
 namespace Utils
 {
-    inline const raylib::Vector2 getFoodSpawnPoint(const std::list<raylib::Vector2>& playerBody)
+    inline const raylib::Vector2 getFoodSpawnPoint(const std::deque<raylib::Vector2>& playerBody)
     {
         const float margin = Consts::FOOD_SPAWN_MARGIN;
         std::random_device rd;
@@ -65,13 +65,20 @@ namespace Utils
 
     // Gives you the position (Vector2) for your text so it will be Centered in specific area for Font
     inline raylib::Vector2 centralizeTextEx(Font font, const char *text, float fontSize, 
-                                            const raylib::Vector2& anchorPosition, const raylib::Vector2& areaSize, float spacing = 0)
+                                            const raylib::Vector2& anchorPosition, const raylib::Vector2& areaSize, float spacing = 1)
     {
         raylib::Vector2 textPosition = { 0 };
         raylib::Vector2 textSize = MeasureTextEx(font, text, fontSize, spacing);
 
-        textPosition.x = anchorPosition.x + ((areaSize.x - textSize.x) / 2.0f);
-        textPosition.y = anchorPosition.y + ((areaSize.y - textSize.y) / 2.0f);
+        textPosition = anchorPosition + ((areaSize - textSize) / 2.0f);
+
+        TraceLog(LOG_INFO, "Text: \"%s\"", text);
+        TraceLog(LOG_INFO, "FontSize: %f", fontSize);
+        TraceLog(LOG_INFO, "Spacing: %f", spacing);
+        TraceLog(LOG_INFO, "Anchor Position: %f, %f", anchorPosition.x, anchorPosition.y);
+        TraceLog(LOG_INFO, "Area Size: %f, %f", areaSize.x, areaSize.y);
+        TraceLog(LOG_INFO, "Text Size: %f, %f", textSize.x, textSize.y);
+        TraceLog(LOG_INFO, "Text Position: %f, %f", textPosition.x, textPosition.y);
 
         return textPosition;
     }
@@ -96,12 +103,11 @@ namespace Utils
     }
 
     inline void drawButton(const raylib::Font& font, const raylib::Rectangle& rect, 
-                            const std::string& text, const raylib::Color& buttonColor, 
-                            float fontSize, const raylib::Color& textColor, float spacing = 1) 
+                            const std::string& text, const raylib::Vector2& textPosition, 
+                            const raylib::Color& buttonColor, float fontSize, 
+                            const raylib::Color& textColor, float spacing = 1) 
     {
         DrawRectangleRec(rect, buttonColor);
-        raylib::Vector2 textPosition = centralizeTextEx(font, text.c_str(), fontSize, 
-                                        { rect.x, rect.y }, { rect.width, rect.height }, spacing);
         raylib::DrawTextEx(font, text.c_str(), textPosition, fontSize, spacing, textColor);
     }
 } // namespace Utils

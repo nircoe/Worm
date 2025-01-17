@@ -8,17 +8,18 @@
 #include "auxiliary/utils.hpp"
 #include "auxiliary/enums.hpp"
 #include "auxiliary/colors.hpp"
-#include <list>
+#include <deque>
 
 class Player : public GameObject 
 {
+protected:
     Moveable m_moveable; 
     Enums::Difficulty m_difficulty;
 
     int m_beginningFrames;
     bool m_isBeginning;
 
-    std::list<raylib::Vector2> m_playerBody; // each item is the center position of a circle
+    std::deque<raylib::Vector2> m_playerBody; // each item is the center position of a circle
 
     const bool checkBodyToBodyCollision() const;
     const bool checkBodyToBorderCollision() const;
@@ -26,7 +27,7 @@ class Player : public GameObject
     void updatePlayerBody(bool checkInnerCollisions = true);
 
 public:
-    Player() = default;
+    Player() = delete;
     
     Player(raylib::Vector2 initialPosition, const float speed, Enums::Difficulty difficulty);
 
@@ -35,10 +36,6 @@ public:
     virtual void update() override;
 
     virtual void render() const override;
-
-    void initForHomeScene();
-
-    void updateForHomeScene();
 
     const bool checkFoodCollision(Food& food) const;
 
@@ -50,5 +47,7 @@ public:
 
     void changeDifficulty(Enums::Difficulty newDifficulty);
 
-    const std::list<raylib::Vector2> getPlayerBody() const;
+    const std::deque<raylib::Vector2> getPlayerBody() const;
+
+    const bool isBeginning() const;
 };

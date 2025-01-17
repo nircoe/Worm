@@ -42,6 +42,7 @@ set(SOURCES
     src/game_object.cpp
     src/moveable.cpp
     src/player.cpp
+    src/home_scene_player.cpp
     src/food.cpp
     src/scene.cpp
     src/scene_manager.cpp

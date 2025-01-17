@@ -9,8 +9,10 @@
 
 int main() 
 {
+    SetTraceLogLevel(LOG_ALL);       // Show all logs
+
     HomeScene homeScene;
-    GameScene gameScene(Enums::Difficulty::Medium);
+    GameScene gameScene(Consts::STARTING_DIFFICULTY);
 
     SceneManager sceneManager({ &homeScene, &gameScene });
     //SceneManager sceneManager({ &homeScene });

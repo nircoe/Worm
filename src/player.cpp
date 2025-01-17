@@ -11,17 +11,12 @@ Player::Player(raylib::Vector2 initialPosition, const float speed, Enums::Diffic
 
 void Player::render() const
 {
-    for (auto it = m_playerBody.rbegin(); it != m_playerBody.rend(); ++it)
+    for (auto& it = m_playerBody.rbegin(); it != m_playerBody.rend(); ++it)
     {
         float radius = (m_playerBody.front().Equals(*it)) ? Consts::PLAYER_HEAD_RADIUS : Consts::PLAYER_BODY_RADIUS;
         Color color = (m_playerBody.front().Equals(*it)) ? Colors::WORM_HEAD_COLOR : Colors::WORM_BODY_COLOR;
         DrawCircleV(*it, radius, color);
     }
-}
-
-void Player::initForHomeScene()
-{
-    m_moveable.setVelocity({ Consts::PLAYER_SPEED, 0.0f});
 }
 
 void Player::updatePlayerBody(bool checkInnerCollisions)
@@ -31,22 +26,16 @@ void Player::updatePlayerBody(bool checkInnerCollisions)
     {
         raylib::Vector2 temp = velocity;
         if(checkInnerCollisions && CheckCollisionCircles(this->fixGettingOffScreen(m_playerBody.front() + velocity), 
-                                    Consts::PLAYER_HEAD_RADIUS, *(++m_playerBody.begin()), Consts::PLAYER_BODY_RADIUS))
+            Consts::PLAYER_HEAD_RADIUS, m_playerBody[1], Consts::PLAYER_BODY_RADIUS))
         {
             velocity *= Consts::DIAGONAL_MULTIPLY;
         }
         m_playerBody.pop_back();
         m_playerBody.push_front(this->fixGettingOffScreen(m_playerBody.front() + velocity));
 
-        if(this->m_beginningFrames < 3)
-            if(++(this->m_beginningFrames) == 3)
-                this->m_isBeginning = false;
+        if(++(this->m_beginningFrames) < 3)
+            this->m_isBeginning = false;
     }
-}
-
-void Player::updateForHomeScene()
-{
-    updatePlayerBody(false);
 }
 
 void Player::update() 
@@ -102,9 +91,14 @@ void Player::changeDifficulty(Enums::Difficulty newDifficulty)
     m_difficulty = newDifficulty;
 }
 
-const std::list<raylib::Vector2> Player::getPlayerBody() const
+const std::deque<raylib::Vector2> Player::getPlayerBody() const
 {
     return this->m_playerBody;
+}
+
+const bool Player::isBeginning() const
+{
+    return m_isBeginning;
 }
 
 const bool Player::checkBodyToBodyCollision() const
@@ -125,10 +119,15 @@ const bool Player::checkBodyToBorderCollision() const
     if(this->m_difficulty != Enums::Difficulty::Hard && 
         this->m_difficulty != Enums::Difficulty::Impossible) return false;
 
-    for (auto &&rec : Consts::BORDERS)
+    for(const auto& segment : m_playerBody)
     {
-        if(CheckCollisionCircleRec(this->m_playerBody.front(), Consts::PLAYER_HEAD_RADIUS, rec))
-            return true;
+        const auto& borders = m_difficulty == Enums::Difficulty::Impossible ? 
+            Consts::IMPOSSIBLE_BORDERS : Consts::BORDERS;
+        for (const auto& rec : borders)
+        {
+            if(CheckCollisionCircleRec(segment, Consts::PLAYER_HEAD_RADIUS, rec))
+                return true;
+        }
     }
     return false;
 }
@@ -139,21 +138,14 @@ raylib::Vector2 Player::fixGettingOffScreen(raylib::Vector2 pos) const
         this->m_difficulty == Enums::Difficulty::Impossible) return pos;
 
     if(pos.x < 0.0f)
-    {
         pos.x += Consts::SCREEN_WIDTH;
-    }
     else if(Consts::SCREEN_WIDTH < pos.x)
-    {
         pos.x -= Consts::SCREEN_WIDTH;
-    }
 
     if(pos.y < 0.0f)
-    {
         pos.y += Consts::SCREEN_HEIGHT;
-    }
     else if(Consts::SCREEN_HEIGHT < pos.y)
-    {
         pos.y -= Consts::SCREEN_HEIGHT;
-    }
+        
     return pos;
 }

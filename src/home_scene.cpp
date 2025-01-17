@@ -8,14 +8,13 @@ HomeScene::HomeScene() :
 { 
     //  0  ,  1  ,  2  ,    3   ,  4  ,     5
     // Play, Exit, Easy, Medium, Hard, Impossible
-    resetButtonsColor();
 
-    m_player.initForHomeScene();
+    resetButtonsColor();
 }
 
 void HomeScene::update(SceneManager& sceneManager)
 {
-    m_player.updateForHomeScene();
+    m_player.update();
 
     resetButtonsColor();
     raylib::Vector2 mousePosition = GetMousePosition();
@@ -33,7 +32,7 @@ void HomeScene::renderUI(const raylib::Font& font)
     for(std::size_t i = 0; i < m_arraysSize; ++i)
     {
         Utils::drawButton(font, Consts::HOME_BUTTONS_RECTS[i], Consts::HOME_BUTTONS_TEXTS[i], 
-            m_buttonsColors[i], Consts::BUTTONS_FONT_SIZE, WHITE);
+            m_buttonsTextPosition[i], m_buttonsColors[i], Consts::BUTTONS_FONT_SIZE, WHITE);
     }
 }
 
@@ -42,11 +41,18 @@ Enums::Difficulty HomeScene::getDifficulty() const
     return m_difficulty;
 }
 
-void HomeScene::calculateTitlePosition(const raylib::Font &font)
+void HomeScene::calculateTextsPositions(const raylib::Font &font)
 {
     m_titlePosition = Utils::centralizeTextEx(font, m_titleText.c_str(), 
                                             Consts::TITLE_FONT_SIZE, raylib::Vector2::Zero(), 
                                             { Consts::SCREEN_WIDTH, 200.0f});
+
+    for(std::size_t i = 0; i < 6; ++i)
+    {
+        auto& rect = Consts::HOME_BUTTONS_RECTS[i];
+        m_buttonsTextPosition[i] = Utils::centralizeTextEx(font, Consts::HOME_BUTTONS_TEXTS[i].c_str(), Consts::BUTTONS_FONT_SIZE, 
+                                        { rect.x, rect.y }, { rect.width, rect.height });
+    }
 }
 
 void HomeScene::resetButtonsColor()

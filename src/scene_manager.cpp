@@ -24,13 +24,14 @@ SceneManager::SceneManager(std::initializer_list<Scene*> scenes) :
         if(i >= Consts::NUM_OF_SCENES)
         {
             TraceLog(LOG_WARNING, "Too many scenes provided, will take only " + Consts::NUM_OF_SCENES);
+            fflush(stdout);
             break;
         }
         m_scenes[i] = scene;
+        m_scenes[i]->calculateTextsPositions(m_font);
         ++i;
     }
     m_activeScenes.set(0);
-    static_cast<HomeScene*>(m_scenes[0])->calculateTitlePosition(m_font);
 }
 
 void SceneManager::activateScene(Enums::SceneName sceneName)

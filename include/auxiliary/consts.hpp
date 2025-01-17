@@ -5,23 +5,20 @@
 #include "colors.hpp"
 #include <string>
 #include <array>
-#include <list>
+#include <deque>
 
 namespace Consts
 {
     const std::string GAME_NAME = "Worm";
-    const std::string GAME_OVER_TEXT = "GAME OVER!";
+    const std::string GAME_OVER_TEXT = "Game Over!";
     const std::string FONT_PATH = "C:/Projects/Worm/assets/fonts/joystix_monospace.otf";
     const std::string ICON_IMAGE_PATH = "C:/Projects/Worm/assets/worm.png";
 
-    // const int EASY_FPS_TARGET = 10;
-    // const int MEDIUM_FPS_TARGET = 20;
-    // const int HARD_FPS_TARGET = 30;
-    // const int IMPOSSIBLE_FPS_TARGET = 60;
     const int SCREEN_WIDTH = 800;
     const int SCREEN_HEIGHT = 800;
-    const int GAME_OVER_FONT_SIZE = 50;
+    const int GAME_OVER_FONT_SIZE = 40;
     const int TITLE_FONT_SIZE = 80;
+    const int START_GAME_FONT_SIZE = 24;
     const int BUTTONS_FONT_SIZE = 20;
     const int NUM_OF_SCENES = 2; // 2
 
@@ -31,14 +28,23 @@ namespace Consts
     const float PLAYER_HEAD_RADIUS = 12.0f;
     const float PLAYER_BODY_RADIUS = 10.0f;
     const float FOOD_SPAWN_MARGIN = 50.0f;
+    const float GAME_OVER_TO_SCORE_GAP = 30.0f;
 
     const raylib::Vector2 HALF_SCREEN(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f);
-    const std::list<raylib::Vector2> INITIAL_PLAYER_BODY = { HALF_SCREEN, HALF_SCREEN, HALF_SCREEN };
+    const raylib::Vector2 SCREEN_SIZE(SCREEN_WIDTH, SCREEN_HEIGHT);
+    const std::deque<raylib::Vector2> INITIAL_PLAYER_BODY = { HALF_SCREEN, HALF_SCREEN, HALF_SCREEN };
     const std::vector<raylib::Rectangle> BORDERS = {
         { -1.0f, -1.0f, 10.0f, SCREEN_HEIGHT + 1.0f },
         { -1.0f, -1.0f, SCREEN_WIDTH + 1.0f, 10.0f },
         { -1.0f, SCREEN_HEIGHT - 10.0f, SCREEN_WIDTH + 1.0f, 10.0f },
         { SCREEN_WIDTH - 10.0f, -1.0f, 10.0f, SCREEN_HEIGHT + 1.0f }
+    };
+
+    const std::vector<raylib::Rectangle> IMPOSSIBLE_BORDERS = {
+        { -1.0f, -1.0f, 30.0f, SCREEN_HEIGHT + 1.0f },
+        { -1.0f, -1.0f, SCREEN_WIDTH + 1.0f, 30.0f },
+        { -1.0f, SCREEN_HEIGHT - 30.0f, SCREEN_WIDTH + 1.0f, 30.0f },
+        { SCREEN_WIDTH - 30.0f, -1.0f, 30.0f, SCREEN_HEIGHT + 1.0f }
     };
 
     const raylib::Rectangle PLAY_BUTTON_RECT(300, 450, 200, 60);
@@ -83,10 +89,10 @@ namespace Consts
     const std::array<raylib::Color, 6> HOME_BUTTONS_BASE_COLORS = {
         Colors::BUTTON_BASE_COLOR,
         Colors::BUTTON_BASE_COLOR,
-        Colors::EASY_BASE_COLOR,
-        Colors::MEDIUM_BASE_COLOR,
-        Colors::HARD_BASE_COLOR,
-        Colors::IMPOSSIBLE_BASE_COLOR };
+        Colors::BUTTON_BASE_COLOR,
+        Colors::BUTTON_BASE_COLOR,
+        Colors::BUTTON_BASE_COLOR,
+        Colors::BUTTON_BASE_COLOR };
 
     //  0  ,  1  ,  2  ,   3   ,  4  ,     5
     // Play, Exit, Easy, Medium, Hard, Impossible
@@ -116,5 +122,7 @@ namespace Consts
         Enums::Difficulty::Hard,
         Enums::Difficulty::Impossible
     };
+
+    const Enums::Difficulty STARTING_DIFFICULTY = Enums::Difficulty::Easy;
 
 } // namespace Consts
