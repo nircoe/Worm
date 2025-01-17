@@ -3,6 +3,10 @@ project(Worm) # My Project Name
 
 set_property(GLOBAL PROPERTY PROJECT_NAME "Worm")
 
+# Set compiler flags - treat warnings as errors
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W3 /WX")
+
+
 # raylib
 find_package(raylib QUIET)
 if (NOT raylib_FOUND)
@@ -38,7 +42,11 @@ set(SOURCES
     src/game_object.cpp
     src/moveable.cpp
     src/player.cpp
+    src/home_scene_player.cpp
     src/food.cpp
+    src/scene.cpp
+    src/scene_manager.cpp
+    src/home_scene.cpp
     src/game_scene.cpp
     src/main.cpp
     # any other source file in the future

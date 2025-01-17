@@ -9,6 +9,8 @@
 class Food : public GameObject 
 {
 public:
+    Food() = default;
+    
     Food(raylib::Vector2 position);
     
     virtual ~Food() override = default;

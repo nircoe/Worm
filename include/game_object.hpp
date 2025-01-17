@@ -15,6 +15,7 @@ class GameObject
     bool m_isActive;
     
 public:
+    GameObject() = default;
     GameObject(raylib::Vector2 initialPosition);
     virtual ~GameObject() = default;
 
