@@ -30,9 +30,9 @@ class HomeScene : public Scene
     void resetButtonsColor();
     void resetDifficultyButtonsColor();
     void checkDifficultyButton();
-    raylib::Color checkButton(SceneManager& sceneManager, const raylib::Color &hoverColor, 
+    raylib::Color checkButton(GameManager& gameManager, const raylib::Color &hoverColor, 
         const raylib::Color& clickedColor, Enums::HomeButton button);
-    void checkButtons(SceneManager& sceneManager, const raylib::Vector2& mousePosition);
+    void checkButtons(GameManager& gameManager, const raylib::Vector2& mousePosition);
     const bool checkButtonHover(const raylib::Vector2& mousePosition, const raylib::Rectangle& rect);
     
 
@@ -41,7 +41,7 @@ public:
 
     ~HomeScene() = default;
 
-    void update(SceneManager& sceneManager) override;
+    void update(GameManager& gameManager) override;
     void render() override;
     void renderUI(const raylib::Font& font) override;
 

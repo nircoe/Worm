@@ -45,7 +45,7 @@ set(SOURCES
     src/home_scene_player.cpp
     src/food.cpp
     src/scene.cpp
-    src/scene_manager.cpp
+    src/game_manager.cpp
     src/home_scene.cpp
     src/game_scene.cpp
     src/main.cpp

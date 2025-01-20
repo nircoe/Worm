@@ -6,7 +6,7 @@ GameScene::GameScene(Enums::Difficulty difficulty) : m_player(raylib::Vector2(),
       m_isBeginning(true),
       m_gameOver(false) { }
 
-void GameScene::update(SceneManager& sceneManager) 
+void GameScene::update(GameManager& gameManager) 
 {
     if(!this->m_gameOver)
     {
@@ -56,7 +56,7 @@ void GameScene::render()
 void GameScene::renderUI(const raylib::Font& font)
 {
     if(m_isBeginning)
-        DrawTextEx(font, m_startText, m_startTextPosition, Consts::START_GAME_FONT_SIZE, 1, BLACK);
+        DrawTextEx(font, m_startText, m_startTextPosition, Consts::START_GAME_FONT_SIZE, 1, Colors::TEXT_COLOR);
     if(m_gameOver) 
         gameOver(font);
 }
@@ -70,7 +70,8 @@ void GameScene::changeDifficulty(Enums::Difficulty newDifficulty)
 {
     m_difficulty = newDifficulty;
     m_borders = (m_difficulty == Enums::Difficulty::Impossible) ? Consts::IMPOSSIBLE_BORDERS : Consts::BORDERS;
-    m_borderColor = (m_difficulty == Enums::Difficulty::Impossible) ? Colors::IMPOSSIBLE_HOVER_COLOR : Colors::HARD_HOVER_COLOR;
+    m_borderColor = Colors::BORDER_COLOR;
+    //m_borderColor = (m_difficulty == Enums::Difficulty::Impossible) ? Colors::IMPOSSIBLE_HOVER_COLOR : Colors::HARD_HOVER_COLOR;
     m_player.changeDifficulty(newDifficulty);
 }
 
@@ -105,10 +106,10 @@ void GameScene::gameOver(const raylib::Font &font) const
     float textHeight = Consts::SCREEN_HEIGHT;
     textHeight *= (m_player.getHeadPosition().y > Consts::HALF_SCREEN.y) ? 0.25f : 0.75f;
     raylib::DrawTextEx(font, Consts::GAME_OVER_TEXT.c_str(), const_cast<raylib::Vector2&>(m_gameOverTextPosition), 
-        Consts::GAME_OVER_FONT_SIZE, 1, BLACK);
+        Consts::GAME_OVER_FONT_SIZE, 1, Colors::TEXT_COLOR);
 
     raylib::DrawTextEx(font, m_scoreText.c_str(), const_cast<raylib::Vector2&>(m_scoreTextPosition), 
-        Consts::GAME_OVER_FONT_SIZE, 1, BLACK);
+        Consts::GAME_OVER_FONT_SIZE, 1, Colors::TEXT_COLOR);
 
     // TODO: add buttons
 }

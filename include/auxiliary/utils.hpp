@@ -42,10 +42,10 @@ namespace Utils
         return spawnPoint;
     }
 
-    inline const raylib::Vector2 getFoodSize()
-    {
-        return raylib::Vector2(Consts::FOOD_SIZE, Consts::FOOD_SIZE);
-    }
+    // inline const raylib::Vector2 getFoodSize()
+    // {
+    //     return raylib::Vector2(Consts::FOOD_SIZE, Consts::FOOD_SIZE);
+    // }
 
     inline const int centerlizeTextX(const char* text, const int fontSize) 
     {

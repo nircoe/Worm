@@ -2,7 +2,7 @@
 
 #include <vector>
 #include <string>
-#include "scene_manager.hpp"
+#include "game_manager.hpp"
 #include "scene.hpp"
 #include "game_object.hpp"
 #include "player.hpp"
@@ -45,7 +45,7 @@ public:
 
     ~GameScene() = default;
     
-    void update(SceneManager& sceneManager) override;
+    void update(GameManager& gameManager) override;
     void render() override;
     void renderUI(const raylib::Font& font) override;
 

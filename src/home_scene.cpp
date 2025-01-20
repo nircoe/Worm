@@ -1,5 +1,5 @@
 #include "home_scene.hpp"
-#include "scene_manager.hpp"
+#include "game_manager.hpp"
 
 HomeScene::HomeScene() : 
     m_player(raylib::Vector2::Zero(), 
@@ -12,13 +12,13 @@ HomeScene::HomeScene() :
     resetButtonsColor();
 }
 
-void HomeScene::update(SceneManager& sceneManager)
+void HomeScene::update(GameManager& gameManager)
 {
     m_player.update();
 
     resetButtonsColor();
     raylib::Vector2 mousePosition = GetMousePosition();
-    checkButtons(sceneManager, mousePosition);
+    checkButtons(gameManager, mousePosition);
 }
 
 void HomeScene::render()
@@ -28,7 +28,7 @@ void HomeScene::render()
 
 void HomeScene::renderUI(const raylib::Font& font)
 {
-    DrawTextEx(font, m_titleText, m_titlePosition, Consts::TITLE_FONT_SIZE, 1, BLACK);
+    DrawTextEx(font, m_titleText, m_titlePosition, Consts::TITLE_FONT_SIZE, 1, Colors::TEXT_COLOR);
     for(std::size_t i = 0; i < m_arraysSize; ++i)
     {
         Utils::drawButton(font, Consts::HOME_BUTTONS_RECTS[i], Consts::HOME_BUTTONS_TEXTS[i], 
@@ -45,7 +45,7 @@ void HomeScene::calculateTextsPositions(const raylib::Font &font)
 {
     m_titlePosition = Utils::centralizeTextEx(font, m_titleText.c_str(), 
                                             Consts::TITLE_FONT_SIZE, raylib::Vector2::Zero(), 
-                                            { Consts::SCREEN_WIDTH, 200.0f});
+                                            { Consts::SCREEN_WIDTH, 300.0f});
 
     for(std::size_t i = 0; i < 6; ++i)
     {
@@ -90,22 +90,22 @@ void HomeScene::checkDifficultyButton()
     }
 }
 
-raylib::Color HomeScene::checkButton(SceneManager& sceneManager, const raylib::Color &hoverColor, 
+raylib::Color HomeScene::checkButton(GameManager& gameManager, const raylib::Color &hoverColor, 
     const raylib::Color& clickedColor, Enums::HomeButton button)
 {
     if(IsMouseButtonReleased(MOUSE_BUTTON_LEFT) && m_currentClickedButton == button)
     {
         if(button == Enums::HomeButton::Play)
         {
-            sceneManager.activateScene(Enums::SceneName::Game_Scene);
-            sceneManager.deactivateScene(Enums::SceneName::Home_Scene);
+            gameManager.activateScene(Enums::SceneName::Game_Scene);
+            gameManager.deactivateScene(Enums::SceneName::Home_Scene);
         }
         else if(button == Enums::HomeButton::Exit)
-            sceneManager.closeGame();
+            gameManager.closeGame();
         else if(button != Enums::HomeButton::Play && button != Enums::HomeButton::Exit) 
         {
             checkDifficultyButton();
-            sceneManager.changeDifficulty(m_difficulty);
+            gameManager.changeDifficulty(m_difficulty);
         }
         
         m_currentClickedButton = Enums::HomeButton::None;
@@ -125,13 +125,13 @@ raylib::Color HomeScene::checkButton(SceneManager& sceneManager, const raylib::C
     return hoverColor;
 }
 
-void HomeScene::checkButtons(SceneManager& sceneManager, const raylib::Vector2& mousePosition)
+void HomeScene::checkButtons(GameManager& gameManager, const raylib::Vector2& mousePosition)
 {
     for(std::size_t i = 0; i < m_arraysSize; ++i)
     {
         if(checkButtonHover(mousePosition, Consts::HOME_BUTTONS_RECTS[i]))
         {
-            m_buttonsColors[i] = checkButton(sceneManager, Consts::HOME_BUTTONS_HOVER_COLORS[i], 
+            m_buttonsColors[i] = checkButton(gameManager, Consts::HOME_BUTTONS_HOVER_COLORS[i], 
                                                 Consts::HOME_BUTTONS_CLICKED_COLORS[i], 
                                                 Consts::HOME_BUTTONS_IDS[i]);
             return;
