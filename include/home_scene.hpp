@@ -6,6 +6,7 @@
 #include "auxiliary/consts.hpp"
 #include "auxiliary/utils.hpp"
 #include "auxiliary/enums.hpp"
+#include "ui/button.hpp"
 #include <string>
 
 namespace raylib { class Color; class Vector2; class Rectangle; }
@@ -16,9 +17,7 @@ class HomeScene : public Scene
 
     //  0  ,  1  ,  2  ,   3   ,  4  ,     5
     // Play, Exit, Easy, Medium, Hard, Impossible
-    const std::size_t m_arraysSize = 6;
-    std::array<raylib::Color, 6> m_buttonsColors;
-    std::array<raylib::Vector2, 6> m_buttonsTextPosition;
+    std::array<UI::Button, 6> m_buttons;
 
     raylib::Vector2 m_titlePosition;
 
@@ -29,23 +28,20 @@ class HomeScene : public Scene
 
     void resetButtonsColor();
     void resetDifficultyButtonsColor();
-    void checkDifficultyButton();
-    raylib::Color checkButton(SceneManager& sceneManager, const raylib::Color &hoverColor, 
-        const raylib::Color& clickedColor, Enums::HomeButton button);
-    void checkButtons(SceneManager& sceneManager, const raylib::Vector2& mousePosition);
-    const bool checkButtonHover(const raylib::Vector2& mousePosition, const raylib::Rectangle& rect);
-    
+    void checkDifficultyButton(); 
+    raylib::Color checkButton(GameManager& gameManager, const raylib::Color &hoverColor, 
+        const raylib::Color& clickedColor, int buttonId) override;
 
 public:
     HomeScene();
 
     ~HomeScene() = default;
 
-    void update(SceneManager& sceneManager) override;
+    void update(GameManager& gameManager) override;
     void render() override;
     void renderUI(const raylib::Font& font) override;
 
     Enums::Difficulty getDifficulty() const;
 
-    void calculateTextsPositions(const raylib::Font& font) override;
+    void initUI(const raylib::Font& font) override;
 };

@@ -66,8 +66,7 @@ void Player::update()
 const bool Player::checkFoodCollision(Food& food) const
 {
     raylib::Vector2 food_pos = food.getTransform().getPosition();
-    raylib::Vector2 food_size = Utils::getFoodSize();
-    Rectangle rec = { food_pos.x, food_pos.y, food_size.x, food_size.y };
+    Rectangle rec = { food_pos.x, food_pos.y, Consts::FOOD_SIZE, Consts::FOOD_SIZE };
     return CheckCollisionCircleRec(m_playerBody.front(), 10.0f, rec);
 }
 

@@ -1,8 +1,8 @@
 #pragma once
 
-class SceneManager;
+#include "raylib-cpp.hpp"
 
-namespace raylib { class Font; }
+class GameManager;
 
 class Scene 
 {
@@ -12,11 +12,13 @@ public:
     Scene(bool active = true);
     ~Scene() = default;
     
-    virtual void update(SceneManager& sceneManager) = 0;
+    virtual void update(GameManager& gameManager) = 0;
     virtual void render() = 0;
     virtual void renderUI(const raylib::Font& font) = 0;
     
-    virtual void calculateTextsPositions(const raylib::Font& font);
+    virtual void initUI(const raylib::Font& font) = 0;
+    virtual raylib::Color checkButton(GameManager& gameManager, const raylib::Color &hoverColor, 
+        const raylib::Color& clickedColor, int buttonId) = 0; 
 
     const bool isActive() const;
     void setActive(bool active = true);

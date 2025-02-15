@@ -2,7 +2,7 @@
 
 Scene::Scene(bool active) : m_isActive(active) { }
 
-void Scene::calculateTextsPositions(const raylib::Font &font) { }
+void Scene::initUI(const raylib::Font &font) { }
 
 const bool Scene::isActive() const { return this->m_isActive; }
 

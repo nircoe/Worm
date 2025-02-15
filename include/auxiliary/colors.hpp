@@ -6,7 +6,10 @@
 namespace Colors
 {
     // Home Scene
-    
+    const raylib::Color BACKGROUND_COLOR(248, 240, 227);   
+    const raylib::Color TEXT_COLOR(97, 62, 33);
+    const raylib::Color BORDER_COLOR(200, 180, 140); // 120, 150, 100 or maybe 100, 130, 80
+
     // Easy Button (Green - Calm, approachable)
     const raylib::Color EASY_CLICKED_COLOR(100, 180, 100);     // Slightly desaturated, friendly green
     const raylib::Color EASY_HOVER_COLOR(130, 210, 130);    // Lighter, more vibrant green
@@ -29,8 +32,8 @@ namespace Colors
     const raylib::Color BUTTON_CLICKED_COLOR(160, 82, 45);  // Sienna
 
     // Game Scene
-    const raylib::Color WORM_HEAD_COLOR(97, 62, 33);
+    const raylib::Color WORM_HEAD_COLOR(TEXT_COLOR);
     const raylib::Color WORM_BODY_COLOR(145, 94, 49);
-    const raylib::Color FOOD_COLOR(EASY_HOVER_COLOR);
+    const raylib::Color FOOD_COLOR(200, 0, 0);
     
 }
