@@ -36,5 +36,7 @@ public:
     void render();
     void renderUI();
 
+    const raylib::Font& getFont();
+
     int gameLoop();
 };

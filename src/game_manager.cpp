@@ -29,7 +29,7 @@ GameManager::GameManager(std::initializer_list<Scene*> scenes) :
             break;
         }
         m_scenes[i] = scene;
-        m_scenes[i]->calculateTextsPositions(m_font);
+        m_scenes[i]->initUI(m_font);
         ++i;
     }
     m_activeScenes.set(0);
@@ -105,11 +105,16 @@ void GameManager::renderUI()
     }
 }
 
+const raylib::Font &GameManager::getFont()
+{
+    return m_font;
+}
+
 int GameManager::gameLoop()
 {
     try
     {
-        while(!m_shouldClose && !m_window.ShouldClose())
+        while(!m_window.ShouldClose())
         {
             this->update();
 
@@ -125,6 +130,9 @@ int GameManager::gameLoop()
                 this->renderUI();
             }   
             m_window.EndDrawing();
+
+            if(m_shouldClose) 
+                m_window.Close();
         }
     }
     catch(const std::exception& e)

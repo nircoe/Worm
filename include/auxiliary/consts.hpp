@@ -86,16 +86,6 @@ namespace Consts
 
     //  0  ,  1  ,  2  ,   3   ,  4  ,     5
     // Play, Exit, Easy, Medium, Hard, Impossible
-    const std::array<raylib::Color, 6> HOME_BUTTONS_BASE_COLORS = {
-        Colors::BUTTON_BASE_COLOR,
-        Colors::BUTTON_BASE_COLOR,
-        Colors::BUTTON_BASE_COLOR,
-        Colors::BUTTON_BASE_COLOR,
-        Colors::BUTTON_BASE_COLOR,
-        Colors::BUTTON_BASE_COLOR };
-
-    //  0  ,  1  ,  2  ,   3   ,  4  ,     5
-    // Play, Exit, Easy, Medium, Hard, Impossible
     const std::array<raylib::Color, 6> HOME_BUTTONS_HOVER_COLORS = {
         Colors::BUTTON_HOVER_COLOR,
         Colors::BUTTON_HOVER_COLOR,
@@ -124,5 +114,30 @@ namespace Consts
     };
 
     const Enums::Difficulty STARTING_DIFFICULTY = Enums::Difficulty::Easy;
+
+    // GAME OVER UI
+
+    const raylib::Rectangle GAME_OVER_MAIN_MENU_BUTTON_RECT(80, 480, 200, 60);
+    const raylib::Rectangle GAME_OVER_PLAY_AGAIN_BUTTON_RECT(300, 480, 200, 60);
+    const raylib::Rectangle GAME_OVER_EXIT_BUTTON_RECT(520, 480, 200, 60);
+
+    //     0          1        2
+    // Main Menu, Play Again, Exit
+    const std::array<const raylib::Rectangle, 3> GAME_OVER_RECTS = {
+        Consts::GAME_OVER_MAIN_MENU_BUTTON_RECT,
+        Consts::GAME_OVER_PLAY_AGAIN_BUTTON_RECT,
+        Consts::GAME_OVER_EXIT_BUTTON_RECT };
+
+    //     0          1        2
+    // Main Menu, Play Again, Exit
+    const std::array<const std::string, 3> GAME_OVER_BUTTONS_TEXT = {
+        "Main Menu",
+        "Play Again",
+        "Exit" };
+
+    const std::array<Enums::GameButton, 3> GAME_OVER_BUTTONS_ID = {
+        Enums::GameButton::Home_Screen,
+        Enums::GameButton::Play_Again,
+        Enums::GameButton::Exit };
 
 } // namespace Consts

@@ -26,13 +26,26 @@ void GameScene::update(GameManager& gameManager)
     if(!this->m_gameOver && !m_player.isActive())
     {
         this->m_gameOver = true;
-        this->calculateGameOverTextPositions();
+        resetScoreText(gameManager.getFont());
         this->m_food.setActive(false);
     }
 
     if(this->m_gameOver)
     {
-        // logic for buttons
+        resetButtonsColor();
+
+        raylib::Vector2 mousePosition = GetMousePosition();
+
+        for(std::size_t i = 0; i < m_buttons.size(); ++i)
+        {
+            if(m_buttons[i].isHovered(mousePosition))
+            {
+                m_buttons[i].setColor(checkButton(gameManager, Colors::BUTTON_HOVER_COLOR, 
+                Colors::BUTTON_CLICKED_COLOR, 
+                static_cast<int>(Consts::GAME_OVER_BUTTONS_ID[i])));
+                break;
+            }
+        }
     }
 }
 
@@ -80,24 +93,61 @@ const Enums::Difficulty GameScene::getDifficulty() const
     return m_difficulty;
 }
 
-void GameScene::calculateTextsPositions(const raylib::Font &font)
+void GameScene::initUI(const raylib::Font &font)
 {
-    m_font = &font;
-
     m_startTextPosition = Utils::centralizeTextEx(font, m_startText.c_str(), Consts::START_GAME_FONT_SIZE, raylib::Vector2::Zero(), 
         { Consts::SCREEN_WIDTH, Consts::SCREEN_HEIGHT / 2});
-}
 
-void GameScene::calculateGameOverTextPositions()
-{
-    m_gameOverTextPosition = Utils::centralizeTextEx(*m_font, Consts::GAME_OVER_TEXT.c_str(), 
-        Consts::GAME_OVER_FONT_SIZE, raylib::Vector2::Zero(), Consts::SCREEN_SIZE);
+    m_gameOverTextPosition = Utils::centralizeTextEx(font, Consts::GAME_OVER_TEXT.c_str(), 
+        Consts::GAME_OVER_FONT_SIZE, raylib::Vector2::Zero(), { Consts::SCREEN_WIDTH, Consts::SCREEN_HEIGHT * (2.0f / 3.0f) });
     m_gameOverTextPosition.y -= Consts::GAME_OVER_TO_SCORE_GAP;
 
-    m_scoreText = "Your Score: " + std::to_string(this->m_player.getScore());
-    m_scoreTextPosition = Utils::centralizeTextEx(*m_font, m_scoreText.c_str(), Consts::GAME_OVER_FONT_SIZE, 
-        raylib::Vector2::Zero(), Consts::SCREEN_SIZE);
-    m_scoreTextPosition.y = m_gameOverTextPosition.y + (Consts::GAME_OVER_TO_SCORE_GAP * 2);
+
+    for(std::size_t i = 0; i < m_buttons.size(); ++i)
+    {
+        auto& rect = Consts::GAME_OVER_RECTS[i];
+        m_buttons[i].init(Colors::BUTTON_BASE_COLOR, 
+        rect, 
+        Utils::centralizeTextEx(font, Consts::GAME_OVER_BUTTONS_TEXT[i].c_str(), Consts::BUTTONS_FONT_SIZE, 
+                                {rect.x, rect.y}, {rect.width, rect.height}),
+        WHITE,
+        Consts::GAME_OVER_BUTTONS_TEXT[i], 
+        Consts::BUTTONS_FONT_SIZE);
+    }
+}
+
+raylib::Color GameScene::checkButton(GameManager &gameManager, const raylib::Color &hoverColor, const raylib::Color &clickedColor, int buttonId)
+{
+    auto button = static_cast<Enums::GameButton>(buttonId);
+    if(IsMouseButtonReleased(MOUSE_BUTTON_LEFT) && m_currentClickedButton == button)
+    {
+        if(button == Enums::GameButton::Home_Screen)
+        {
+            gameManager.activateScene(Enums::SceneName::Home_Scene);
+            restart(); // reset for next play
+            gameManager.deactivateScene(Enums::SceneName::Game_Scene);
+        }
+        else if(button == Enums::GameButton::Play_Again) 
+        {
+            restart();
+        }
+        else if(button == Enums::GameButton::Exit)
+            gameManager.closeGame();
+        
+        m_currentClickedButton = Enums::GameButton::None;
+        return clickedColor;
+    } 
+    if(IsMouseButtonDown(MOUSE_BUTTON_LEFT) && m_currentClickedButton == button)
+    {
+        return clickedColor;
+    }
+
+    if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+    {
+        m_currentClickedButton = button;
+    }
+        
+    return hoverColor;
 }
 
 void GameScene::gameOver(const raylib::Font &font) const
@@ -105,11 +155,41 @@ void GameScene::gameOver(const raylib::Font &font) const
     // Draw text "GAME OVER!"
     float textHeight = Consts::SCREEN_HEIGHT;
     textHeight *= (m_player.getHeadPosition().y > Consts::HALF_SCREEN.y) ? 0.25f : 0.75f;
-    raylib::DrawTextEx(font, Consts::GAME_OVER_TEXT.c_str(), const_cast<raylib::Vector2&>(m_gameOverTextPosition), 
+    raylib::DrawTextEx(font, Consts::GAME_OVER_TEXT.c_str(), m_gameOverTextPosition, 
         Consts::GAME_OVER_FONT_SIZE, 1, Colors::TEXT_COLOR);
 
-    raylib::DrawTextEx(font, m_scoreText.c_str(), const_cast<raylib::Vector2&>(m_scoreTextPosition), 
+    raylib::DrawTextEx(font, m_scoreText.c_str(), m_scoreTextPosition, 
         Consts::GAME_OVER_FONT_SIZE, 1, Colors::TEXT_COLOR);
 
-    // TODO: add buttons
+    for(std::size_t i = 0; i < m_buttons.size(); ++i)
+    {
+        m_buttons[i].render(font);
+    }
+}
+
+void GameScene::restart()
+{
+    m_player = Player(raylib::Vector2::Zero(), Consts::PLAYER_SPEED, m_difficulty);
+    m_food = Food(Utils::getFoodSpawnPoint(Consts::INITIAL_PLAYER_BODY));
+    m_isBeginning = true;
+    m_gameOver = false;
+
+    resetButtonsColor();
+}
+
+void GameScene::resetButtonsColor()
+{
+    for(std::size_t i = 0; i < m_buttons.size(); ++i)
+    {
+        m_buttons[i].setColor(Colors::BUTTON_BASE_COLOR);
+    }
+}
+
+void GameScene::resetScoreText(const raylib::Font& font)
+{
+    m_score = m_player.getScore();
+    m_scoreText = "Your Score: " + std::to_string(m_score);
+    m_scoreTextPosition = Utils::centralizeTextEx(font, m_scoreText.c_str(), Consts::GAME_OVER_FONT_SIZE, 
+        raylib::Vector2::Zero(), Consts::SCREEN_SIZE);
+    m_scoreTextPosition.y = m_gameOverTextPosition.y + (Consts::GAME_OVER_TO_SCORE_GAP * 2);
 }

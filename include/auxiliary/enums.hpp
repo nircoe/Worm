@@ -18,20 +18,20 @@ namespace Enums
 
     enum class HomeButton
     {
-        None,
-        Play,
-        Exit,
-        Easy,
-        Medium,
-        Hard,
-        Impossible
+        None = -1,
+        Play = 0,
+        Exit = 1,
+        Easy = 2,
+        Medium = 3,
+        Hard = 4,
+        Impossible = 5
     };
 
     enum class GameButton
     {
-        None,
-        Home_Screen,
-        Play_Again,
-        Exit
+        None = -1,
+        Home_Screen = 0,
+        Play_Again = 1,
+        Exit = 2
     };
 }

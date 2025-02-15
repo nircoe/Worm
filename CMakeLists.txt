@@ -40,6 +40,7 @@ endif()
 set(SOURCES 
     src/transform2d.cpp
     src/game_object.cpp
+    src/button.cpp
     src/moveable.cpp
     src/player.cpp
     src/home_scene_player.cpp
