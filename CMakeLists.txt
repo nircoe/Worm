@@ -37,21 +37,7 @@ endif()
 
 # This is the main part:
 # My source files here:
-set(SOURCES 
-    src/transform2d.cpp
-    src/game_object.cpp
-    src/button.cpp
-    src/moveable.cpp
-    src/player.cpp
-    src/home_scene_player.cpp
-    src/food.cpp
-    src/scene.cpp
-    src/game_manager.cpp
-    src/home_scene.cpp
-    src/game_scene.cpp
-    src/main.cpp
-    # any other source file in the future
-)
+file(GLOB_RECURSE SOURCES "src/*.cpp")
 add_executable(${PROJECT_NAME} ${SOURCES})
 
 # Add the include directory so that headers can be referenced directly
