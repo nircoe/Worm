@@ -4,8 +4,6 @@ GameObject::GameObject(raylib::Vector2 initialPosition) : m_transform(initialPos
 
 void GameObject::setActive(bool active) { m_isActive = active; }
 
-unsigned int GameObject::getId() const { return m_id; }
-
 Transform2D& GameObject::getTransform() { return m_transform; }
 
 const Transform2D& GameObject::getTransform() const { return m_transform; }
