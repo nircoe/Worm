@@ -66,7 +66,7 @@ void GameScene::render()
     m_food.render();
 }
 
-void GameScene::renderUI(const raylib::Font& font)
+void GameScene::renderUI(const raylib::Font& font, const raylib::Camera2D& camera)
 {
     if(m_isBeginning)
         DrawTextEx(font, m_startText, m_startTextPosition, Consts::START_GAME_FONT_SIZE, 1, Colors::TEXT_COLOR);
@@ -152,7 +152,6 @@ raylib::Color GameScene::checkButton(GameManager &gameManager, const raylib::Col
 
 void GameScene::gameOver(const raylib::Font &font) const
 {
-    // Draw text "GAME OVER!"
     float textHeight = Consts::SCREEN_HEIGHT;
     textHeight *= (m_player.getHeadPosition().y > Consts::HALF_SCREEN.y) ? 0.25f : 0.75f;
     raylib::DrawTextEx(font, Consts::GAME_OVER_TEXT.c_str(), m_gameOverTextPosition, 
@@ -161,9 +160,9 @@ void GameScene::gameOver(const raylib::Font &font) const
     raylib::DrawTextEx(font, m_scoreText.c_str(), m_scoreTextPosition, 
         Consts::GAME_OVER_FONT_SIZE, 1, Colors::TEXT_COLOR);
 
-    for(std::size_t i = 0; i < m_buttons.size(); ++i)
+    for(auto& button : m_buttons)
     {
-        m_buttons[i].render(font);
+        button.render(font);
     }
 }
 
@@ -179,9 +178,9 @@ void GameScene::restart()
 
 void GameScene::resetButtonsColor()
 {
-    for(std::size_t i = 0; i < m_buttons.size(); ++i)
+    for(auto& button : m_buttons)
     {
-        m_buttons[i].setColor(Colors::BUTTON_BASE_COLOR);
+        button.setColor(Colors::BUTTON_BASE_COLOR);
     }
 }
 

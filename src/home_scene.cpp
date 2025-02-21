@@ -4,18 +4,26 @@
 HomeScene::HomeScene() : 
     m_player(raylib::Vector2::Zero(), 
     Consts::PLAYER_SPEED, 
-    m_difficulty) 
-{ 
-    //  0  ,  1  ,  2  ,    3   ,  4  ,     5
-    // Play, Exit, Easy, Medium, Hard, Impossible
-
-    //resetButtonsColor();
-}
+    m_difficulty) { }
 
 void HomeScene::update(GameManager& gameManager)
 {
-    m_player.update();
+    if(m_isLoading)
+    {
+        m_player.loading(gameManager);
+        if(m_player.isFinishLoading())
+        {
+            m_isLoading = false;
+            m_player.resetBody();
+            gameManager.changeDifficulty(m_difficulty);
+            gameManager.resetCamera();
+            gameManager.activateScene(Enums::SceneName::Game_Scene);
+            gameManager.deactivateScene(Enums::SceneName::Home_Scene);
+        }
+        return;
+    }
 
+    m_player.update();
     resetButtonsColor();
     raylib::Vector2 mousePosition = GetMousePosition();
 
@@ -36,12 +44,12 @@ void HomeScene::render()
     m_player.render();
 }
 
-void HomeScene::renderUI(const raylib::Font& font)
+void HomeScene::renderUI(const raylib::Font& font, const raylib::Camera2D& camera)
 {
-    DrawTextEx(font, m_titleText, m_titlePosition, Consts::TITLE_FONT_SIZE, 1, Colors::TEXT_COLOR);
-    for(std::size_t i = 0; i < m_buttons.size(); ++i)
+    raylib::DrawTextEx(font, m_titleText, camera.GetWorldToScreen(m_titlePosition), Consts::TITLE_FONT_SIZE, 1, Colors::TEXT_COLOR);
+    for(auto& button : m_buttons)
     {
-        m_buttons[i].render(font);
+        button.render(font, camera);
     }
 }
 
@@ -73,9 +81,9 @@ void HomeScene::initUI(const raylib::Font &font)
 
 void HomeScene::resetButtonsColor()
 {
-    for(std::size_t i = 0; i < m_buttons.size(); ++i)
+    for(auto& button : m_buttons)
     {
-        m_buttons[i].setColor(Colors::BUTTON_BASE_COLOR);
+        button.setColor(Colors::BUTTON_BASE_COLOR);
     }
     resetDifficultyButtonsColor();
 }
@@ -116,8 +124,8 @@ raylib::Color HomeScene::checkButton(GameManager& gameManager, const raylib::Col
     {
         if(button == Enums::HomeButton::Play)
         {
-            gameManager.activateScene(Enums::SceneName::Game_Scene);
-            gameManager.deactivateScene(Enums::SceneName::Home_Scene);
+            gameManager.changeDifficulty(Enums::Difficulty::Hard);
+            m_isLoading = true;
         }
         else if(button == Enums::HomeButton::Exit)
             gameManager.closeGame();

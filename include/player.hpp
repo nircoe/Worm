@@ -19,7 +19,7 @@ protected:
     int m_beginningFrames;
     bool m_isBeginning;
 
-    std::deque<raylib::Vector2> m_playerBody; // each item is the center position of a circle
+    std::deque<raylib::Vector2> m_playerBody;
 
     const bool checkBodyToBodyCollision() const;
     const bool checkBodyToBorderCollision() const;

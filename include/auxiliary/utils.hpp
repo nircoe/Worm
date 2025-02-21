@@ -42,11 +42,6 @@ namespace Utils
         return spawnPoint;
     }
 
-    // inline const raylib::Vector2 getFoodSize()
-    // {
-    //     return raylib::Vector2(Consts::FOOD_SIZE, Consts::FOOD_SIZE);
-    // }
-
     inline const int centerlizeTextX(const char* text, const int fontSize) 
     {
         return (Consts::SCREEN_WIDTH - MeasureText(text, fontSize)) / 2;
@@ -71,14 +66,6 @@ namespace Utils
         raylib::Vector2 textSize = MeasureTextEx(font, text, fontSize, spacing);
 
         textPosition = anchorPosition + ((areaSize - textSize) / 2.0f);
-
-        TraceLog(LOG_INFO, "Text: \"%s\"", text);
-        TraceLog(LOG_INFO, "FontSize: %f", fontSize);
-        TraceLog(LOG_INFO, "Spacing: %f", spacing);
-        TraceLog(LOG_INFO, "Anchor Position: %f, %f", anchorPosition.x, anchorPosition.y);
-        TraceLog(LOG_INFO, "Area Size: %f, %f", areaSize.x, areaSize.y);
-        TraceLog(LOG_INFO, "Text Size: %f, %f", textSize.x, textSize.y);
-        TraceLog(LOG_INFO, "Text Position: %f, %f", textPosition.x, textPosition.y);
 
         return textPosition;
     }

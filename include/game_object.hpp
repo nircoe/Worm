@@ -8,9 +8,6 @@
 
 class GameObject 
 {
-    static unsigned int s_idCounter; // static member for ID generation
-
-    unsigned int m_id;
     Transform2D m_transform;
     bool m_isActive;
     
@@ -27,7 +24,6 @@ public:
 #pragma endregion
     
 #pragma region getters
-    unsigned int getId() const;
     Transform2D& getTransform();
     const Transform2D& getTransform() const;
     const bool isActive() const;

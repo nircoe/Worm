@@ -9,14 +9,12 @@
 
 int main() 
 {
-    SetTraceLogLevel(LOG_ALL);       // Show all logs
+    SetTraceLogLevel(LOG_ALL);       // Show all logs, TODO: delete when finish the project!
 
     HomeScene homeScene;
     GameScene gameScene(Consts::STARTING_DIFFICULTY);
 
     GameManager gameManager({ &homeScene, &gameScene });
-    //GameManager gameManager({ &homeScene });
-    // GameManager gameManager({ &gameScene });
 
     return gameManager.gameLoop();
 }

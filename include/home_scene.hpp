@@ -25,11 +25,12 @@ class HomeScene : public Scene
     Enums::HomeButton m_currentClickedButton = Enums::HomeButton::None;
     
     HomeScenePlayer m_player;
+    bool m_isLoading = false;
 
     void resetButtonsColor();
     void resetDifficultyButtonsColor();
     void checkDifficultyButton(); 
-    raylib::Color checkButton(GameManager& gameManager, const raylib::Color &hoverColor, 
+    virtual raylib::Color checkButton(GameManager& gameManager, const raylib::Color &hoverColor, 
         const raylib::Color& clickedColor, int buttonId) override;
 
 public:
@@ -37,11 +38,11 @@ public:
 
     ~HomeScene() = default;
 
-    void update(GameManager& gameManager) override;
-    void render() override;
-    void renderUI(const raylib::Font& font) override;
+    virtual void update(GameManager& gameManager) override;
+    virtual void render() override;
+    virtual void renderUI(const raylib::Font& font, const raylib::Camera2D& camera) override;
 
     Enums::Difficulty getDifficulty() const;
 
-    void initUI(const raylib::Font& font) override;
+    virtual void initUI(const raylib::Font& font) override;
 };
