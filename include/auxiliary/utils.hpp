@@ -72,14 +72,6 @@ namespace Utils
 
         textPosition = anchorPosition + ((areaSize - textSize) / 2.0f);
 
-        TraceLog(LOG_INFO, "Text: \"%s\"", text);
-        TraceLog(LOG_INFO, "FontSize: %f", fontSize);
-        TraceLog(LOG_INFO, "Spacing: %f", spacing);
-        TraceLog(LOG_INFO, "Anchor Position: %f, %f", anchorPosition.x, anchorPosition.y);
-        TraceLog(LOG_INFO, "Area Size: %f, %f", areaSize.x, areaSize.y);
-        TraceLog(LOG_INFO, "Text Size: %f, %f", textSize.x, textSize.y);
-        TraceLog(LOG_INFO, "Text Position: %f, %f", textPosition.x, textPosition.y);
-
         return textPosition;
     }
 

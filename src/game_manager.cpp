@@ -16,7 +16,7 @@ GameManager::GameManager(std::initializer_list<Scene*> scenes) :
     m_font(Consts::FONT_PATH, 80),
     m_iconImage(Consts::ICON_IMAGE_PATH)
 {
-    m_window.SetTargetFPS(static_cast<int>(Enums::Difficulty::Medium));
+    m_window.SetTargetFPS(static_cast<int>(Enums::Difficulty::Easy));
     m_window.SetIcon(m_iconImage);
 
     size_t i = 0;
@@ -100,7 +100,7 @@ void GameManager::renderUI()
     {
         if(m_activeScenes.test(i))
         {
-            m_scenes[i]->renderUI(m_font);
+            m_scenes[i]->renderUI(m_font, m_camera);
         }
     }
 }
@@ -108,6 +108,24 @@ void GameManager::renderUI()
 const raylib::Font &GameManager::getFont()
 {
     return m_font;
+}
+
+void GameManager::moveCamera(raylib::Vector2 velocity)
+{
+    raylib::Vector2 target = m_camera.target;
+    const auto deltaTime = GetFrameTime();
+    raylib::Vector2 newValue = target + (velocity); // TODO: make the camera movement faster but smooth and matching the worm speed
+    m_camera.SetTarget(newValue);
+}
+
+const raylib::Vector2 GameManager::getCameraTarget() const
+{
+    return m_camera.GetTarget();
+}
+
+void GameManager::resetCamera()
+{
+    m_camera.SetTarget(raylib::Vector2::Zero());
 }
 
 int GameManager::gameLoop()

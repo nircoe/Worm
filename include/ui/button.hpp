@@ -28,6 +28,7 @@ namespace UI
             raylib::Color textColor, std::string text, float fontSize);
 
         void render(const raylib::Font& font, float spacing = 1) const;
+        void render(const raylib::Font& font, const raylib::Camera2D& camera, float spacing = 1) const;
 
         void setTextPosition(const raylib::Vector2& pos);
 

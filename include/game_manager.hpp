@@ -38,5 +38,11 @@ public:
 
     const raylib::Font& getFont();
 
+    void moveCamera(raylib::Vector2 velocity);
+
+    const raylib::Vector2 getCameraTarget() const;
+
+    void resetCamera();
+
     int gameLoop();
 };

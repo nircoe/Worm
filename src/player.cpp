@@ -22,14 +22,14 @@ void Player::render() const
 void Player::updatePlayerBody(bool checkInnerCollisions)
 {
     raylib::Vector2 velocity = m_moveable.getVelocity();
-    if(velocity != raylib::Vector2::Zero())
+    if(!velocity.Equals(raylib::Vector2::Zero()))
     {
-        raylib::Vector2 temp = velocity;
         if(checkInnerCollisions && CheckCollisionCircles(this->fixGettingOffScreen(m_playerBody.front() + velocity), 
             Consts::PLAYER_HEAD_RADIUS, m_playerBody[1], Consts::PLAYER_BODY_RADIUS))
         {
             velocity *= Consts::DIAGONAL_MULTIPLY;
         }
+
         m_playerBody.pop_back();
         m_playerBody.push_front(this->fixGettingOffScreen(m_playerBody.front() + velocity));
 
