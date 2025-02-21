@@ -5,6 +5,7 @@ HomeScenePlayer::HomeScenePlayer(raylib::Vector2 initialPosition, const float sp
     Player(initialPosition, speed, difficulty)
 {
     m_moveable.setVelocity({ Consts::PLAYER_SPEED });
+    m_moveable.setVelocity({ Consts::PLAYER_SPEED });
 }
 
 void HomeScenePlayer::update()
