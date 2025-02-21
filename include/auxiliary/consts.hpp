@@ -33,14 +33,17 @@ namespace Consts
     const raylib::Vector2 HALF_SCREEN(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f);
     const raylib::Vector2 SCREEN_SIZE(SCREEN_WIDTH, SCREEN_HEIGHT);
     const std::deque<raylib::Vector2> INITIAL_PLAYER_BODY = { HALF_SCREEN, HALF_SCREEN, HALF_SCREEN };
-    const std::vector<raylib::Rectangle> BORDERS = {
+
+    const std::vector<raylib::Rectangle> BORDERS = 
+    {
         { -1.0f, -1.0f, 10.0f, SCREEN_HEIGHT + 1.0f },
         { -1.0f, -1.0f, SCREEN_WIDTH + 1.0f, 10.0f },
         { -1.0f, SCREEN_HEIGHT - 10.0f, SCREEN_WIDTH + 1.0f, 10.0f },
         { SCREEN_WIDTH - 10.0f, -1.0f, 10.0f, SCREEN_HEIGHT + 1.0f }
     };
 
-    const std::vector<raylib::Rectangle> IMPOSSIBLE_BORDERS = {
+    const std::vector<raylib::Rectangle> IMPOSSIBLE_BORDERS = 
+    {
         { -1.0f, -1.0f, 30.0f, SCREEN_HEIGHT + 1.0f },
         { -1.0f, -1.0f, SCREEN_WIDTH + 1.0f, 30.0f },
         { -1.0f, SCREEN_HEIGHT - 30.0f, SCREEN_WIDTH + 1.0f, 30.0f },
@@ -56,57 +59,68 @@ namespace Consts
 
     //  0  ,  1  ,  2  ,   3   ,  4  ,     5
     // Play, Exit, Easy, Medium, Hard, Impossible
-    const std::array<const std::string, 6> HOME_BUTTONS_TEXTS = {  
+    const std::array<const std::string, 6> HOME_BUTTONS_TEXTS = 
+    {  
         "Play",
         "Exit",
         "Easy",
         "Medium",
         "Hard",
-        "Impossible" };
+        "Impossible" 
+    };
 
     //  0  ,  1  ,  2  ,   3   ,  4  ,     5
     // Play, Exit, Easy, Medium, Hard, Impossible
-    const std::array<const raylib::Rectangle, 6> HOME_BUTTONS_RECTS = {
+    const std::array<const raylib::Rectangle, 6> HOME_BUTTONS_RECTS = 
+    {
         Consts::PLAY_BUTTON_RECT,
         Consts::EXIT_BUTTON_RECT,
         Consts::EASY_BUTTON_RECT,
         Consts::MEDIUM_BUTTON_RECT,
         Consts::HARD_BUTTON_RECT,
-        Consts::IMPOSSIBLE_BUTTON_RECT };
+        Consts::IMPOSSIBLE_BUTTON_RECT 
+    };
 
     //  0  ,  1  ,  2  ,   3   ,  4  ,     5
     // Play, Exit, Easy, Medium, Hard, Impossible   
-    const std::array<Enums::HomeButton, 6> HOME_BUTTONS_IDS = {
+    const std::array<Enums::HomeButton, 6> HOME_BUTTONS_IDS = 
+    {
         Enums::HomeButton::Play,
         Enums::HomeButton::Exit,
         Enums::HomeButton::Easy,
         Enums::HomeButton::Medium,
         Enums::HomeButton::Hard,
-        Enums::HomeButton::Impossible };
+        Enums::HomeButton::Impossible 
+    };
 
     //  0  ,  1  ,  2  ,   3   ,  4  ,     5
     // Play, Exit, Easy, Medium, Hard, Impossible
-    const std::array<raylib::Color, 6> HOME_BUTTONS_HOVER_COLORS = {
+    const std::array<raylib::Color, 6> HOME_BUTTONS_HOVER_COLORS = 
+    {
         Colors::BUTTON_HOVER_COLOR,
         Colors::BUTTON_HOVER_COLOR,
         Colors::EASY_HOVER_COLOR,
         Colors::MEDIUM_HOVER_COLOR,
         Colors::HARD_HOVER_COLOR,
-        Colors::IMPOSSIBLE_HOVER_COLOR };
+        Colors::IMPOSSIBLE_HOVER_COLOR 
+    };
 
     //  0  ,  1  ,  2  ,   3   ,  4  ,     5
     // Play, Exit, Easy, Medium, Hard, Impossible
-    const std::array<raylib::Color, 6> HOME_BUTTONS_CLICKED_COLORS = {
+    const std::array<raylib::Color, 6> HOME_BUTTONS_CLICKED_COLORS = 
+    {
         Colors::BUTTON_CLICKED_COLOR,
         Colors::BUTTON_CLICKED_COLOR,
         Colors::EASY_CLICKED_COLOR,
         Colors::MEDIUM_CLICKED_COLOR,
         Colors::HARD_CLICKED_COLOR,
-        Colors::IMPOSSIBLE_CLICKED_COLOR };
+        Colors::IMPOSSIBLE_CLICKED_COLOR 
+    };
 
     //  0  ,   1   ,  2  ,     3
     // Easy, Medium, Hard, Impossible
-    const std::array<Enums::Difficulty, 4> DIFFICULTIES_ARRAY = {
+    const std::array<Enums::Difficulty, 4> DIFFICULTIES_ARRAY = 
+    {
         Enums::Difficulty::Easy,
         Enums::Difficulty::Medium,
         Enums::Difficulty::Hard,
@@ -123,21 +137,27 @@ namespace Consts
 
     //     0          1        2
     // Main Menu, Play Again, Exit
-    const std::array<const raylib::Rectangle, 3> GAME_OVER_RECTS = {
+    const std::array<const raylib::Rectangle, 3> GAME_OVER_RECTS = 
+    {
         Consts::GAME_OVER_MAIN_MENU_BUTTON_RECT,
         Consts::GAME_OVER_PLAY_AGAIN_BUTTON_RECT,
-        Consts::GAME_OVER_EXIT_BUTTON_RECT };
+        Consts::GAME_OVER_EXIT_BUTTON_RECT 
+    };
 
     //     0          1        2
     // Main Menu, Play Again, Exit
-    const std::array<const std::string, 3> GAME_OVER_BUTTONS_TEXT = {
+    const std::array<const std::string, 3> GAME_OVER_BUTTONS_TEXT = 
+    {
         "Main Menu",
         "Play Again",
-        "Exit" };
+        "Exit" 
+    };
 
-    const std::array<Enums::GameButton, 3> GAME_OVER_BUTTONS_ID = {
+    const std::array<Enums::GameButton, 3> GAME_OVER_BUTTONS_ID = 
+    {
         Enums::GameButton::Home_Screen,
         Enums::GameButton::Play_Again,
-        Enums::GameButton::Exit };
+        Enums::GameButton::Exit 
+    };
 
 } // namespace Consts

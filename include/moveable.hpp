@@ -22,6 +22,4 @@ public:
     void setVelocity(raylib::Vector2 vel);
 
     const raylib::Vector2& getVelocity() const;
-
-    // more methods, like dash, jump, etc.
 };

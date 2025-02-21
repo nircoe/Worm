@@ -86,7 +86,9 @@
 		"xloctime": "cpp",
 		"xmemory": "cpp",
 		"xtr1common": "cpp",
-		"xutility": "cpp"
+		"xutility": "cpp",
+		"queue": "cpp",
+		"ranges": "cpp"
 	},
 	"C_Cpp.default.compilerPath": "C:\\raylib\\w64devkit\\bin\\g++.exe",
 	"cmake.generator": "Ninja"

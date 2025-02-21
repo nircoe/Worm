@@ -8,8 +8,6 @@ protected:
 
     float m_posX;
     float m_posY;
-    
-    // rotation? scale?
 
 public:
 
@@ -26,6 +24,4 @@ public:
     raylib::Vector2 getPosition();
 
     const raylib::Vector2 getPosition() const;
-
-    // more methods
 };

@@ -35,11 +35,10 @@ class GameScene : public Scene
     bool m_isBeginning;
     bool m_gameOver;
     std::size_t m_score = 0;
-    // TODO: add buttons for gameover!
     
     const int GAME_OVER_TEXT_WIDTH = Utils::centerlizeTextX(Consts::GAME_OVER_TEXT.c_str(), Consts::GAME_OVER_FONT_SIZE);
 
-    raylib::Color checkButton(GameManager& gameManager, const raylib::Color &hoverColor, 
+    virtual raylib::Color checkButton(GameManager& gameManager, const raylib::Color &hoverColor, 
         const raylib::Color& clickedColor, int buttonId) override; 
 
     void gameOver(const raylib::Font& font) const;
@@ -57,9 +56,9 @@ public:
 
     ~GameScene() = default;
     
-    void update(GameManager& gameManager) override;
-    void render() override;
-    void renderUI(const raylib::Font& font) override;
+    virtual void update(GameManager& gameManager) override;
+    virtual void render() override;
+    virtual void renderUI(const raylib::Font& font, const raylib::Camera2D& camera) override;
 
     const raylib::Vector2 getPlayerHeadPosition() const;
 
@@ -67,5 +66,5 @@ public:
 
     const Enums::Difficulty getDifficulty() const;
 
-    void initUI(const raylib::Font& font) override;
+    virtual void initUI(const raylib::Font& font) override;
 };

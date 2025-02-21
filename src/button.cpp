@@ -22,8 +22,15 @@ void UI::Button::init(raylib::Color color, raylib::Rectangle rect, raylib::Vecto
 
 void UI::Button::render(const raylib::Font &font, float spacing) const
 {
-    DrawRectangleRec(m_rect, m_color);
+    DrawRectangleRounded(m_rect, 0.2f, 16, m_color);
     raylib::DrawTextEx(font, m_text.c_str(), m_textPosition, m_fontSize, spacing, m_textColor);
+}
+
+void UI::Button::render(const raylib::Font &font, const raylib::Camera2D& camera, float spacing) const
+{
+    raylib::Rectangle rect = raylib::Rectangle(camera.GetWorldToScreen(m_rect.GetPosition()), { m_rect.width, m_rect.height });
+    DrawRectangleRounded(rect, 0.2f, 16, m_color);
+    raylib::DrawTextEx(font, m_text.c_str(), camera.GetWorldToScreen(m_textPosition), m_fontSize, spacing, m_textColor);
 }
 
 void UI::Button::setTextPosition(const raylib::Vector2& pos)

@@ -8,9 +8,6 @@
 
 class GameObject 
 {
-    static unsigned int s_idCounter; // static member for ID generation
-
-    unsigned int m_id;
     Transform2D m_transform;
     bool m_isActive;
     
