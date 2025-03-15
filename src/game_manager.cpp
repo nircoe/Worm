@@ -32,7 +32,9 @@ GameManager::GameManager(std::initializer_list<Scene*> scenes) :
         m_scenes[i]->initUI(m_font);
         ++i;
     }
-    m_activeScenes.set(0);
+    activateScene(Enums::SceneName::Home_Scene);
+
+    m_dataManager.init(*this, getGameDataPath().string());
 }
 
 void GameManager::activateScene(Enums::SceneName sceneName)
@@ -68,8 +70,23 @@ void GameManager::setSceneActive(Enums::SceneName sceneName, bool active)
 {
     int scene = static_cast<int>(sceneName);
     if(scene < 0 || m_scenes.size() <= scene) 
+    {
+        std::cerr << "Error: Invalid Scene Name" << std::endl;
         closeGame();
+    }
+        
     m_activeScenes.set(scene, active);
+}
+
+std::filesystem::path GameManager::getGameDataPath()
+{
+    std::filesystem::path path = std::filesystem::path(GetApplicationDirectory());
+    path /= "savedata";
+
+    if(!std::filesystem::exists(path))
+        std::filesystem::create_directory(path);
+    
+    return path / "gamedata.bin";
 }
 
 void GameManager::update()
@@ -126,6 +143,11 @@ const raylib::Vector2 GameManager::getCameraTarget() const
 void GameManager::resetCamera()
 {
     m_camera.SetTarget(raylib::Vector2::Zero());
+}
+
+void GameManager::newGame()
+{
+    activateScene(Enums::SceneName::New_Game_Scene);
 }
 
 int GameManager::gameLoop()

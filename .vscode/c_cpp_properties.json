@@ -5,7 +5,9 @@
             "includePath": [
                 "${workspaceFolder}/include/**",
                 "C:/Libraries/raylib-5.5/include/**",
-                "C:/Libraries/raylib-cpp-5.5.0/include/**"
+                "C:/Libraries/raylib-cpp-5.5.0/include/**",
+                "C:/Libraries/cryptopp-8.9.0/**",
+                "C:/Libraries/json-cpp/"
             ],
             "defines": [
                 "_DEBUG",
@@ -19,8 +21,7 @@
             "cStandard": "c99",
             "cppStandard": "c++17",
             "intelliSenseMode": "gcc-x64",
-            "configurationProvider": "ms-vscode.cmake-tools",
-            "compileCommands": "${workspaceFolder}/build/compile_commands.json"
+            "configurationProvider": "ms-vscode.cmake-tools"
         }
     ],
     "version": 4

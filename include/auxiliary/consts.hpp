@@ -20,7 +20,7 @@ namespace Consts
     const int TITLE_FONT_SIZE = 80;
     const int START_GAME_FONT_SIZE = 24;
     const int BUTTONS_FONT_SIZE = 20;
-    const int NUM_OF_SCENES = 2;
+    const int NUM_OF_SCENES = 3;
 
     const float PLAYER_SPEED = 23.0f;
     const float DIAGONAL_MULTIPLY = 1.352f;
