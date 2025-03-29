@@ -34,30 +34,36 @@ if (NOT raylib_cpp_FOUND)
     FetchContent_MakeAvailable(raylib_cpp)
 endif()
 
-# cryptopp
-set(CRYPTOPP_LIB_DIR "C:/Libraries/cryptopp-8.9.0/cryptopp/x64/Output/Release") # Path to cryptlib.lib
-set(CRYPTOPP_INCLUDE_DIR "C:/Libraries/cryptopp-8.9.0/") # Path to cryptopp headers
-
-# nlohmann/json
-set(JSON_INCLUDE_DIR "C:/Libraries/json-cpp/")
+add_subdirectory(external/datacoe)
 
 # This is the main part:
 # My source files here:
-file(GLOB_RECURSE SOURCES "src/*.cpp")
-add_executable(${PROJECT_NAME} ${SOURCES})
+add_executable(${PROJECT_NAME}
+    src/transform2d.cpp
+    src/button.cpp
+    src/moveable.cpp
+    src/game_object.cpp
+    src/scene.cpp
+    src/new_game_scene.cpp
+    src/home_scene.cpp
+    src/game_scene.cpp
+    src/game_manager.cpp
+    src/food.cpp
+    src/player.cpp
+    src/home_scene_player.cpp
+    src/main.cpp
+)
 
 # Add the include directory so that headers can be referenced directly
 target_include_directories(${PROJECT_NAME} PRIVATE 
-                            ${CMAKE_SOURCE_DIR}/include 
-                            ${CRYPTOPP_INCLUDE_DIR} 
-                            ${JSON_INCLUDE_DIR})
+                            ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 # Set output name based on build type
 set_target_properties(${PROJECT_NAME} PROPERTIES 
     CXX_STANDARD 17
 )
 
-target_link_libraries(${PROJECT_NAME} PRIVATE raylib raylib_cpp ${CRYPTOPP_LIB_DIR}/cryptlib.lib)
+target_link_libraries(${PROJECT_NAME} PRIVATE raylib raylib_cpp datacoe)
 
 # Treat warnings as errors
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")

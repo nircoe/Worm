@@ -22,6 +22,6 @@ public:
     
     virtual void initUI(const raylib::Font& font) = 0;
 
-    const bool isActive() const;
+    bool isActive() const;
     void setActive(bool active = true);
 };

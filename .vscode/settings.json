@@ -98,7 +98,10 @@
 		"mutex": "cpp",
 		"set": "cpp",
 		"valarray": "cpp",
-		"xtree": "cpp"
+		"xtree": "cpp",
+		"csignal": "cpp",
+		"regex": "cpp",
+		"unordered_set": "cpp"
 	},
 	"C_Cpp.default.compilerPath": "C:\\raylib\\w64devkit\\bin\\g++.exe",
 	"cmake.generator": "Ninja"

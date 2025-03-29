@@ -62,7 +62,7 @@ void Player::update()
         this->setActive(false);
 }
 
-const bool Player::checkFoodCollision(Food& food) const
+bool Player::checkFoodCollision(Food& food) const
 {
     raylib::Vector2 food_pos = food.getTransform().getPosition();
     Rectangle rec = { food_pos.x, food_pos.y, Consts::FOOD_SIZE, Consts::FOOD_SIZE };
@@ -74,7 +74,7 @@ const raylib::Vector2 Player::getHeadPosition() const
     return this->getPlayerBody().front();
 }
 
-const std::size_t Player::getScore() const
+std::size_t Player::getScore() const
 {
     return this->getPlayerBody().size() - 3;
 }
@@ -94,12 +94,12 @@ const std::deque<raylib::Vector2> Player::getPlayerBody() const
     return this->m_playerBody;
 }
 
-const bool Player::isBeginning() const
+bool Player::isBeginning() const
 {
     return m_isBeginning;
 }
 
-const bool Player::checkBodyToBodyCollision() const
+bool Player::checkBodyToBodyCollision() const
 {
     if(this->m_isBeginning) return false;
 
@@ -112,7 +112,7 @@ const bool Player::checkBodyToBodyCollision() const
     return false;
 }
 
-const bool Player::checkBodyToBorderCollision() const
+bool Player::checkBodyToBorderCollision() const
 {
     if(this->m_difficulty != Enums::Difficulty::Hard && 
         this->m_difficulty != Enums::Difficulty::Impossible) return false;

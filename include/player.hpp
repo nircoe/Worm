@@ -21,8 +21,8 @@ protected:
 
     std::deque<raylib::Vector2> m_playerBody;
 
-    const bool checkBodyToBodyCollision() const;
-    const bool checkBodyToBorderCollision() const;
+    bool checkBodyToBodyCollision() const;
+    bool checkBodyToBorderCollision() const;
     raylib::Vector2 fixGettingOffScreen(raylib::Vector2 pos) const;
     void updatePlayerBody(bool checkInnerCollisions = true);
 
@@ -37,11 +37,11 @@ public:
 
     virtual void render() const override;
 
-    const bool checkFoodCollision(Food& food) const;
+    bool checkFoodCollision(Food& food) const;
 
     const raylib::Vector2 getHeadPosition() const;
 
-    const std::size_t getScore() const;
+    std::size_t getScore() const;
 
     void handleFoodCollision();
 
@@ -49,5 +49,5 @@ public:
 
     const std::deque<raylib::Vector2> getPlayerBody() const;
 
-    const bool isBeginning() const;
+    bool isBeginning() const;
 };

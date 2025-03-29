@@ -26,6 +26,6 @@ public:
 #pragma region getters
     Transform2D& getTransform();
     const Transform2D& getTransform() const;
-    const bool isActive() const;
+    bool isActive() const;
 #pragma endregion
 };

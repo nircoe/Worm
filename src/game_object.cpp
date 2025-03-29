@@ -8,4 +8,4 @@ Transform2D& GameObject::getTransform() { return m_transform; }
 
 const Transform2D& GameObject::getTransform() const { return m_transform; }
 
-const bool GameObject::isActive() const { return m_isActive; }
+bool GameObject::isActive() const { return m_isActive; }

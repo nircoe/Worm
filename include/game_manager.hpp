@@ -6,7 +6,7 @@
 #include <filesystem>
 #include "auxiliary/enums.hpp"
 #include "auxiliary/consts.hpp"
-#include "data_management/data_manager.hpp"
+#include "data_manager.hpp"
 
 class Scene;
 
@@ -14,7 +14,7 @@ namespace raylib { class Window; class Camera2D; }
 
 class GameManager 
 {
-    DataManager m_dataManager;
+    datacoe::DataManager m_dataManager; // TODO: We need to rebase datacoe game/worm branch from main!
     raylib::Window m_window;
     int m_targetFPS;
     raylib::Camera2D m_camera;

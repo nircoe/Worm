@@ -34,7 +34,7 @@ namespace UI
 
         void setColor(const raylib::Color& newColor);
 
-        const bool isHovered(const raylib::Vector2& mousePosition);
+        bool isHovered(const raylib::Vector2& mousePosition) const;
     };
 
 }

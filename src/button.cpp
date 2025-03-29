@@ -43,7 +43,7 @@ void UI::Button::setColor(const raylib::Color& newColor)
     m_color = newColor;
 }
 
-const bool UI::Button::isHovered(const raylib::Vector2 &mousePosition)
+bool UI::Button::isHovered(const raylib::Vector2 &mousePosition) const
 {
     return CheckCollisionPointRec(mousePosition, m_rect);
 }
