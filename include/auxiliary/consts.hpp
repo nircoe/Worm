@@ -160,4 +160,30 @@ namespace Consts
         Enums::GameButton::Exit 
     };
 
+    // NEW GAME UI
+
+    const raylib::Rectangle NEW_GAME_NICKNAME_BUTTON_RECT(80, 480, 300, 60);
+    const raylib::Rectangle NEW_GAME_GUEST_BUTTON_RECT(420, 480, 300, 60);
+    const raylib::Rectangle NEW_GAME_TEXT_BOX_RECT(200, 350, 400, 60);
+
+    const std::array<const raylib::Rectangle, 2> NEW_GAME_RECTS =
+    {
+        Consts::NEW_GAME_NICKNAME_BUTTON_RECT,
+        Consts::NEW_GAME_GUEST_BUTTON_RECT
+    };
+
+    const std::array<const std::string, 2> NEW_GAME_BUTTONS_TEXT =
+    {
+        "Continue",
+        "Continue as guest"
+    };
+
+    const std::array<Enums::NewGameButton, 2> NEW_GAME_BUTTONS_ID =
+    {
+        Enums::NewGameButton::Continue,
+        Enums::NewGameButton::Guest
+    };
+
+    const std::size_t MAX_INPUT_CHARS = 24;
+
 } // namespace Consts

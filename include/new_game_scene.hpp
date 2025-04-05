@@ -7,6 +7,7 @@
 #include "auxiliary/utils.hpp"
 #include "auxiliary/enums.hpp"
 #include "ui/button.hpp"
+#include "ui/textbox.hpp"
 #include <string>
 
 namespace raylib { class Color; class Vector2; class Rectangle; }
@@ -14,17 +15,18 @@ namespace raylib { class Color; class Vector2; class Rectangle; }
 class NewGameScene : public Scene
 {
     const std::string m_titleText = "Welcome!";
-    const std::string m_subTitleText = "Please choose a nickname or continue as guest";
+    const std::string m_subtitleText = "Please choose a nickname or continue as guest";
 
     //        0        ,        1
     // Play as nickname, Play as guest
     std::array<UI::Button, 2> m_buttons;
 
-    raylib::Rectangle m_background;
     raylib::Vector2 m_titlePosition;
-    raylib::Vector2 m_subTitlePosition;
+    raylib::Vector2 m_subtitlePosition;
 
-    Enums::HomeButton m_currentClickedButton = Enums::HomeButton::None;
+    Enums::NewGameButton m_currentClickedButton = Enums::NewGameButton::None;
+
+    UI::TextBox m_textBox;
 
     void resetButtonsColor();
 
@@ -40,5 +42,5 @@ public:
     virtual void render() override;
     virtual void renderUI(const raylib::Font& font, const raylib::Camera2D& camera) override;
 
-    virtual void initUI(const raylib::Font& font) override;
+    virtual void initUI(const GameManager &gameManager) override;
 };

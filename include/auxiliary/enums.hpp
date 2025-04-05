@@ -35,4 +35,11 @@ namespace Enums
         Play_Again = 1,
         Exit = 2
     };
+
+    enum class NewGameButton
+    {
+        None = -1,
+        Continue = 0,
+        Guest = 1
+    };
 }

@@ -6,7 +6,9 @@
                 "${workspaceFolder}/include/**",
                 "C:/Libraries/raylib-5.5/include/**",
                 "C:/Libraries/raylib-cpp-5.5.0/include/**",
-                "${workspaceFolder}/external/datacoe/include/**"
+                "${workspaceFolder}/external/datacoe/include/**",
+                "${workspaceFolder}/external/datacoe/external/json/single_include",
+                "${workspaceFolder}/build/external/datacoe/external/cryptopp-cmake"
             ],
             "defines": [
                 "_DEBUG",
@@ -27,7 +29,9 @@
                 "${workspaceFolder}/include/**",
                 "C:/Libraries/raylib-5.5/include/**",
                 "C:/Libraries/raylib-cpp-5.5.0/include/**",
-                "${workspaceFolder}/external/datacoe/include/**"
+                "${workspaceFolder}/external/datacoe/include/**",
+                "${workspaceFolder}/external/datacoe/external/json/single_include",
+                "${workspaceFolder}/build/external/datacoe/external/cryptopp-cmake"
             ],
             "defines": [
                 "_DEBUG",

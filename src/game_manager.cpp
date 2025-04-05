@@ -2,11 +2,10 @@
 #include "scene.hpp"
 #include "home_scene.hpp"
 #include "game_scene.hpp"
-#include "raylib-cpp.hpp"
+#include <cstddef>
 #include <string>
 #include "auxiliary/enums.hpp"
 #include "auxiliary/colors.hpp"
-#include <algorithm>
 #include <iostream>
 #include <exception>
 
@@ -24,17 +23,23 @@ GameManager::GameManager(std::initializer_list<Scene*> scenes) :
     {
         if(i >= Consts::NUM_OF_SCENES)
         {
-            TraceLog(LOG_WARNING, "Too many scenes provided, will take only " + Consts::NUM_OF_SCENES);
+            std::string message = "Too many scenes provided, will take only " + std::to_string(Consts::NUM_OF_SCENES);
+            TraceLog(LOG_WARNING, message.c_str());
             fflush(stdout);
             break;
         }
         m_scenes[i] = scene;
-        m_scenes[i]->initUI(m_font);
+        m_scenes[i]->initUI(*this);
         ++i;
     }
-    activateScene(Enums::SceneName::Home_Scene);
 
-    m_dataManager.init(*this, getGameDataPath().string());
+    if (m_dataManager.init(getGameDataPath().string()))
+        activateScene(Enums::SceneName::Home_Scene);
+    else // failed to load, start new game
+    {
+        m_window.SetTargetFPS(60);
+        activateScene(Enums::SceneName::New_Game_Scene);
+    }
 }
 
 void GameManager::activateScene(Enums::SceneName sceneName)
@@ -69,12 +74,12 @@ void GameManager::changeDifficulty(Enums::Difficulty newDifficulty)
 void GameManager::setSceneActive(Enums::SceneName sceneName, bool active)
 {
     int scene = static_cast<int>(sceneName);
-    if(scene < 0 || m_scenes.size() <= scene) 
+    if (scene < 0 || static_cast<int>(m_scenes.size()) <= scene)
     {
         std::cerr << "Error: Invalid Scene Name" << std::endl;
         closeGame();
     }
-        
+    m_scenes[scene]->setActive(active);
     m_activeScenes.set(scene, active);
 }
 
@@ -122,7 +127,7 @@ void GameManager::renderUI()
     }
 }
 
-const raylib::Font &GameManager::getFont()
+const raylib::Font &GameManager::getFont() const
 {
     return m_font;
 }
@@ -130,7 +135,6 @@ const raylib::Font &GameManager::getFont()
 void GameManager::moveCamera(raylib::Vector2 velocity)
 {
     raylib::Vector2 target = m_camera.target;
-    const auto deltaTime = GetFrameTime();
     raylib::Vector2 newValue = target + (velocity);
     m_camera.SetTarget(newValue);
 }
@@ -145,9 +149,20 @@ void GameManager::resetCamera()
     m_camera.SetTarget(raylib::Vector2::Zero());
 }
 
-void GameManager::newGame()
+void GameManager::newGame(const std::string& nickname)
 {
-    activateScene(Enums::SceneName::New_Game_Scene);
+    m_dataManager.newGame(nickname);
+}
+
+const datacoe::GameData GameManager::getGamedata() const
+{
+    return m_dataManager.getGamedata();
+}
+
+bool GameManager::saveGame(const datacoe::GameData &data)
+{
+    m_dataManager.setGamedata(data);
+    return m_dataManager.saveGame();
 }
 
 int GameManager::gameLoop()

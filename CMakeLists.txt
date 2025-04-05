@@ -41,6 +41,7 @@ add_subdirectory(external/datacoe)
 add_executable(${PROJECT_NAME}
     src/transform2d.cpp
     src/button.cpp
+    src/textbox.cpp
     src/moveable.cpp
     src/game_object.cpp
     src/scene.cpp

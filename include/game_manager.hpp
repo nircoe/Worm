@@ -4,9 +4,9 @@
 #include <bitset>
 #include <initializer_list>
 #include <filesystem>
+#include <datacoe/data_manager.hpp>
 #include "auxiliary/enums.hpp"
 #include "auxiliary/consts.hpp"
-#include "data_manager.hpp"
 
 class Scene;
 
@@ -14,7 +14,7 @@ namespace raylib { class Window; class Camera2D; }
 
 class GameManager 
 {
-    datacoe::DataManager m_dataManager; // TODO: We need to rebase datacoe game/worm branch from main!
+    datacoe::DataManager m_dataManager;
     raylib::Window m_window;
     int m_targetFPS;
     raylib::Camera2D m_camera;
@@ -42,7 +42,7 @@ public:
     void render();
     void renderUI();
 
-    const raylib::Font& getFont();
+    const raylib::Font& getFont() const;
 
     void moveCamera(raylib::Vector2 velocity);
 
@@ -50,7 +50,10 @@ public:
 
     void resetCamera();
 
-    void newGame();
+    void newGame(const std::string& nickname = "");
+
+    const datacoe::GameData getGamedata() const;
+    bool saveGame(const datacoe::GameData &data);
 
     int gameLoop();
 };

@@ -14,12 +14,14 @@ namespace raylib { class Color; class Vector2; class Rectangle; }
 class HomeScene : public Scene
 {
     const std::string m_titleText = "Worm";
+    std::string m_welcomeText = "Welcome";
 
     //  0  ,  1  ,  2  ,   3   ,  4  ,     5
     // Play, Exit, Easy, Medium, Hard, Impossible
     std::array<UI::Button, 6> m_buttons;
 
     raylib::Vector2 m_titlePosition;
+    raylib::Vector2 m_welcomePosition;
 
     Enums::Difficulty m_difficulty = Consts::STARTING_DIFFICULTY;
     Enums::HomeButton m_currentClickedButton = Enums::HomeButton::None;
@@ -44,5 +46,5 @@ public:
 
     Enums::Difficulty getDifficulty() const;
 
-    virtual void initUI(const raylib::Font& font) override;
+    virtual void initUI(const GameManager &gameManager) override;
 };

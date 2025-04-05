@@ -11,7 +11,7 @@ Player::Player(raylib::Vector2 initialPosition, const float speed, Enums::Diffic
 
 void Player::render() const
 {
-    for (auto& it = m_playerBody.rbegin(); it != m_playerBody.rend(); ++it)
+    for (auto it = m_playerBody.rbegin(); it != m_playerBody.rend(); ++it)
     {
         float radius = (m_playerBody.front().Equals(*it)) ? Consts::PLAYER_HEAD_RADIUS : Consts::PLAYER_BODY_RADIUS;
         Color color = (m_playerBody.front().Equals(*it)) ? Colors::WORM_HEAD_COLOR : Colors::WORM_BODY_COLOR;

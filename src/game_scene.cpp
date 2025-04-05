@@ -1,4 +1,5 @@
 #include "game_scene.hpp"
+#include <datacoe/game_data.hpp>
 
 GameScene::GameScene(Enums::Difficulty difficulty) : m_player(raylib::Vector2(), Consts::PLAYER_SPEED, difficulty),
       m_food(Utils::getFoodSpawnPoint(Consts::INITIAL_PLAYER_BODY)),
@@ -28,6 +29,7 @@ void GameScene::update(GameManager& gameManager)
         this->m_gameOver = true;
         resetScoreText(gameManager.getFont());
         this->m_food.setActive(false);
+        saveGame(gameManager);
     }
 
     if(this->m_gameOver)
@@ -66,7 +68,7 @@ void GameScene::render()
     m_food.render();
 }
 
-void GameScene::renderUI(const raylib::Font& font, const raylib::Camera2D& camera)
+void GameScene::renderUI(const raylib::Font& font, const raylib::Camera2D& /*camera*/)
 {
     if(m_isBeginning)
         DrawTextEx(font, m_startText, m_startTextPosition, Consts::START_GAME_FONT_SIZE, 1, Colors::TEXT_COLOR);
@@ -88,13 +90,14 @@ void GameScene::changeDifficulty(Enums::Difficulty newDifficulty)
     m_player.changeDifficulty(newDifficulty);
 }
 
-const Enums::Difficulty GameScene::getDifficulty() const
+Enums::Difficulty GameScene::getDifficulty() const
 {
     return m_difficulty;
 }
 
-void GameScene::initUI(const raylib::Font &font)
+void GameScene::initUI(const GameManager &gameManager)
 {
+    auto& font = gameManager.getFont();
     m_startTextPosition = Utils::centralizeTextEx(font, m_startText.c_str(), Consts::START_GAME_FONT_SIZE, raylib::Vector2::Zero(), 
         { Consts::SCREEN_WIDTH, Consts::SCREEN_HEIGHT / 2});
 
@@ -160,6 +163,9 @@ void GameScene::gameOver(const raylib::Font &font) const
     raylib::DrawTextEx(font, m_scoreText.c_str(), m_scoreTextPosition, 
         Consts::GAME_OVER_FONT_SIZE, 1, Colors::TEXT_COLOR);
 
+    raylib::DrawTextEx(font, m_highscoreText.c_str(), m_highscoreTextPosition,
+                       Consts::GAME_OVER_FONT_SIZE, 1, Colors::TEXT_COLOR);
+
     for(auto& button : m_buttons)
     {
         button.render(font);
@@ -191,4 +197,32 @@ void GameScene::resetScoreText(const raylib::Font& font)
     m_scoreTextPosition = Utils::centralizeTextEx(font, m_scoreText.c_str(), Consts::GAME_OVER_FONT_SIZE, 
         raylib::Vector2::Zero(), Consts::SCREEN_SIZE);
     m_scoreTextPosition.y = m_gameOverTextPosition.y + (Consts::GAME_OVER_TO_SCORE_GAP * 2);
+    
+}
+
+void GameScene::saveGame(GameManager &gameManager)
+{
+    datacoe::GameData data = gameManager.getGamedata();
+    auto highscores = data.getHighscores();
+    int index;
+    if (m_difficulty == Enums::Difficulty::Easy)
+        index = 0;
+    else if (m_difficulty == Enums::Difficulty::Medium)
+        index = 1;
+    else if (m_difficulty == Enums::Difficulty::Hard)
+        index = 2;
+    else
+        index = 3;
+
+    auto score = m_player.getScore();
+    if (highscores[index] < score)
+        highscores[index] = score;
+
+    m_highscoreText = "Your Highscore: " + std::to_string(highscores[index]);
+    m_highscoreTextPosition = Utils::centralizeTextEx(gameManager.getFont(), m_highscoreText.c_str(), Consts::GAME_OVER_FONT_SIZE,
+                                                      raylib::Vector2::Zero(), Consts::SCREEN_SIZE);
+    m_highscoreTextPosition.y = m_gameOverTextPosition.y + (Consts::GAME_OVER_TO_SCORE_GAP * 4);
+
+    data.setHighscores(highscores);
+    gameManager.saveGame(data);
 }

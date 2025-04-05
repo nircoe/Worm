@@ -20,7 +20,7 @@ public:
     virtual void render() = 0;
     virtual void renderUI(const raylib::Font& font, const raylib::Camera2D& camera) = 0;
     
-    virtual void initUI(const raylib::Font& font) = 0;
+    virtual void initUI(const GameManager& gameManager) = 0;
 
     bool isActive() const;
     void setActive(bool active = true);

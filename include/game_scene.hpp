@@ -25,9 +25,11 @@ class GameScene : public Scene
 
     const std::string m_startText = "Start Moving With The Arrow Buttons!";
     std::string m_scoreText;
+    std::string m_highscoreText;
     raylib::Vector2 m_startTextPosition;
     raylib::Vector2 m_gameOverTextPosition;
     raylib::Vector2 m_scoreTextPosition;
+    raylib::Vector2 m_highscoreTextPosition;
 
     std::array<UI::Button, 3> m_buttons;
     Enums::GameButton m_currentClickedButton = Enums::GameButton::None;
@@ -35,8 +37,6 @@ class GameScene : public Scene
     bool m_isBeginning;
     bool m_gameOver;
     std::size_t m_score = 0;
-    
-    const int GAME_OVER_TEXT_WIDTH = Utils::centerlizeTextX(Consts::GAME_OVER_TEXT.c_str(), Consts::GAME_OVER_FONT_SIZE);
 
     virtual raylib::Color checkButton(GameManager& gameManager, const raylib::Color &hoverColor, 
         const raylib::Color& clickedColor, int buttonId) override; 
@@ -48,6 +48,8 @@ class GameScene : public Scene
     void resetButtonsColor();
 
     void resetScoreText(const raylib::Font& font);
+
+    void saveGame(GameManager &gameManager);
 
 public:
     GameScene() = default;
@@ -64,7 +66,7 @@ public:
 
     void changeDifficulty(Enums::Difficulty newDifficulty);
 
-    const Enums::Difficulty getDifficulty() const;
+    Enums::Difficulty getDifficulty() const;
 
-    virtual void initUI(const raylib::Font& font) override;
+    virtual void initUI(const GameManager &gameManager) override;
 };

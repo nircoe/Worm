@@ -23,6 +23,16 @@ void HomeScene::update(GameManager& gameManager)
         return;
     }
 
+    auto nickname = gameManager.getGamedata().getNickname();
+    if (m_welcomeText == "Welcome")
+    {
+        m_welcomeText += nickname.empty() ? nickname : " " + nickname;
+        m_welcomeText += "!";
+        m_welcomePosition = Utils::centralizeTextEx(gameManager.getFont(), m_welcomeText.c_str(), 24, raylib::Vector2::Zero(),
+                                                    {Consts::SCREEN_WIDTH, 300.0f});
+        m_welcomePosition.y = m_titlePosition.y + 80.0f;
+    }
+
     m_player.update();
     resetButtonsColor();
     raylib::Vector2 mousePosition = GetMousePosition();
@@ -47,7 +57,8 @@ void HomeScene::render()
 void HomeScene::renderUI(const raylib::Font& font, const raylib::Camera2D& camera)
 {
     raylib::DrawTextEx(font, m_titleText, camera.GetWorldToScreen(m_titlePosition), Consts::TITLE_FONT_SIZE, 1, Colors::TEXT_COLOR);
-    for(auto& button : m_buttons)
+    raylib::DrawTextEx(font, m_welcomeText, camera.GetWorldToScreen(m_welcomePosition), 24, 1, Colors::TEXT_COLOR);
+    for (auto &button : m_buttons)
     {
         button.render(font, camera);
     }
@@ -58,8 +69,9 @@ Enums::Difficulty HomeScene::getDifficulty() const
     return m_difficulty;
 }
 
-void HomeScene::initUI(const raylib::Font &font)
+void HomeScene::initUI(const GameManager &gameManager)
 {
+    auto &font = gameManager.getFont();
     m_titlePosition = Utils::centralizeTextEx(font, m_titleText.c_str(), 
                                             Consts::TITLE_FONT_SIZE, raylib::Vector2::Zero(), 
                                             { Consts::SCREEN_WIDTH, 300.0f});
