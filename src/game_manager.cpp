@@ -18,10 +18,10 @@ GameManager::GameManager(std::initializer_list<Scene*> scenes) :
     m_window.SetTargetFPS(static_cast<int>(Enums::Difficulty::Easy));
     m_window.SetIcon(m_iconImage);
 
-    size_t i = 0;
-    for(Scene* scene: scenes)
+    std::size_t i = 0;
+    for (Scene *scene : scenes)
     {
-        if(i >= Consts::NUM_OF_SCENES)
+        if (i >= Consts::NUM_OF_SCENES)
         {
             std::string message = "Too many scenes provided, will take only " + std::to_string(Consts::NUM_OF_SCENES);
             TraceLog(LOG_WARNING, message.c_str());
@@ -29,7 +29,7 @@ GameManager::GameManager(std::initializer_list<Scene*> scenes) :
             break;
         }
         m_scenes[i] = scene;
-        m_scenes[i]->initUI(*this);
+        deactivateScene(static_cast<Enums::SceneName>(i));
         ++i;
     }
 
@@ -39,6 +39,11 @@ GameManager::GameManager(std::initializer_list<Scene*> scenes) :
     {
         m_window.SetTargetFPS(60);
         activateScene(Enums::SceneName::New_Game_Scene);
+    }
+    for(auto& scene : m_scenes)
+    {
+        if(scene->isActive())
+            scene->initUI(*this);
     }
 }
 
@@ -52,6 +57,7 @@ void GameManager::activateScene(Enums::SceneName sceneName)
         GameScene* gameScene = static_cast<GameScene*>(m_scenes[static_cast<int>(sceneName)]);
         gameScene->changeDifficulty(difficulty);
     }
+    m_scenes[static_cast<int>(sceneName)]->initUI(*this);
 }
 
 void GameManager::deactivateScene(Enums::SceneName sceneName)
@@ -96,34 +102,28 @@ std::filesystem::path GameManager::getGameDataPath()
 
 void GameManager::update()
 {
-    for(std::size_t i = 0; i < Consts::NUM_OF_SCENES; ++i)
+    for(auto scene : m_scenes)
     {
-        if(m_activeScenes.test(i))
-        {
-            m_scenes[i]->update(*this);
-        }
+        if(scene->isActive())
+            scene->update(*this);
     }
 }
 
 void GameManager::render()
 {
-    for(std::size_t i = 0; i < Consts::NUM_OF_SCENES; ++i)
+    for (auto scene : m_scenes)
     {
-        if(m_activeScenes.test(i))
-        {
-            m_scenes[i]->render();
-        }
+        if (scene->isActive())
+            scene->render();
     }
 }
 
 void GameManager::renderUI()
 {
-    for(std::size_t i = 0; i < Consts::NUM_OF_SCENES; ++i)
+    for (auto scene : m_scenes)
     {
-        if(m_activeScenes.test(i))
-        {
-            m_scenes[i]->renderUI(m_font, m_camera);
-        }
+        if (scene->isActive())
+            scene->renderUI(m_font, m_camera);
     }
 }
 

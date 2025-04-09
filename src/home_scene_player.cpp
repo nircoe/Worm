@@ -4,6 +4,8 @@
 HomeScenePlayer::HomeScenePlayer(raylib::Vector2 initialPosition, const float speed, Enums::Difficulty difficulty) : 
     Player(initialPosition, speed, difficulty)
 {
+    for(auto& it : m_playerBody)
+        it += initialPosition;
     m_moveable.setVelocity({ Consts::PLAYER_SPEED });
 }
 

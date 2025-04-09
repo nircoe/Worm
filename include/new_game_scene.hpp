@@ -8,12 +8,15 @@
 #include "auxiliary/enums.hpp"
 #include "ui/button.hpp"
 #include "ui/textbox.hpp"
+#include "ui/text.hpp"
 #include <string>
 
 namespace raylib { class Color; class Vector2; class Rectangle; }
 
 class NewGameScene : public Scene
 {
+    UI::Text m_title;
+    UI::Text m_subtitle;
     const std::string m_titleText = "Welcome!";
     const std::string m_subtitleText = "Please choose a nickname or continue as guest";
 

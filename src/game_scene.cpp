@@ -102,7 +102,7 @@ void GameScene::initUI(const GameManager &gameManager)
         { Consts::SCREEN_WIDTH, Consts::SCREEN_HEIGHT / 2});
 
     m_gameOverTextPosition = Utils::centralizeTextEx(font, Consts::GAME_OVER_TEXT.c_str(), 
-        Consts::GAME_OVER_FONT_SIZE, raylib::Vector2::Zero(), { Consts::SCREEN_WIDTH, Consts::SCREEN_HEIGHT * (2.0f / 3.0f) });
+        Consts::GAME_OVER_FONT_SIZE + 10.0f, raylib::Vector2::Zero(), { Consts::SCREEN_WIDTH, Consts::SCREEN_HEIGHT * (2.0f / 3.0f) });
     m_gameOverTextPosition.y -= Consts::GAME_OVER_TO_SCORE_GAP;
 
 
@@ -158,13 +158,13 @@ void GameScene::gameOver(const raylib::Font &font) const
     float textHeight = Consts::SCREEN_HEIGHT;
     textHeight *= (m_player.getHeadPosition().y > Consts::HALF_SCREEN.y) ? 0.25f : 0.75f;
     raylib::DrawTextEx(font, Consts::GAME_OVER_TEXT.c_str(), m_gameOverTextPosition, 
-        Consts::GAME_OVER_FONT_SIZE, 1, Colors::TEXT_COLOR);
+        Consts::GAME_OVER_FONT_SIZE + 10.0f, 1, Colors::TEXT_COLOR);
 
     raylib::DrawTextEx(font, m_scoreText.c_str(), m_scoreTextPosition, 
-        Consts::GAME_OVER_FONT_SIZE, 1, Colors::TEXT_COLOR);
+        30.0f, 1, Colors::TEXT_COLOR);
 
     raylib::DrawTextEx(font, m_highscoreText.c_str(), m_highscoreTextPosition,
-                       Consts::GAME_OVER_FONT_SIZE, 1, Colors::TEXT_COLOR);
+        30.0f, 1, Colors::TEXT_COLOR);
 
     for(auto& button : m_buttons)
     {
@@ -194,9 +194,9 @@ void GameScene::resetScoreText(const raylib::Font& font)
 {
     m_score = m_player.getScore();
     m_scoreText = "Your Score: " + std::to_string(m_score);
-    m_scoreTextPosition = Utils::centralizeTextEx(font, m_scoreText.c_str(), Consts::GAME_OVER_FONT_SIZE, 
+    m_scoreTextPosition = Utils::centralizeTextEx(font, m_scoreText.c_str(), Consts::GAME_OVER_FONT_SIZE - 10.0f, 
         raylib::Vector2::Zero(), Consts::SCREEN_SIZE);
-    m_scoreTextPosition.y = m_gameOverTextPosition.y + (Consts::GAME_OVER_TO_SCORE_GAP * 2);
+    m_scoreTextPosition.y = m_gameOverTextPosition.y + (Consts::GAME_OVER_TO_SCORE_GAP * 3);
     
 }
 
@@ -219,7 +219,7 @@ void GameScene::saveGame(GameManager &gameManager)
         highscores[index] = score;
 
     m_highscoreText = "Your Highscore: " + std::to_string(highscores[index]);
-    m_highscoreTextPosition = Utils::centralizeTextEx(gameManager.getFont(), m_highscoreText.c_str(), Consts::GAME_OVER_FONT_SIZE,
+    m_highscoreTextPosition = Utils::centralizeTextEx(gameManager.getFont(), m_highscoreText.c_str(), Consts::GAME_OVER_FONT_SIZE - 10.0f,
                                                       raylib::Vector2::Zero(), Consts::SCREEN_SIZE);
     m_highscoreTextPosition.y = m_gameOverTextPosition.y + (Consts::GAME_OVER_TO_SCORE_GAP * 4);
 

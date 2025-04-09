@@ -88,10 +88,14 @@ void NewGameScene::renderUI(const raylib::Font &font, const raylib::Camera2D &ca
 void NewGameScene::initUI(const GameManager &gameManager)
 {
   auto &font = gameManager.getFont();
+  m_title.init("Welcome!", Colors::TEXT_COLOR, 70.0f, 
+    {0.0f, 0.0f, Consts::SCREEN_WIDTH, 350.0f}, &font);
   m_titlePosition = Utils::centralizeTextEx(font, m_titleText.c_str(),
                                             70, raylib::Vector2::Zero(),
                                             {Consts::SCREEN_WIDTH, 350.0f});
 
+  m_subtitle.init("Please choose a nickname or continue as guest", Colors::TEXT_COLOR, 20.0f, 
+    {0.0f, 80.0f, Consts::SCREEN_HEIGHT, 350.0f}, &font);
   m_subtitlePosition = Utils::centralizeTextEx(font, m_subtitleText.c_str(),
                                                20, raylib::Vector2::Zero(),
                                                {Consts::SCREEN_WIDTH, 350.0f});

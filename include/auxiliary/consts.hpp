@@ -50,8 +50,8 @@ namespace Consts
         { SCREEN_WIDTH - 30.0f, -1.0f, 30.0f, SCREEN_HEIGHT + 1.0f }
     };
 
-    const raylib::Rectangle PLAY_BUTTON_RECT(300, 450, 200, 60);
-    const raylib::Rectangle EXIT_BUTTON_RECT(300, 520, 200, 60);
+    const raylib::Rectangle PLAY_BUTTON_RECT(300, 520, 200, 60);
+    const raylib::Rectangle EXIT_BUTTON_RECT(300, 590, 200, 60);
     const raylib::Rectangle EASY_BUTTON_RECT(60, 250, 150, 70);
     const raylib::Rectangle MEDIUM_BUTTON_RECT(230, 250, 150, 70);
     const raylib::Rectangle HARD_BUTTON_RECT(395, 250, 150, 70);

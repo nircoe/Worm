@@ -7,14 +7,21 @@
 #include "auxiliary/utils.hpp"
 #include "auxiliary/enums.hpp"
 #include "ui/button.hpp"
+#include "ui/text.hpp"
 #include <string>
 
 namespace raylib { class Color; class Vector2; class Rectangle; }
 
 class HomeScene : public Scene
 {
+    UI::Text m_title;
+    UI::Text m_welcome;
+    UI::Text m_highscoreTitle;
+    std::array<UI::Text, 4> m_highscores;
     const std::string m_titleText = "Worm";
     std::string m_welcomeText = "Welcome";
+
+    std::string m_nickname = "";
 
     //  0  ,  1  ,  2  ,   3   ,  4  ,     5
     // Play, Exit, Easy, Medium, Hard, Impossible
