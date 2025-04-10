@@ -23,7 +23,6 @@ class GameManager
     raylib::Font m_font;
     const raylib::Image m_iconImage;
     bool m_shouldClose = false;
-    bool m_startGame = true;
 
     void setSceneActive(Enums::SceneName sceneName, bool active = true);
 

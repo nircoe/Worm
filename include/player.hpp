@@ -10,10 +10,10 @@
 #include "auxiliary/colors.hpp"
 #include <deque>
 
-class Player : public GameObject 
+class Player : public GameObject
 {
 protected:
-    Moveable m_moveable; 
+    Moveable m_moveable;
     Enums::Difficulty m_difficulty;
 
     int m_beginningFrames;
@@ -27,8 +27,8 @@ protected:
     void updatePlayerBody(bool checkInnerCollisions = true);
 
 public:
-    Player() = delete;
-    
+    Player() = default;
+
     Player(raylib::Vector2 initialPosition, const float speed, Enums::Difficulty difficulty);
 
     virtual ~Player() override = default;
@@ -37,7 +37,7 @@ public:
 
     virtual void render() const override;
 
-    bool checkFoodCollision(Food& food) const;
+    bool checkFoodCollision(Food &food) const;
 
     const raylib::Vector2 getHeadPosition() const;
 

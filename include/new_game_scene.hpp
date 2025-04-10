@@ -27,8 +27,8 @@ class NewGameScene : public Scene
 
     void resetButtonsColor();
 
-    virtual raylib::Color checkButton(GameManager& gameManager, const raylib::Color &hoverColor, 
-        const raylib::Color& clickedColor, int buttonId) override;
+    virtual raylib::Color checkButton(GameManager &gameManager, const raylib::Color &hoverColor,
+                                      const raylib::Color &clickedColor, std::size_t buttonId) override;
 
     bool checkEnterKey(GameManager &gameManager);
 

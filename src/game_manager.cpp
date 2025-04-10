@@ -52,12 +52,12 @@ void GameManager::activateScene(Enums::SceneName sceneName)
     setSceneActive(sceneName, true);
     if(sceneName == Enums::SceneName::Game_Scene)
     {
-        HomeScene* homeScene = static_cast<HomeScene*>(m_scenes[static_cast<int>(Enums::SceneName::Home_Scene)]);
+        HomeScene* homeScene = static_cast<HomeScene*>(m_scenes[static_cast<std::size_t>(Enums::SceneName::Home_Scene)]);
         Enums::Difficulty difficulty = homeScene->getDifficulty();
-        GameScene* gameScene = static_cast<GameScene*>(m_scenes[static_cast<int>(sceneName)]);
+        GameScene *gameScene = static_cast<GameScene *>(m_scenes[static_cast<std::size_t>(sceneName)]);
         gameScene->changeDifficulty(difficulty);
     }
-    m_scenes[static_cast<int>(sceneName)]->initUI(*this);
+    m_scenes[static_cast<std::size_t>(sceneName)]->initUI(*this);
 }
 
 void GameManager::deactivateScene(Enums::SceneName sceneName)
@@ -79,11 +79,12 @@ void GameManager::changeDifficulty(Enums::Difficulty newDifficulty)
 
 void GameManager::setSceneActive(Enums::SceneName sceneName, bool active)
 {
-    int scene = static_cast<int>(sceneName);
-    if (scene < 0 || static_cast<int>(m_scenes.size()) <= scene)
+    std::size_t scene = static_cast<std::size_t>(sceneName);
+    if (m_scenes.size() <= scene)
     {
         std::cerr << "Error: Invalid Scene Name" << std::endl;
         closeGame();
+        return;
     }
     m_scenes[scene]->setActive(active);
     m_activeScenes.set(scene, active);

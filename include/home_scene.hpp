@@ -33,9 +33,9 @@ class HomeScene : public Scene
 
     void resetButtonsColor();
     void resetDifficultyButtonsColor();
-    void checkDifficultyButton(); 
-    virtual raylib::Color checkButton(GameManager& gameManager, const raylib::Color &hoverColor, 
-        const raylib::Color& clickedColor, int buttonId) override;
+    void checkDifficultyButton();
+    virtual raylib::Color checkButton(GameManager &gameManager, const raylib::Color &hoverColor,
+                                      const raylib::Color &clickedColor, std::size_t buttonId) override;
 
 public:
     HomeScene();

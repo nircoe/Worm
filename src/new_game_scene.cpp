@@ -10,7 +10,7 @@ void NewGameScene::resetButtonsColor()
   m_buttons[1].setColor(Colors::BUTTON_BASE_COLOR);
 }
 
-raylib::Color NewGameScene::checkButton(GameManager &gameManager, const raylib::Color &hoverColor, const raylib::Color &clickedColor, int buttonId)
+raylib::Color NewGameScene::checkButton(GameManager &gameManager, const raylib::Color &hoverColor, const raylib::Color &clickedColor, std::size_t buttonId)
 {
   auto button = static_cast<Enums::NewGameButton>(buttonId);
   const std::string &text = m_textBox.getText();
@@ -51,7 +51,7 @@ bool NewGameScene::checkEnterKey(GameManager &gameManager)
   gameManager.newGame(text);
   gameManager.activateScene(Enums::SceneName::Home_Scene);
   gameManager.deactivateScene(Enums::SceneName::New_Game_Scene);
-  m_buttons[static_cast<int>(Enums::NewGameButton::Continue)].setColor(Colors::BUTTON_CLICKED_COLOR);
+  m_buttons[static_cast<std::size_t>(Enums::NewGameButton::Continue)].setColor(Colors::BUTTON_CLICKED_COLOR);
 
   return true;
 }
@@ -70,8 +70,8 @@ void NewGameScene::update(GameManager &gameManager)
     if (m_buttons[i].isHovered(mousePosition))
     {
       m_buttons[i].setColor(checkButton(gameManager, Colors::BUTTON_HOVER_COLOR,
-        Colors::BUTTON_CLICKED_COLOR,
-        static_cast<int>(Consts::NEW_GAME_BUTTONS_ID[i])));
+                                        Colors::BUTTON_CLICKED_COLOR,
+                                        static_cast<std::size_t>(Consts::NEW_GAME_BUTTONS_ID[i])));
       break;
     }
   }

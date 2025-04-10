@@ -104,6 +104,5 @@
 		"unordered_set": "cpp",
 		"text_encoding": "cpp"
 	},
-	"C_Cpp.default.compilerPath": "C:/w64devkit/bin/g++.exe",
 	"cmake.generator": "Ninja"
 }

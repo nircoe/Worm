@@ -1,10 +1,11 @@
 #include "ui/text.hpp"
 #include "auxiliary/utils.hpp"
-#include "text.hpp"
 
 void UI::Text::calculateRect()
 {
-    raylib::Vector2 textSize = m_font ? MeasureTextEx(*m_font, m_text.c_str(), m_fontSize, m_spacing) : raylib::Vector2(MeasureText(m_text.c_str(), m_fontSize), m_fontSize);
+    raylib::Vector2 textSize = m_font ? 
+        MeasureTextEx(*m_font, m_text.c_str(), m_fontSize, m_spacing) : 
+        raylib::Vector2((float)MeasureText(m_text.c_str(), (int)m_fontSize), m_fontSize);
     m_rect = raylib::Rectangle(m_textPosition, textSize);
 }
 

@@ -43,8 +43,8 @@ void GameScene::update(GameManager& gameManager)
             if(m_buttons[i].isHovered(mousePosition))
             {
                 m_buttons[i].setColor(checkButton(gameManager, Colors::BUTTON_HOVER_COLOR, 
-                Colors::BUTTON_CLICKED_COLOR, 
-                static_cast<int>(Consts::GAME_OVER_BUTTONS_ID[i])));
+                                                Colors::BUTTON_CLICKED_COLOR, 
+                                                static_cast<std::size_t>(Consts::GAME_OVER_BUTTONS_ID[i])));
                 break;
             }
         }
@@ -118,7 +118,7 @@ void GameScene::initUI(const GameManager &gameManager)
     }
 }
 
-raylib::Color GameScene::checkButton(GameManager &gameManager, const raylib::Color &hoverColor, const raylib::Color &clickedColor, int buttonId)
+raylib::Color GameScene::checkButton(GameManager &gameManager, const raylib::Color &hoverColor, const raylib::Color &clickedColor, std::size_t buttonId)
 {
     auto button = static_cast<Enums::GameButton>(buttonId);
     if(IsMouseButtonReleased(MOUSE_BUTTON_LEFT) && m_currentClickedButton == button)

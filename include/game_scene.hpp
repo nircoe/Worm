@@ -36,8 +36,8 @@ class GameScene : public Scene
     bool m_gameOver;
     std::size_t m_score = 0;
 
-    virtual raylib::Color checkButton(GameManager& gameManager, const raylib::Color &hoverColor, 
-        const raylib::Color& clickedColor, int buttonId) override; 
+    virtual raylib::Color checkButton(GameManager &gameManager, const raylib::Color &hoverColor,
+                                      const raylib::Color &clickedColor, std::size_t buttonId) override;
 
     void restart();
 

@@ -32,7 +32,7 @@ void HomeScene::update(GameManager &gameManager)
         {
             m_buttons[i].setColor(checkButton(gameManager, Consts::HOME_BUTTONS_HOVER_COLORS[i],
                                               Consts::HOME_BUTTONS_CLICKED_COLORS[i],
-                                              static_cast<int>(Consts::HOME_BUTTONS_IDS[i])));
+                                              static_cast<std::size_t>(Consts::HOME_BUTTONS_IDS[i])));
             break;
         }
     }
@@ -125,7 +125,7 @@ void HomeScene::checkDifficultyButton()
 }
 
 raylib::Color HomeScene::checkButton(GameManager &gameManager, const raylib::Color &hoverColor,
-                                     const raylib::Color &clickedColor, int buttonId)
+                                     const raylib::Color &clickedColor, std::size_t buttonId)
 {
     auto button = static_cast<Enums::HomeButton>(buttonId);
     if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT) && m_currentClickedButton == button)
@@ -146,7 +146,7 @@ raylib::Color HomeScene::checkButton(GameManager &gameManager, const raylib::Col
         m_currentClickedButton = Enums::HomeButton::None;
         return clickedColor;
     }
-    
+
     if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && m_currentClickedButton == button)
         return clickedColor;
 

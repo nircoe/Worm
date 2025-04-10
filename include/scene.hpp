@@ -9,8 +9,8 @@ class Scene
     bool m_isActive;
 
 protected:
-    virtual raylib::Color checkButton(GameManager& gameManager, const raylib::Color &hoverColor, 
-        const raylib::Color& clickedColor, int buttonId) = 0; 
+    virtual raylib::Color checkButton(GameManager &gameManager, const raylib::Color &hoverColor,
+                                      const raylib::Color &clickedColor, std::size_t buttonId) = 0;
 
 public:
     Scene(bool active = true);
