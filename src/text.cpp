@@ -75,6 +75,12 @@ void UI::Text::setText(const std::string &text)
     calculateRect();
 }
 
+void UI::Text::setText(const std::string &text, const raylib::Rectangle &area)
+{
+    m_text = text;
+    centralizeText(area);
+}
+
 void UI::Text::setTextPosition(const raylib::Vector2 &pos)
 {
     m_textPosition = pos;
@@ -114,4 +120,40 @@ float UI::Text::getFontSize() const { return m_fontSize; }
 
 const raylib::Font *UI::Text::getFont() const { return m_font; }
 
+std::size_t UI::Text::length() const
+{
+    return m_text.length();
+}
+
 bool UI::Text::isHovered(const raylib::Vector2 &mousePosition) const { return CheckCollisionPointRec(mousePosition, m_rect); }
+
+UI::Text &UI::Text::operator+=(const std::string &addition)
+{
+    m_text += addition;
+    return *this;
+}
+
+UI::Text &UI::Text::operator+=(const char addition)
+{
+    m_text += addition;
+    return *this;
+}
+
+UI::Text &UI::Text::operator+=(const char *addition)
+{
+    m_text += addition;
+    return *this;
+}
+
+UI::Text &UI::Text::operator--()
+{
+    m_text = m_text.substr(0, length() - 1);
+    return *this;
+}
+
+const UI::Text UI::Text::operator--(int)
+{
+    const UI::Text text(*this);
+    --(*this);
+    return text;
+}

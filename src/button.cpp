@@ -1,50 +1,31 @@
 #include "ui/button.hpp"
 #include "auxiliary/utils.hpp"
-#include "button.hpp"
 
-UI::Button::Button(raylib::Color color, raylib::Rectangle rect, raylib::Color textColor, std::string text, 
-    float fontSize, const raylib::Font *font = nullptr) : 
+UI::Button::Button(const raylib::Color &color, const raylib::Rectangle &rect, const raylib::Color &textColor, const std::string &text,
+    const float fontSize, const raylib::Font *font) : 
     m_color(color),
     m_rect(rect),
-    m_text(text, textColor, fontSize, rect, font)
-    // m_textColor(textColor),
-    // m_text(text),
-    // m_fontSize(fontSize),
-    // m_font(font) 
-{
-    // m_textPosition = m_font ? 
-    //     Utils::centralizeTextEx(*font, m_text.c_str(), m_fontSize, m_rect.GetPosition(), m_rect.GetSize()) :
-    //     Utils::centralizeText(m_text.c_str(), (int)m_fontSize, m_rect.GetPosition(), m_rect.GetSize());
-}
+    m_text(text, textColor, fontSize, rect, font) { }
 
-void UI::Button::init(raylib::Color color, raylib::Rectangle rect, raylib::Color textColor, std::string text, 
-    float fontSize, const raylib::Font *font = nullptr)
+void UI::Button::init(const raylib::Color &color, const raylib::Rectangle &rect, const raylib::Color &textColor, const std::string &text,
+    const float fontSize, const raylib::Font *font)
 {
     m_color = color;
     m_rect = rect;
     m_text.init(text, textColor, fontSize, m_rect, font);
-
-    // m_textColor = textColor;
-    // m_text = text;
-    // m_fontSize = fontSize;
-    // m_font = font;
-
-    // m_textPosition = m_font ? 
-    //     Utils::centralizeTextEx(*font, m_text.c_str(), m_fontSize, m_rect.GetPosition(), m_rect.GetSize()) :
-    //     Utils::centralizeText(m_text.c_str(), (int)m_fontSize, m_rect.GetPosition(), m_rect.GetSize());
 }
 
-void UI::Button::render(const raylib::Font &font, float spacing) const
+void UI::Button::render() const
 {
     DrawRectangleRounded(m_rect, 0.2f, 16, m_color);
-    raylib::DrawTextEx(font, m_text, m_textPosition, m_fontSize, spacing, m_textColor);
+    m_text.render();
 }
 
-void UI::Button::render(const raylib::Font &font, const raylib::Camera2D& camera, float spacing) const
+void UI::Button::render(const raylib::Camera2D& camera) const
 {
     raylib::Rectangle rect = raylib::Rectangle(camera.GetWorldToScreen(m_rect.GetPosition()), { m_rect.width, m_rect.height });
     DrawRectangleRounded(rect, 0.2f, 16, m_color);
-    raylib::DrawTextEx(font, m_text, camera.GetWorldToScreen(m_textPosition), m_fontSize, spacing, m_textColor);
+    m_text.render(camera);
 }
 
 void UI::Button::setColor(const raylib::Color &newColor)

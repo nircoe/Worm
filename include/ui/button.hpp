@@ -12,26 +12,21 @@ namespace UI
         raylib::Color m_color;
         raylib::Rectangle m_rect;
         UI::Text m_text;
-        // raylib::Vector2 m_textPosition;
-        // raylib::Color m_textColor;
-        // std::string m_text;
-        // float m_fontSize;
-        // const raylib::Font *m_font;
 
     public:
 
         Button() = default;
 
-        Button(raylib::Color color, raylib::Rectangle rect, raylib::Color textColor, std::string text, 
-            float fontSize, const raylib::Font *font = nullptr);
+        Button(const raylib::Color &color, const raylib::Rectangle &rect, const raylib::Color &textColor, const std::string &text, 
+            const float fontSize, const raylib::Font *font = nullptr);
 
         ~Button() = default;
 
-        void init(raylib::Color color, raylib::Rectangle rect, raylib::Color textColor, std::string text, 
-            float fontSize, const raylib::Font *font = nullptr);
+        void init(const raylib::Color &color, const raylib::Rectangle &rect, const raylib::Color &textColor, const std::string &text,
+                  const float fontSize, const raylib::Font *font = nullptr);
 
-        void render(const raylib::Font& font, float spacing = 1) const;
-        void render(const raylib::Font& font, const raylib::Camera2D& camera, float spacing = 1) const;
+        void render() const;
+        void render(const raylib::Camera2D& camera) const;
 
         void setColor(const raylib::Color &newColor);
         void setText(const std::string &text);

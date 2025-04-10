@@ -39,6 +39,7 @@ namespace UI
         void render(const raylib::Camera2D &camera) const;
 
         void setText(const std::string &text);
+        void setText(const std::string &text, const raylib::Rectangle &area);
         void setTextPosition(const raylib::Vector2 &pos);
         void centralizeText(const raylib::Rectangle &area);
         void setColor(const raylib::Color &newColor);
@@ -50,8 +51,15 @@ namespace UI
         const raylib::Color &getColor() const;
         float getFontSize() const;
         const raylib::Font *getFont() const;
+        std::size_t length() const;
 
         bool isHovered(const raylib::Vector2 &mousePosition) const;
+
+        UI::Text &operator+=(const std::string &addition);
+        UI::Text &operator+=(const char addition);
+        UI::Text &operator+=(const char *addition);
+        UI::Text &operator--();
+        const UI::Text operator--(int);
     };
 
 } // namespace uicoe

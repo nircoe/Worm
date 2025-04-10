@@ -3,24 +3,18 @@
 #include "auxiliary/consts.hpp"
 #include "auxiliary/utils.hpp"
 
-UI::TextBox::TextBox(raylib::Color color, raylib::Rectangle rect, raylib::Vector2 textPosition, 
-    raylib::Color textColor, float fontSize, std::string text) : 
+UI::TextBox::TextBox(raylib::Color color, raylib::Rectangle rect, raylib::Vector2 textPosition,
+    raylib::Color textColor, float fontSize, const raylib::Font *font, std::string text) : 
     m_color(color),
     m_rect(rect),
-    m_textPosition(textPosition),
-    m_textColor(textColor),
-    m_fontSize(fontSize),
-    m_text(text) { }
+    m_text(text, textPosition, textColor, fontSize, font) {}
 
-void UI::TextBox::init(raylib::Color color, raylib::Rectangle rect, raylib::Vector2 textPosition, 
-    raylib::Color textColor, float fontSize, std::string text)
+void UI::TextBox::init(raylib::Color color, raylib::Rectangle rect, raylib::Vector2 textPosition,
+    raylib::Color textColor, float fontSize, const raylib::Font *font, std::string text)
 {
     m_color = color;
     m_rect = rect;
-    m_textPosition = textPosition;
-    m_textColor = textColor;
-    m_fontSize = fontSize;
-    m_text = text;
+    m_text.init(text, textPosition, textColor, fontSize, font);
 }
 
 void UI::TextBox::update()
@@ -40,7 +34,7 @@ void UI::TextBox::update()
         auto len = m_text.length();
         if (len > 0 && m_framesCounter - m_lastFrameDelete >= 5)
         {
-            m_text = m_text.substr(0, len - 1);
+            --m_text;
             m_lastFrameDelete = m_framesCounter;
         }
     }
@@ -48,29 +42,53 @@ void UI::TextBox::update()
     m_framesCounter++;
 }
 
-void UI::TextBox::render(const raylib::Font &font, bool round, float spacing) const
+void UI::TextBox::render()
 {
-    if(round)
-        DrawRectangleRounded(m_rect, 1.0f, 8, m_color);
-    else
-        DrawRectangleRec(m_rect, m_color);
-    std::string text = m_text;
-    if (text.length() < Consts::MAX_INPUT_CHARS && (m_framesCounter / 20) % 2 == 0)
-        text += "_";
-    raylib::DrawTextEx(font, text, m_textPosition, m_fontSize, spacing, m_textColor);
+    DrawRectangleRec(m_rect, m_color);
+    renderText();
 }
 
-void UI::TextBox::render(const raylib::Font &font, const raylib::Camera2D &camera, bool round, float spacing) const
+void UI::TextBox::render(float roundness, int segments)
 {
-    raylib::Rectangle rect = raylib::Rectangle(camera.GetWorldToScreen(m_rect.GetPosition()), {m_rect.width, m_rect.height});
-    if (round)
-        DrawRectangleRounded(rect, 1.0f, 8, m_color);
+    DrawRectangleRounded(m_rect, roundness, segments, m_color);
+    renderText();
+}
+
+void UI::TextBox::render(const raylib::Camera2D &camera)
+{
+    raylib::Rectangle rect = getRectWorldToScreen(camera);
+    DrawRectangleRec(rect, m_color);
+    renderText(&camera);
+}
+
+void UI::TextBox::render(const raylib::Camera2D &camera, float roundness, int segments)
+{
+    raylib::Rectangle rect = getRectWorldToScreen(camera);
+    DrawRectangleRounded(rect, roundness, segments, m_color);
+    renderText(&camera);
+}
+
+const raylib::Rectangle UI::TextBox::getRectWorldToScreen(const raylib::Camera2D &camera)
+{
+    return raylib::Rectangle(camera.GetWorldToScreen(m_rect.GetPosition()), {m_rect.width, m_rect.height});
+}
+
+void UI::TextBox::renderText(const raylib::Camera2D *camera)
+{
+    bool addition = false;
+    if (m_text.length() < Consts::MAX_INPUT_CHARS && (m_framesCounter / 20) % 2 == 0)
+    {
+        m_text += "_";
+        addition = true;
+    }
+
+    if(camera)
+        m_text.render(*camera);
     else
-        DrawRectangleRec(rect, m_color);
-    std::string text = m_text;
-    if (text.length() < Consts::MAX_INPUT_CHARS && (m_framesCounter / 20) % 2 == 0)
-        text += "_";
-    raylib::DrawTextEx(font, text, camera.GetWorldToScreen(m_textPosition), m_fontSize, spacing, m_textColor);
+        m_text.render();
+
+    if (addition)
+        --m_text;
 }
 
 void UI::TextBox::setColor(const raylib::Color &newColor)
@@ -80,7 +98,7 @@ void UI::TextBox::setColor(const raylib::Color &newColor)
 
 std::string UI::TextBox::getText() const
 {
-    return m_text;
+    return m_text.getText();
 }
 
 bool UI::TextBox::isHovered(const raylib::Vector2 &mousePosition) const

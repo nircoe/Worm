@@ -123,7 +123,7 @@ void GameManager::renderUI()
     for (auto scene : m_scenes)
     {
         if (scene->isActive())
-            scene->renderUI(m_font, m_camera);
+            scene->renderUI(m_camera);
     }
 }
 

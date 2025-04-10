@@ -18,17 +18,12 @@ class HomeScene : public Scene
     UI::Text m_welcome;
     UI::Text m_highscoreTitle;
     std::array<UI::Text, 4> m_highscores;
-    const std::string m_titleText = "Worm";
-    std::string m_welcomeText = "Welcome";
 
     std::string m_nickname = "";
 
     //  0  ,  1  ,  2  ,   3   ,  4  ,     5
     // Play, Exit, Easy, Medium, Hard, Impossible
     std::array<UI::Button, 6> m_buttons;
-
-    raylib::Vector2 m_titlePosition;
-    raylib::Vector2 m_welcomePosition;
 
     Enums::Difficulty m_difficulty = Consts::STARTING_DIFFICULTY;
     Enums::HomeButton m_currentClickedButton = Enums::HomeButton::None;
@@ -47,11 +42,10 @@ public:
 
     ~HomeScene() = default;
 
+    virtual void initUI(const GameManager &gameManager) override;
     virtual void update(GameManager& gameManager) override;
     virtual void render() override;
-    virtual void renderUI(const raylib::Font& font, const raylib::Camera2D& camera) override;
-
+    virtual void renderUI(const raylib::Camera2D& camera) override;
+    
     Enums::Difficulty getDifficulty() const;
-
-    virtual void initUI(const GameManager &gameManager) override;
 };
