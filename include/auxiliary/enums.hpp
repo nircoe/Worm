@@ -12,8 +12,9 @@ namespace Enums
 
     enum class SceneName
     {
-        Home_Scene = 0,
-        Game_Scene = 1
+        New_Game_Scene = 0,
+        Home_Scene = 1,
+        Game_Scene = 2
     };
 
     enum class HomeButton
@@ -33,5 +34,12 @@ namespace Enums
         Home_Screen = 0,
         Play_Again = 1,
         Exit = 2
+    };
+
+    enum class NewGameButton
+    {
+        None = -1,
+        Continue = 0,
+        Guest = 1
     };
 }

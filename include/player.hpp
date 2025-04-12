@@ -10,10 +10,10 @@
 #include "auxiliary/colors.hpp"
 #include <deque>
 
-class Player : public GameObject 
+class Player : public GameObject
 {
 protected:
-    Moveable m_moveable; 
+    Moveable m_moveable;
     Enums::Difficulty m_difficulty;
 
     int m_beginningFrames;
@@ -21,14 +21,14 @@ protected:
 
     std::deque<raylib::Vector2> m_playerBody;
 
-    const bool checkBodyToBodyCollision() const;
-    const bool checkBodyToBorderCollision() const;
+    bool checkBodyToBodyCollision() const;
+    bool checkBodyToBorderCollision() const;
     raylib::Vector2 fixGettingOffScreen(raylib::Vector2 pos) const;
     void updatePlayerBody(bool checkInnerCollisions = true);
 
 public:
-    Player() = delete;
-    
+    Player() = default;
+
     Player(raylib::Vector2 initialPosition, const float speed, Enums::Difficulty difficulty);
 
     virtual ~Player() override = default;
@@ -37,11 +37,11 @@ public:
 
     virtual void render() const override;
 
-    const bool checkFoodCollision(Food& food) const;
+    bool checkFoodCollision(Food &food) const;
 
     const raylib::Vector2 getHeadPosition() const;
 
-    const std::size_t getScore() const;
+    std::size_t getScore() const;
 
     void handleFoodCollision();
 
@@ -49,5 +49,5 @@ public:
 
     const std::deque<raylib::Vector2> getPlayerBody() const;
 
-    const bool isBeginning() const;
+    bool isBeginning() const;
 };

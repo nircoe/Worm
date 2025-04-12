@@ -2,6 +2,7 @@
 
 #include "raylib-cpp.hpp"
 #include <string>
+#include "ui/text.hpp"
 
 namespace UI 
 {
@@ -10,31 +11,36 @@ namespace UI
     {
         raylib::Color m_color;
         raylib::Rectangle m_rect;
-        raylib::Vector2 m_textPosition;
-        raylib::Color m_textColor;
-        std::string m_text;
-        float m_fontSize;
+        UI::Text m_text;
 
     public:
 
         Button() = default;
 
-        Button(raylib::Color color, raylib::Rectangle rect, raylib::Vector2 textPosition, 
-            raylib::Color textColor, std::string text, float fontSize);
+        Button(const raylib::Color &color, const raylib::Rectangle &rect, const raylib::Color &textColor, const std::string &text, 
+            const float fontSize, const raylib::Font *font = nullptr);
 
         ~Button() = default;
 
-        void init(raylib::Color color, raylib::Rectangle rect, raylib::Vector2 textPosition, 
-            raylib::Color textColor, std::string text, float fontSize);
+        void init(const raylib::Color &color, const raylib::Rectangle &rect, const raylib::Color &textColor, const std::string &text,
+                  const float fontSize, const raylib::Font *font = nullptr);
 
-        void render(const raylib::Font& font, float spacing = 1) const;
-        void render(const raylib::Font& font, const raylib::Camera2D& camera, float spacing = 1) const;
+        void render() const;
+        void render(const raylib::Camera2D& camera) const;
 
+        void setColor(const raylib::Color &newColor);
+        void setText(const std::string &text);
         void setTextPosition(const raylib::Vector2& pos);
+        void setFontSize(const float fontSize);
+        void setFont(const raylib::Font *font = nullptr);
 
-        void setColor(const raylib::Color& newColor);
+        const raylib::Color &getColor() const;
+        const std::string& getText() const;
+        const raylib::Vector2& getTextPosition() const;
+        float getFontSize() const;
+        const raylib::Font *getFont() const;
 
-        const bool isHovered(const raylib::Vector2& mousePosition);
+        bool isHovered(const raylib::Vector2& mousePosition) const;
     };
 
 }

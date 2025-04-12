@@ -42,12 +42,12 @@ namespace Utils
         return spawnPoint;
     }
 
-    inline const int centerlizeTextX(const char* text, const int fontSize) 
+    inline int centerlizeTextX(const char* text, const int fontSize) 
     {
         return (Consts::SCREEN_WIDTH - MeasureText(text, fontSize)) / 2;
     }
 
-    inline void drawTestingText(raylib::Window& window, raylib::Camera2D& camera, 
+    inline void drawTestingText(raylib::Window& window, 
                                 const int TargetFPS, const raylib::Vector2 playerPos)
     {
         const char* targetFPSStr = TargetFPS > 0 ? TextFormat("Target FPS: %i", TargetFPS) : "Target FPS: MAX";

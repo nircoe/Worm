@@ -20,7 +20,7 @@ namespace Consts
     const int TITLE_FONT_SIZE = 80;
     const int START_GAME_FONT_SIZE = 24;
     const int BUTTONS_FONT_SIZE = 20;
-    const int NUM_OF_SCENES = 2;
+    const int NUM_OF_SCENES = 3;
 
     const float PLAYER_SPEED = 23.0f;
     const float DIAGONAL_MULTIPLY = 1.352f;
@@ -50,12 +50,12 @@ namespace Consts
         { SCREEN_WIDTH - 30.0f, -1.0f, 30.0f, SCREEN_HEIGHT + 1.0f }
     };
 
-    const raylib::Rectangle PLAY_BUTTON_RECT(300, 450, 200, 60);
-    const raylib::Rectangle EXIT_BUTTON_RECT(300, 520, 200, 60);
-    const raylib::Rectangle EASY_BUTTON_RECT(60, 250, 150, 70);
-    const raylib::Rectangle MEDIUM_BUTTON_RECT(230, 250, 150, 70);
-    const raylib::Rectangle HARD_BUTTON_RECT(395, 250, 150, 70);
-    const raylib::Rectangle IMPOSSIBLE_BUTTON_RECT(565, 250, 150, 70);
+    const raylib::Rectangle PLAY_BUTTON_RECT(300, 470, 200, 60);
+    const raylib::Rectangle EXIT_BUTTON_RECT(300, 540, 200, 60);
+    const raylib::Rectangle EASY_BUTTON_RECT(60, 200, 150, 70);
+    const raylib::Rectangle MEDIUM_BUTTON_RECT(230, 200, 150, 70);
+    const raylib::Rectangle HARD_BUTTON_RECT(395, 200, 150, 70);
+    const raylib::Rectangle IMPOSSIBLE_BUTTON_RECT(565, 200, 150, 70);
 
     //  0  ,  1  ,  2  ,   3   ,  4  ,     5
     // Play, Exit, Easy, Medium, Hard, Impossible
@@ -159,5 +159,31 @@ namespace Consts
         Enums::GameButton::Play_Again,
         Enums::GameButton::Exit 
     };
+
+    // NEW GAME UI
+
+    const raylib::Rectangle NEW_GAME_NICKNAME_BUTTON_RECT(80, 480, 300, 60);
+    const raylib::Rectangle NEW_GAME_GUEST_BUTTON_RECT(420, 480, 300, 60);
+    const raylib::Rectangle NEW_GAME_TEXT_BOX_RECT(200, 350, 400, 60);
+
+    const std::array<const raylib::Rectangle, 2> NEW_GAME_RECTS =
+    {
+        Consts::NEW_GAME_NICKNAME_BUTTON_RECT,
+        Consts::NEW_GAME_GUEST_BUTTON_RECT
+    };
+
+    const std::array<const std::string, 2> NEW_GAME_BUTTONS_TEXT =
+    {
+        "Continue",
+        "Continue as guest"
+    };
+
+    const std::array<Enums::NewGameButton, 2> NEW_GAME_BUTTONS_ID =
+    {
+        Enums::NewGameButton::Continue,
+        Enums::NewGameButton::Guest
+    };
+
+    const std::size_t MAX_INPUT_CHARS = 24;
 
 } // namespace Consts

@@ -1,0 +1,3 @@
+[submodule "external/datacoe"]
+	path = external/datacoe
+	url = https://github.com/nircoe/datacoe.git

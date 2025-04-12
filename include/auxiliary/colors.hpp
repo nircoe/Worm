@@ -36,4 +36,6 @@ namespace Colors
     const raylib::Color WORM_BODY_COLOR(145, 94, 49);
     const raylib::Color FOOD_COLOR(200, 0, 0);
     
+    // New Game Scene
+    const raylib::Color TEXT_BOX_COLOR(253, 253, 253);
 }

@@ -88,8 +88,21 @@
 		"xtr1common": "cpp",
 		"xutility": "cpp",
 		"queue": "cpp",
-		"ranges": "cpp"
+		"ranges": "cpp",
+		"any": "cpp",
+		"codecvt": "cpp",
+		"condition_variable": "cpp",
+		"filesystem": "cpp",
+		"fstream": "cpp",
+		"map": "cpp",
+		"mutex": "cpp",
+		"set": "cpp",
+		"valarray": "cpp",
+		"xtree": "cpp",
+		"csignal": "cpp",
+		"regex": "cpp",
+		"unordered_set": "cpp",
+		"text_encoding": "cpp"
 	},
-	"C_Cpp.default.compilerPath": "C:\\raylib\\w64devkit\\bin\\g++.exe",
 	"cmake.generator": "Ninja"
 }

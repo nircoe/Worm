@@ -19,13 +19,9 @@ public:
     virtual void update() = 0;
     virtual void render() const = 0;
 
-#pragma region setters
     void setActive(bool active);
-#pragma endregion
     
-#pragma region getters
     Transform2D& getTransform();
     const Transform2D& getTransform() const;
-    const bool isActive() const;
-#pragma endregion
+    bool isActive() const;
 };

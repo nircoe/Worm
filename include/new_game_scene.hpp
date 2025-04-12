@@ -7,45 +7,38 @@
 #include "auxiliary/utils.hpp"
 #include "auxiliary/enums.hpp"
 #include "ui/button.hpp"
+#include "ui/textbox.hpp"
 #include "ui/text.hpp"
 #include <string>
 
 namespace raylib { class Color; class Vector2; class Rectangle; }
 
-class HomeScene : public Scene
+class NewGameScene : public Scene
 {
     UI::Text m_title;
-    UI::Text m_welcome;
-    UI::Text m_highscoreTitle;
-    std::array<UI::Text, 4> m_highscores;
+    UI::Text m_subtitle;
+    UI::TextBox m_textBox;
 
-    std::string m_nickname = "";
+    //        0        ,        1
+    // Play as nickname, Play as guest
+    std::array<UI::Button, 2> m_buttons;
 
-    //  0  ,  1  ,  2  ,   3   ,  4  ,     5
-    // Play, Exit, Easy, Medium, Hard, Impossible
-    std::array<UI::Button, 6> m_buttons;
-
-    Enums::Difficulty m_difficulty = Consts::STARTING_DIFFICULTY;
-    Enums::HomeButton m_currentClickedButton = Enums::HomeButton::None;
-    
-    HomeScenePlayer m_player;
-    bool m_isLoading = false;
+    Enums::NewGameButton m_currentClickedButton = Enums::NewGameButton::None;
 
     void resetButtonsColor();
-    void resetDifficultyButtonsColor();
-    void checkDifficultyButton();
+
     virtual raylib::Color checkButton(GameManager &gameManager, const raylib::Color &hoverColor,
                                       const raylib::Color &clickedColor, std::size_t buttonId) override;
 
-public:
-    HomeScene();
+    bool checkEnterKey(GameManager &gameManager);
 
-    ~HomeScene() = default;
+public:
+    NewGameScene() = default;
+
+    ~NewGameScene() = default;
 
     virtual void initUI(const GameManager &gameManager) override;
     virtual void update(GameManager& gameManager) override;
     virtual void render() override;
     virtual void renderUI(const raylib::Camera2D& camera) override;
-    
-    Enums::Difficulty getDifficulty() const;
 };
