@@ -25,12 +25,14 @@ class GameManager
     bool m_shouldClose = false;
 
     void setSceneActive(Enums::SceneName sceneName, bool active = true);
+    bool loadSceneAudio(Enums::SceneName sceneName);
+    bool unloadSceneAudio(Enums::SceneName sceneName);
 
     static std::filesystem::path getGameDataPath();
 
 public:
     GameManager(std::initializer_list<Scene*> scenes);
-    ~GameManager() = default;
+    ~GameManager();
     
     void activateScene(Enums::SceneName sceneName);
     void deactivateScene(Enums::SceneName sceneName);

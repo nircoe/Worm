@@ -1,5 +1,6 @@
 #include "game_scene.hpp"
 #include <datacoe/game_data.hpp>
+#include <soundcoe.hpp>
 
 GameScene::GameScene(Enums::Difficulty difficulty) : m_player(raylib::Vector2(), Consts::PLAYER_SPEED, difficulty),
       m_food(Utils::getFoodSpawnPoint(Consts::INITIAL_PLAYER_BODY)),
@@ -13,6 +14,7 @@ void GameScene::update(GameManager& gameManager)
     {
         if(m_player.checkFoodCollision(m_food))
         {
+            soundcoe::playSound("eating.mp3");
             m_player.handleFoodCollision();
             m_food.changePosition(Utils::getFoodSpawnPoint(m_player.getPlayerBody()));
         }
@@ -123,6 +125,7 @@ raylib::Color GameScene::checkButton(GameManager &gameManager, const raylib::Col
     auto button = static_cast<Enums::GameButton>(buttonId);
     if(IsMouseButtonReleased(MOUSE_BUTTON_LEFT) && m_currentClickedButton == button)
     {
+        soundcoe::playSound("button.wav");
         if(button == Enums::GameButton::Home_Screen)
         {
             gameManager.activateScene(Enums::SceneName::Home_Scene);

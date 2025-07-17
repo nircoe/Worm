@@ -2,6 +2,7 @@
 #include "auxiliary/colors.hpp"
 #include "auxiliary/consts.hpp"
 #include "auxiliary/utils.hpp"
+#include <soundcoe.hpp>
 
 UI::TextBox::TextBox(raylib::Color color, raylib::Rectangle rect, raylib::Vector2 textPosition,
     raylib::Color textColor, float fontSize, const raylib::Font *font, std::string text) : 
@@ -24,6 +25,10 @@ void UI::TextBox::update()
     {
         if ((32 <= key) && (key <= 125) && (m_text.length() < Consts::MAX_INPUT_CHARS))
         {
+            if (soundcoe::isInitialized())
+                soundcoe::playSound("button.wav");
+            else
+                TraceLog(LOG_ERROR, "soundcoe is not initialized!");
             m_text += (char)key;
         }
         key = GetCharPressed();
@@ -34,6 +39,10 @@ void UI::TextBox::update()
         auto len = m_text.length();
         if (len > 0 && m_framesCounter - m_lastFrameDelete >= 5)
         {
+            if (soundcoe::isInitialized())
+                soundcoe::playSound("button.wav");
+            else
+                TraceLog(LOG_ERROR, "soundcoe is not initialized!");
             --m_text;
             m_lastFrameDelete = m_framesCounter;
         }

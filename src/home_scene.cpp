@@ -1,5 +1,6 @@
 #include "home_scene.hpp"
 #include "game_manager.hpp"
+#include <soundcoe.hpp>
 
 HomeScene::HomeScene() : m_player(raylib::Vector2::Zero(),
                                   Consts::PLAYER_SPEED,
@@ -13,6 +14,7 @@ void HomeScene::update(GameManager &gameManager)
         if (m_player.isFinishLoading())
         {
             m_isLoading = false;
+            m_firstEnter = true;
             m_player.resetBody();
             gameManager.changeDifficulty(m_difficulty);
             gameManager.resetCamera();
@@ -20,6 +22,15 @@ void HomeScene::update(GameManager &gameManager)
             gameManager.deactivateScene(Enums::SceneName::Home_Scene);
         }
         return;
+    }
+
+    if (m_firstEnter)
+    {
+        if (m_nickname == "Eden" || m_nickname == "eden")
+            soundcoe::playSound("beautiful.mp3");
+        else if (m_nickname == "Maya" || m_nickname == "maya")
+            soundcoe::playSound("daughter.ogg");
+        m_firstEnter = false;
     }
 
     m_player.update();
@@ -130,6 +141,7 @@ raylib::Color HomeScene::checkButton(GameManager &gameManager, const raylib::Col
     auto button = static_cast<Enums::HomeButton>(buttonId);
     if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT) && m_currentClickedButton == button)
     {
+        soundcoe::playSound("button.wav");
         if (button == Enums::HomeButton::Play)
         {
             gameManager.changeDifficulty(Enums::Difficulty::Hard);

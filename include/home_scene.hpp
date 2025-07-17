@@ -10,7 +10,12 @@
 #include "ui/text.hpp"
 #include <string>
 
-namespace raylib { class Color; class Vector2; class Rectangle; }
+namespace raylib
+{
+    class Color;
+    class Vector2;
+    class Rectangle;
+}
 
 class HomeScene : public Scene
 {
@@ -27,9 +32,10 @@ class HomeScene : public Scene
 
     Enums::Difficulty m_difficulty = Consts::STARTING_DIFFICULTY;
     Enums::HomeButton m_currentClickedButton = Enums::HomeButton::None;
-    
+
     HomeScenePlayer m_player;
     bool m_isLoading = false;
+    bool m_firstEnter = true;
 
     void resetButtonsColor();
     void resetDifficultyButtonsColor();
@@ -43,9 +49,9 @@ public:
     ~HomeScene() = default;
 
     virtual void initUI(const GameManager &gameManager) override;
-    virtual void update(GameManager& gameManager) override;
+    virtual void update(GameManager &gameManager) override;
     virtual void render() override;
-    virtual void renderUI(const raylib::Camera2D& camera) override;
-    
+    virtual void renderUI(const raylib::Camera2D &camera) override;
+
     Enums::Difficulty getDifficulty() const;
 };
