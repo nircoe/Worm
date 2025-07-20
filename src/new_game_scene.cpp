@@ -1,5 +1,6 @@
 #include "new_game_scene.hpp"
 #include "game_manager.hpp"
+#include <soundcoe.hpp>
 
 void NewGameScene::resetButtonsColor()
 {
@@ -19,6 +20,10 @@ raylib::Color NewGameScene::checkButton(GameManager &gameManager, const raylib::
 
   if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT) && m_currentClickedButton == button)
   {
+    if (soundcoe::isInitialized())
+      soundcoe::playSound("button.wav");
+    else
+      TraceLog(LOG_ERROR, "soundcoe is not initialized!");
     gameManager.changeDifficulty(Enums::Difficulty::Easy);
     if (button == Enums::NewGameButton::Continue) // init datamanager with nickname
       gameManager.newGame(text);
@@ -47,6 +52,10 @@ bool NewGameScene::checkEnterKey(GameManager &gameManager)
   if (!IsKeyPressed(KEY_ENTER) || text.empty())
     return false;
 
+  if(soundcoe::isInitialized())
+    soundcoe::playSound("button.wav");
+  else
+    TraceLog(LOG_ERROR, "soundcoe is not initialized!");
   gameManager.changeDifficulty(Enums::Difficulty::Easy);
   gameManager.newGame(text);
   gameManager.activateScene(Enums::SceneName::Home_Scene);

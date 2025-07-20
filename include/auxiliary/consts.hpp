@@ -11,8 +11,8 @@ namespace Consts
 {
     const std::string GAME_NAME = "Worm";
     const std::string GAME_OVER_TEXT = "Game Over!";
-    const std::string FONT_PATH = "C:/Projects/Worm/assets/fonts/joystix_monospace.otf";
-    const std::string ICON_IMAGE_PATH = "C:/Projects/Worm/assets/images/icon.png";
+    const std::string FONT_PATH = "assets/fonts/joystix_monospace.otf";
+    const std::string ICON_IMAGE_PATH = "assets/images/icon.png";
 
     const int SCREEN_WIDTH = 800;
     const int SCREEN_HEIGHT = 800;

@@ -1,4 +1,5 @@
 #include "player.hpp"
+#include <soundcoe.hpp>
 
 Player::Player(raylib::Vector2 initialPosition, const float speed, Enums::Difficulty difficulty)
     : GameObject(initialPosition), 
@@ -59,7 +60,10 @@ void Player::update()
     updatePlayerBody();
 
     if(this->checkBodyToBodyCollision() || this->checkBodyToBorderCollision())
+    {
+        soundcoe::playSound("ouch2.mp3");
         this->setActive(false);
+    }
 }
 
 bool Player::checkFoodCollision(Food& food) const

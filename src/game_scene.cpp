@@ -1,18 +1,20 @@
 #include "game_scene.hpp"
 #include <datacoe/game_data.hpp>
+#include <soundcoe.hpp>
 
 GameScene::GameScene(Enums::Difficulty difficulty) : m_player(raylib::Vector2(), Consts::PLAYER_SPEED, difficulty),
-      m_food(Utils::getFoodSpawnPoint(Consts::INITIAL_PLAYER_BODY)),
-      m_difficulty(difficulty),
-      m_isBeginning(true),
-      m_gameOver(false) { }
+                                                     m_food(Utils::getFoodSpawnPoint(Consts::INITIAL_PLAYER_BODY)),
+                                                     m_difficulty(difficulty),
+                                                     m_isBeginning(true),
+                                                     m_gameOver(false) {}
 
-void GameScene::update(GameManager& gameManager) 
+void GameScene::update(GameManager &gameManager)
 {
-    if(!this->m_gameOver)
+    if (!this->m_gameOver)
     {
-        if(m_player.checkFoodCollision(m_food))
+        if (m_player.checkFoodCollision(m_food))
         {
+            soundcoe::playSound("eating.mp3");
             m_player.handleFoodCollision();
             m_food.changePosition(Utils::getFoodSpawnPoint(m_player.getPlayerBody()));
         }
@@ -20,11 +22,11 @@ void GameScene::update(GameManager& gameManager)
         m_player.update();
         m_food.update();
 
-        if(m_isBeginning)
+        if (m_isBeginning)
             m_isBeginning = m_player.isBeginning();
     }
 
-    if(!this->m_gameOver && !m_player.isActive())
+    if (!this->m_gameOver && !m_player.isActive())
     {
         this->m_gameOver = true;
         resetScoreText(gameManager);
@@ -32,30 +34,30 @@ void GameScene::update(GameManager& gameManager)
         saveGame(gameManager);
     }
 
-    if(this->m_gameOver)
+    if (this->m_gameOver)
     {
         resetButtonsColor();
 
         raylib::Vector2 mousePosition = GetMousePosition();
 
-        for(std::size_t i = 0; i < m_buttons.size(); ++i)
+        for (std::size_t i = 0; i < m_buttons.size(); ++i)
         {
-            if(m_buttons[i].isHovered(mousePosition))
+            if (m_buttons[i].isHovered(mousePosition))
             {
-                m_buttons[i].setColor(checkButton(gameManager, Colors::BUTTON_HOVER_COLOR, 
-                                                Colors::BUTTON_CLICKED_COLOR, 
-                                                static_cast<std::size_t>(Consts::GAME_OVER_BUTTONS_ID[i])));
+                m_buttons[i].setColor(checkButton(gameManager, Colors::BUTTON_HOVER_COLOR,
+                                                  Colors::BUTTON_CLICKED_COLOR,
+                                                  static_cast<std::size_t>(Consts::GAME_OVER_BUTTONS_ID[i])));
                 break;
             }
         }
     }
 }
 
-void GameScene::render() 
+void GameScene::render()
 {
     m_player.render();
 
-    if(m_difficulty == Enums::Difficulty::Hard || m_difficulty == Enums::Difficulty::Impossible)
+    if (m_difficulty == Enums::Difficulty::Hard || m_difficulty == Enums::Difficulty::Impossible)
     {
         for (auto &&rec : m_borders)
         {
@@ -63,16 +65,17 @@ void GameScene::render()
         }
     }
 
-    if(m_isBeginning) return;
+    if (m_isBeginning)
+        return;
 
     m_food.render();
 }
 
-void GameScene::renderUI(const raylib::Camera2D& /*camera*/)
+void GameScene::renderUI(const raylib::Camera2D & /*camera*/)
 {
-    if(m_isBeginning)
+    if (m_isBeginning)
         m_startText.render();
-    if(!m_gameOver)
+    if (!m_gameOver)
         return;
 
     m_gameoverText.render();
@@ -103,17 +106,16 @@ Enums::Difficulty GameScene::getDifficulty() const
 
 void GameScene::initUI(const GameManager &gameManager)
 {
-    auto& font = gameManager.getFont();
-    m_startText.init("Start Moving With The Arrow Buttons!", Colors::TEXT_COLOR, Consts::START_GAME_FONT_SIZE, 
-        {0.0f, 0.0f, Consts::SCREEN_WIDTH, Consts::HALF_SCREEN.y}, &font);
+    auto &font = gameManager.getFont();
+    m_startText.init("Start Moving With The Arrow Buttons!", Colors::TEXT_COLOR, Consts::START_GAME_FONT_SIZE,
+                     {0.0f, 0.0f, Consts::SCREEN_WIDTH, Consts::HALF_SCREEN.y}, &font);
 
-    m_gameoverText.init("Game Over!", Colors::TEXT_COLOR, 50.0f, 
-        {0.0f, 0.0f, Consts::SCREEN_WIDTH, 1.5f * Consts::HALF_SCREEN.y}, &font);
+    m_gameoverText.init("Game Over!", Colors::TEXT_COLOR, 50.0f,
+                        {0.0f, 0.0f, Consts::SCREEN_WIDTH, 1.5f * Consts::HALF_SCREEN.y}, &font);
 
-
-    for(std::size_t i = 0; i < m_buttons.size(); ++i)
+    for (std::size_t i = 0; i < m_buttons.size(); ++i)
     {
-        auto& rect = Consts::GAME_OVER_RECTS[i];
+        auto &rect = Consts::GAME_OVER_RECTS[i];
         m_buttons[i].init(Colors::BUTTON_BASE_COLOR, rect, WHITE, Consts::GAME_OVER_BUTTONS_TEXT[i], Consts::BUTTONS_FONT_SIZE, &font);
     }
 }
@@ -121,34 +123,37 @@ void GameScene::initUI(const GameManager &gameManager)
 raylib::Color GameScene::checkButton(GameManager &gameManager, const raylib::Color &hoverColor, const raylib::Color &clickedColor, std::size_t buttonId)
 {
     auto button = static_cast<Enums::GameButton>(buttonId);
-    if(IsMouseButtonReleased(MOUSE_BUTTON_LEFT) && m_currentClickedButton == button)
+    if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT) && m_currentClickedButton == button)
     {
-        if(button == Enums::GameButton::Home_Screen)
+        soundcoe::playSound("button.wav");
+        if (button == Enums::GameButton::Home_Screen)
         {
+            soundcoe::fadeOutMusic(gameManager.getMusicHandle(), 1.0f);
+            gameManager.setMusicHandle(soundcoe::fadeInMusic("calm-melody.mp3", 1.5f, 0.45f));
             gameManager.activateScene(Enums::SceneName::Home_Scene);
             restart(); // reset for next play
             gameManager.deactivateScene(Enums::SceneName::Game_Scene);
         }
-        else if(button == Enums::GameButton::Play_Again) 
+        else if (button == Enums::GameButton::Play_Again)
         {
             restart();
         }
-        else if(button == Enums::GameButton::Exit)
+        else if (button == Enums::GameButton::Exit)
             gameManager.closeGame();
-        
+
         m_currentClickedButton = Enums::GameButton::None;
         return clickedColor;
-    } 
-    if(IsMouseButtonDown(MOUSE_BUTTON_LEFT) && m_currentClickedButton == button)
+    }
+    if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && m_currentClickedButton == button)
     {
         return clickedColor;
     }
 
-    if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
     {
         m_currentClickedButton = button;
     }
-        
+
     return hoverColor;
 }
 
@@ -164,7 +169,7 @@ void GameScene::restart()
 
 void GameScene::resetButtonsColor()
 {
-    for(auto& button : m_buttons)
+    for (auto &button : m_buttons)
     {
         button.setColor(Colors::BUTTON_BASE_COLOR);
     }
@@ -174,8 +179,8 @@ void GameScene::resetScoreText(GameManager &gameManager)
 {
     m_score = m_player.getScore();
     std::string scoreText = "Your Score: " + std::to_string(m_score);
-    m_scoreText.init(scoreText, Colors::TEXT_COLOR, 30.0f, 
-        {0.0f, 90.0f, Consts::SCREEN_WIDTH, 1.5f * Consts::HALF_SCREEN.y}, &gameManager.getFont());    
+    m_scoreText.init(scoreText, Colors::TEXT_COLOR, 30.0f,
+                     {0.0f, 90.0f, Consts::SCREEN_WIDTH, 1.5f * Consts::HALF_SCREEN.y}, &gameManager.getFont());
 }
 
 void GameScene::saveGame(GameManager &gameManager)
@@ -197,8 +202,8 @@ void GameScene::saveGame(GameManager &gameManager)
         highscores[index] = score;
 
     std::string highscoreText = "Your Highscore: " + std::to_string(highscores[index]);
-    m_highscoreText.init(highscoreText, Colors::TEXT_COLOR, 30.0f, 
-        {0.0f, 120.0f, Consts::SCREEN_WIDTH, 1.5f * Consts::HALF_SCREEN.y}, &gameManager.getFont());
+    m_highscoreText.init(highscoreText, Colors::TEXT_COLOR, 30.0f,
+                         {0.0f, 120.0f, Consts::SCREEN_WIDTH, 1.5f * Consts::HALF_SCREEN.y}, &gameManager.getFont());
 
     data.setHighscores(highscores);
     gameManager.saveGame(data);
