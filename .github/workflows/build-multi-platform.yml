@@ -80,3 +80,30 @@ jobs:
       shell: bash
       run: |
         cmake --build build --config Release
+
+    - name: Upload Windows Artifact
+      if: matrix.name == 'Windows MSVC'
+      uses: actions/upload-artifact@v4
+      with:
+        name: Worm-Windows
+        path: |
+          build/Release/Worm.exe
+          build/Release/assets/
+
+    - name: Upload Linux Artifact
+      if: matrix.name == 'Linux GCC'
+      uses: actions/upload-artifact@v4
+      with:
+        name: Worm-Linux
+        path: |
+          build/Worm
+          build/assets/
+
+    - name: Upload macOS Artifact
+      if: matrix.name == 'macOS Clang'
+      uses: actions/upload-artifact@v4
+      with:
+        name: Worm-macOS
+        path: |
+          build/Worm
+          build/assets/
