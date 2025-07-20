@@ -8,22 +8,20 @@
 #include "auxiliary/colors.hpp"
 #include <iostream>
 #include <exception>
-#include <soundcoe.hpp>
 #include <thread>
 #include <chrono>
 
 using namespace std::chrono_literals;
 
-GameManager::GameManager(std::initializer_list<Scene*> scenes) : 
-    m_window(Consts::SCREEN_WIDTH, Consts::SCREEN_HEIGHT, Consts::GAME_NAME),
-    m_camera(raylib::Vector2::Zero(), raylib::Vector2::Zero()),
-    m_font(Consts::FONT_PATH, 80),
-    m_iconImage(Consts::ICON_IMAGE_PATH)
+GameManager::GameManager(std::initializer_list<Scene *> scenes) : m_window(Consts::SCREEN_WIDTH, Consts::SCREEN_HEIGHT, Consts::GAME_NAME),
+                                                                  m_camera(raylib::Vector2::Zero(), raylib::Vector2::Zero()),
+                                                                  m_font(Consts::FONT_PATH, 80),
+                                                                  m_iconImage(Consts::ICON_IMAGE_PATH)
 {
     m_window.SetTargetFPS(static_cast<int>(Enums::Difficulty::Easy));
     m_window.SetIcon(m_iconImage);
 
-    if(!soundcoe::initialize("assets/audio"))
+    if (!soundcoe::initialize("assets/audio"))
     {
         TraceLog(LOG_ERROR, "soundcoe failed to initialize!");
         fflush(stdout);
@@ -45,6 +43,7 @@ GameManager::GameManager(std::initializer_list<Scene*> scenes) :
         ++i;
     }
 
+    m_music = soundcoe::fadeInMusic("calm-melody.mp3", 1.0f, 0.45f);
     if (m_dataManager.init(getGameDataPath().string()))
         activateScene(Enums::SceneName::Home_Scene);
     else // failed to load, start new game
@@ -52,9 +51,9 @@ GameManager::GameManager(std::initializer_list<Scene*> scenes) :
         m_window.SetTargetFPS(60);
         activateScene(Enums::SceneName::New_Game_Scene);
     }
-    for(auto& scene : m_scenes)
+    for (auto &scene : m_scenes)
     {
-        if(scene->isActive())
+        if (scene->isActive())
             scene->initUI(*this);
     }
 }
@@ -67,9 +66,9 @@ GameManager::~GameManager()
 void GameManager::activateScene(Enums::SceneName sceneName)
 {
     setSceneActive(sceneName, true);
-    if(sceneName == Enums::SceneName::Game_Scene)
+    if (sceneName == Enums::SceneName::Game_Scene)
     {
-        HomeScene* homeScene = static_cast<HomeScene*>(m_scenes[static_cast<std::size_t>(Enums::SceneName::Home_Scene)]);
+        HomeScene *homeScene = static_cast<HomeScene *>(m_scenes[static_cast<std::size_t>(Enums::SceneName::Home_Scene)]);
         Enums::Difficulty difficulty = homeScene->getDifficulty();
         GameScene *gameScene = static_cast<GameScene *>(m_scenes[static_cast<std::size_t>(sceneName)]);
         gameScene->changeDifficulty(difficulty);
@@ -111,14 +110,14 @@ void GameManager::setSceneActive(Enums::SceneName sceneName, bool active)
 
 bool GameManager::loadSceneAudio(Enums::SceneName sceneName)
 {
-    switch(sceneName)
+    switch (sceneName)
     {
-        case Enums::SceneName::New_Game_Scene:
-            return soundcoe::preloadScene("new_game_scene");
-        case Enums::SceneName::Home_Scene:
-            return soundcoe::preloadScene("home_scene");
-        case Enums::SceneName::Game_Scene:
-            return soundcoe::preloadScene("game_scene");
+    case Enums::SceneName::New_Game_Scene:
+        return soundcoe::preloadScene("new_game_scene");
+    case Enums::SceneName::Home_Scene:
+        return soundcoe::preloadScene("home_scene");
+    case Enums::SceneName::Game_Scene:
+        return soundcoe::preloadScene("game_scene");
     }
     return false;
 }
@@ -142,17 +141,17 @@ std::filesystem::path GameManager::getGameDataPath()
     std::filesystem::path path = std::filesystem::path(GetApplicationDirectory());
     path /= "savedata";
 
-    if(!std::filesystem::exists(path))
+    if (!std::filesystem::exists(path))
         std::filesystem::create_directory(path);
-    
+
     return path / "gamedata.bin";
 }
 
 void GameManager::update()
 {
-    for(auto scene : m_scenes)
+    for (auto scene : m_scenes)
     {
-        if(scene->isActive())
+        if (scene->isActive())
             scene->update(*this);
     }
 
@@ -199,7 +198,7 @@ void GameManager::resetCamera()
     m_camera.SetTarget(raylib::Vector2::Zero());
 }
 
-void GameManager::newGame(const std::string& nickname)
+void GameManager::newGame(const std::string &nickname)
 {
     m_dataManager.newGame(nickname);
     m_dataManager.saveGame();
@@ -216,11 +215,21 @@ bool GameManager::saveGame(const datacoe::GameData &data)
     return m_dataManager.saveGame();
 }
 
+void GameManager::setMusicHandle(soundcoe::MusicHandle handle)
+{
+    m_music = handle;
+}
+
+soundcoe::MusicHandle GameManager::getMusicHandle() const
+{
+    return m_music;
+}
+
 int GameManager::gameLoop()
 {
     try
     {
-        while(!m_window.ShouldClose())
+        while (!m_window.ShouldClose())
         {
             this->update();
 
@@ -234,14 +243,14 @@ int GameManager::gameLoop()
                 m_camera.EndMode();
 
                 this->renderUI();
-            }   
+            }
             m_window.EndDrawing();
 
-            if(m_shouldClose) 
+            if (m_shouldClose)
                 m_window.Close();
         }
     }
-    catch(const std::exception& e)
+    catch (const std::exception &e)
     {
         std::cerr << e.what() << '\n';
         return -1;

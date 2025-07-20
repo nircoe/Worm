@@ -10,6 +10,12 @@ void HomeScene::update(GameManager &gameManager)
 {
     if (m_isLoading)
     {
+        if (!m_firstEnter)
+        {
+            soundcoe::fadeOutMusic(gameManager.getMusicHandle(), 1.5f);
+            gameManager.setMusicHandle(soundcoe::fadeInMusic("short-music.wav", 2.0f, 0.45f));
+            m_firstEnter = true;
+        }
         m_player.loading(gameManager);
         if (m_player.isFinishLoading())
         {
@@ -29,7 +35,7 @@ void HomeScene::update(GameManager &gameManager)
         if (m_nickname == "Eden" || m_nickname == "eden")
             soundcoe::playSound("beautiful.mp3");
         else if (m_nickname == "Maya" || m_nickname == "maya")
-            soundcoe::playSound("daughter.ogg");
+            soundcoe::playSound("bat.mp3");
         m_firstEnter = false;
     }
 
